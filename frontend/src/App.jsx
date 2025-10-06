@@ -1,5 +1,6 @@
 import Footer from './components/footer/Footer'
 import Header from './components/header/Header'
+import Carrusel from './components/Carrusel/Carrusel'
 
 function App() {
   
@@ -7,6 +8,7 @@ function App() {
   return (
     <>
       <Header></Header>
+      <Footer></Footer>
     </>
   )
 }

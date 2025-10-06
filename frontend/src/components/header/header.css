@@ -82,8 +82,8 @@ ul .nav-inscribite {
 
 .icons-container {
   display: flex;
-  gap: 1.75rem;
   align-items: center;
+  height: 2.5rem;
 }
 .cart-button {
   background: none;

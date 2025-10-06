@@ -12,7 +12,7 @@ export default function Header() {
                 <NavLinks />
                 <div className="icons-container">
                     <CartButton />
-                    <Dropdown options={["Blog","Rutina","Progreso","Consulta","Cerrar sesion"]} />
+                    <Dropdown options={["Perfil","Blog","Rutina","Progreso","Consulta","Cerrar sesion"]} />
                 </div>
             </nav>
         </header>
