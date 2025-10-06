@@ -2,6 +2,7 @@ import Logo from "./Logo.jsx";
 import NavLinks from "./NavLinks.jsx";
 import CartButton from "./CartButton.jsx";
 import Dropdown from "./Dropdown.jsx";
+import "./header.css";
 
 export default function Header() {
     return (
@@ -11,7 +12,7 @@ export default function Header() {
                 <NavLinks />
                 <div className="icons-container">
                     <CartButton />
-                    <Dropdown />
+                    <Dropdown options={["Blog","Rutina","Progreso","Consulta","Cerrar sesion"]} />
                 </div>
             </nav>
         </header>
