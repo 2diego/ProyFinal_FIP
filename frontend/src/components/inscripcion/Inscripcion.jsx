@@ -10,6 +10,10 @@ export default function Inscripcion() {
 
     return (
         <section className="inscribite">
+            <div className="titulo">
+                <h1>Elegí el plan de tu preferencia.</h1>
+                <h3 className="subtitulo">¡Eleva tu nivel! Encuentra el plan perfecto para alcanzar tus objetivos.</h3>
+            </div>    
             
             <div className="inscripcion">
                 <CardInscripcion clase="premium" plan="Plan Premium" precio="$40000" beneficio={premium} />

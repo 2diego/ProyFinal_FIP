@@ -1,6 +1,8 @@
 import Banner from "../../components/banner/Banner";
 import Carrusel from "../../components/Carrusel/Carrusel";
 import Header from "../../components/header/Header";
+import Inscripcion from "../../components/inscripcion/Inscripcion";
+import Footer from "../../components/footer/Footer";
 
 const Index = () => {
   return (
@@ -21,7 +23,11 @@ const Index = () => {
       {/* Carrusel */}
       <Carrusel />
 
-    
+      {/* Inscripcion */}
+      <Inscripcion />
+
+      {/* Footer */}
+      <Footer />
 
     </>
   )
