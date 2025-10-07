@@ -6,7 +6,7 @@
     margin: 8rem 0 2rem 0;
 }
 
-/* .titulo {
+.titulo {
     text-align: center;
     font-size: 2rem;
     color: var(--blanco);
@@ -18,7 +18,7 @@
     margin-top: 1rem;
     font-size: 1.8rem;
     margin-bottom: 2%;
-} */
+}
 
 .inscripcion {
     display: flex;

@@ -7,6 +7,7 @@
   min-height: 6rem;
   background-color: var(--gris-osc);
   z-index: 1000;
+  top: 0;
 }
 .header::before{
   content: "";
