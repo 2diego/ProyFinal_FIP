@@ -1,7 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Index from './pages/index/index.jsx'
 
 
 import MetodoPago from './components/metodoPago/MetodoPago.jsx'
@@ -11,14 +12,18 @@ import Banner from './components/banner/Banner.jsx'
 import Cards from './components/card-prod/Cards.jsx'
 
 
-createRoot(document.getElementById('root')).render(
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Index />,
+  }
+]);
+
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+
+createRoot(rootElement).render(
   <StrictMode>
-    <Banner/>
-    <Carrusel/>
-    <Cards/>
-    
-  <IndexAdmin/> 
-  <Inscripcion/>
-  <MetodoPago/>
+    <RouterProvider router={router} />
   </StrictMode>,
 )

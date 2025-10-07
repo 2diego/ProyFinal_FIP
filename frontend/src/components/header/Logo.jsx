@@ -1,7 +1,9 @@
-export default function logo() {
+import logoImg from '../../assets/images/logo-sinfondo.png';
+
+export default function Logo() {
     return(
         <a href="/">
-            <img src="./images/logo-sinfondo.png" alt="logo" className="logo" />
+            <img src={logoImg} alt="logo" className="logo" />
         </a>
     );
 }
