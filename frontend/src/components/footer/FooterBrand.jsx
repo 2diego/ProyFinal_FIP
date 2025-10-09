@@ -1,8 +1,9 @@
+import logoFooter from '../../assets/images/logo-lomascercano.png'
 const FooterBrand = () => {
   return (
     <div className="brand">
       <img
-        src="/images/logo-lomascercano.png"
+        src={logoFooter}
         alt="logo superarse"
         className="brand-logo"
       />
