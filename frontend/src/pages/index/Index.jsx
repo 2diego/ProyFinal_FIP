@@ -3,6 +3,7 @@ import Carrusel from "../../components/Carrusel/Carrusel";
 import Header from "../../components/header/Header";
 import Inscripcion from "../../components/inscripcion/Inscripcion";
 import Footer from "../../components/footer/Footer";
+import bannerRemeras from "../../assets/images/remeras.jpg";
 
 const Index = () => {
   return (
@@ -25,6 +26,17 @@ const Index = () => {
 
       {/* Inscripcion */}
       <Inscripcion />
+
+      {/* Seccion remeras */}
+    <section class="seccion-remeras">
+      <div class="descripcion-remera">
+        <div>
+          <h2 className="entrena">Entrena con estilo. Viste la fuerza de Superarse Gym</h2>
+          <img src={bannerRemeras} alt="banner remeras" className="banner-remeras" />
+        </div>
+      </div>
+    </section>
+    {/* Fin seccion-remeras */}
 
       {/* Footer */}
       <Footer />

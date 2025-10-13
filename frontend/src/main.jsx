@@ -14,6 +14,12 @@ import SeccionBlog from  './pages/pageBlog/SeccionBlog.jsx'
 
 import Productos from './pages/productos/Productos.jsx'
 import ContenidoDetalladoBlog from './pages/pageBlog/ContenidoDetalladoBlog.jsx'
+import Admin from './pages/admin/Admin.jsx'
+import AdminClientes from './pages/admin/AdminClientes.jsx'
+import AdminRutinas from './pages/admin/AdminRutinas.jsx'
+import AdminEjercicios from './pages/admin/AdminEjercicios.jsx'
+import AdminTienda from './pages/admin/AdminTienda.jsx'
+
 
 
 const router = createBrowserRouter([
@@ -22,21 +28,37 @@ const router = createBrowserRouter([
     element: <Index />,
   },
   {
-    path:'productos',
-    element:<Productos/>,
+    path: '/admin',
+    element: <Admin />,
   },
   {
-    path: "/contacto",
-    element: <Contacto />,
-  },
-  { path: "/blog",
-    element: <SeccionBlog />
+    path: '/administrar-clientes',
+    element: <AdminClientes />,
   },
   {
-    path: "/blog/:id",
-    element: <ContenidoDetalladoBlog/>
+    path: '/administrar-rutinas',
+    element: <AdminRutinas />,
+  },
+  {
+    path: '/administrar-ejercicios',
+    element: <AdminEjercicios />,
+  },
+  {
+    path: '/administrar-tienda',
+    element: <AdminTienda />,
+  },
+  {  path: '/productos',
+     element: <Productos/>,
+  },
+  {  path: '/blog',
+     element: <SeccionBlog/>,
+  },
+  {  path: '/blog/:id',
+     element: <ContenidoDetalladoBlog/>,
+  },
+  {  path: '/contacto',
+     element: <Contacto/>,
   }
- 
 ]);
 
 const rootElement = document.getElementById('root');

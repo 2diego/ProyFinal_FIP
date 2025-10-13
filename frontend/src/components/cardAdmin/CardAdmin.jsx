@@ -1,9 +1,9 @@
 import "./cardAdmin.css";
 
-export default function CardAdmin({titulo, descripcion}) {
+export default function CardAdmin({titulo, descripcion, onClick}) {
 
     return (
-            <div className="admin-option">
+            <div className="admin-option" onClick={onClick}>
                 <div className="option-content">
                     <h3>{titulo}</h3>
                     <p>{descripcion}</p>
