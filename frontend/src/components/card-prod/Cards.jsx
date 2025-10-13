@@ -6,7 +6,7 @@ import "./Cards.css";
 function Cards(){
      const [productos ,setProductos] = useState([]);
      const [loading , setLoading] = useState(true);
-     const [error , serError] = useState (null);
+     const [error , setError] = useState (null);
 
 
      useEffect(() => { 

@@ -3,15 +3,17 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Index from './pages/index/index.jsx'
-import Productos from './pages/productos/Productos.jsx'
+
 import Contacto from './pages/contacto/Contacto.jsx'
 
 
 import MetodoPago from './components/metodoPago/MetodoPago.jsx'
 import Inscripcion from './components/inscripcion/Inscripcion.jsx'
 import IndexAdmin from './components/indexAdmin/IndexAdmin.jsx'
+import SeccionBlog from  './pages/pageBlog/SeccionBlog.jsx'
 
-
+import Productos from './pages/productos/Productos.jsx'
+import ContenidoDetalladoBlog from './pages/pageBlog/ContenidoDetalladoBlog.jsx'
 
 
 const router = createBrowserRouter([
@@ -20,13 +22,21 @@ const router = createBrowserRouter([
     element: <Index />,
   },
   {
-    path: "/productos", 
-    element: <Productos />,
+    path:'productos',
+    element:<Productos/>,
   },
   {
     path: "/contacto",
     element: <Contacto />,
   },
+  { path: "/blog",
+    element: <SeccionBlog />
+  },
+  {
+    path: "/blog/:id",
+    element: <ContenidoDetalladoBlog/>
+  }
+ 
 ]);
 
 const rootElement = document.getElementById('root');
