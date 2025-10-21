@@ -5,6 +5,14 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AdministradorModule } from './administrador/administrador.module';
+import { RutinasModule } from './rutinas/rutinas.module';
+import { BlogModule } from './blog/blog.module';
+import { EjercicioModule } from './ejercicio/ejercicio.module';
+import { FichaSaludModule } from './ficha-salud/ficha-salud.module';
+import { RutinaDiasModule } from './rutina-dias/rutina-dias.module';
+import { UsuarioModule } from './usuario/usuario.module';
+import { DetalleVentaModule } from './detalle_venta/detalle_venta.module';
+
 
 @Module({
   imports: [
@@ -26,6 +34,13 @@ import { AdministradorModule } from './administrador/administrador.module';
       inject: [ConfigService],
     }),
     AdministradorModule,
+    RutinasModule,
+    BlogModule,
+    EjercicioModule,
+    FichaSaludModule,
+    RutinaDiasModule,
+    UsuarioModule,
+    DetalleVentaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
