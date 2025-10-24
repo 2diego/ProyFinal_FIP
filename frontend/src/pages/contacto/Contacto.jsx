@@ -1,5 +1,6 @@
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import FormContacto from "../../components/formContacto/FormContacto";
 
 const Contacto = ()=>{
     return(
@@ -9,7 +10,7 @@ const Contacto = ()=>{
         <Header/>
 
 
-        
+        <FormContacto/>
 
 
         {/*Footer*/}

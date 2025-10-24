@@ -34,17 +34,23 @@
 
 .producto-nombre {
   white-space: nowrap;
+  margin-bottom: 0.5rem;
+  
 }
-
+.descripcion-pro{
+  margin-bottom: 0.5rem;
+}
 .precio {
   font-weight: 600;
   font-size: 1.3rem;
+  margin-bottom: 1rem;
 }
 
 .botones {
   display: flex;
   gap: 0 0.6rem;
-  padding: 1rem 0;
+  padding: 0rem 0;
+  
 }
 
 .comprarAhora {

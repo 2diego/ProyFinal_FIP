@@ -1,14 +1,10 @@
-
-
-export default function Textarea({titulo, id, placeholder,name}) {
-
+import "./textarea.css"
+import React from "react";
+const Textarea = React.forwardRef((props,ref) => {
     return (
-        <div className="input-contenedor">
-            <label for="name">{titulo}</label>
-            <div className="textarea-form">
-                <textarea name={name} id={id} className="form-textarea" placeholder={placeholder}></textarea>
-            </div>
-        </div>
-
+        <textarea className="form-textarea" ref={ref} {...props}></textarea>
     )
-}
+});
+
+
+export default Textarea;

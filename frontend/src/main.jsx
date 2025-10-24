@@ -19,7 +19,9 @@ import AdminClientes from './pages/admin/AdminClientes.jsx'
 import AdminRutinas from './pages/admin/AdminRutinas.jsx'
 import AdminEjercicios from './pages/admin/AdminEjercicios.jsx'
 import AdminTienda from './pages/admin/AdminTienda.jsx'
-
+import PlanillaSalud from './pages/planillaSalud/PlanillaSalud.jsx'
+import Registro from './pages/registro/Registro.jsx'
+import Login from './pages/login/Login.jsx'
 
 
 const router = createBrowserRouter([
@@ -58,6 +60,18 @@ const router = createBrowserRouter([
   },
   {  path: '/contacto',
      element: <Contacto/>,
+  },
+  {
+    path: '/planillaSalud',
+    element: <PlanillaSalud />,
+  },
+  {
+    path: '/registro',
+    element: <Registro />,
+  },
+  {
+    path: '/login',
+    element: <Login/>
   }
 ]);
 
