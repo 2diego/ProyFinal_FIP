@@ -1,0 +1,18 @@
+.seccion-productos {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem 0;
+  /* height: 120vh; */
+}
+.sub-productos {
+  color: var(--blanco);
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+}
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
