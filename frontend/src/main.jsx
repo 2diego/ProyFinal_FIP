@@ -13,12 +13,6 @@ import Cards from './components/card-prod/Cards.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Banner/>
-    <Carrusel/>
-    <Cards/>
-    
-  <IndexAdmin/> 
-  <Inscripcion/>
-  <MetodoPago/>
+    <App></App>
   </StrictMode>,
 )
