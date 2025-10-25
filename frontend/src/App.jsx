@@ -1,18 +1,27 @@
 import Footer from './components/footer/Footer'
 import Header from './components/header/Header'
-import Carrito from './components/carrito/Carrito'
-import CompraDirecta from './components/compraDirecta/CompraDirecta'
-import Rutina from './components/rutina/Rutina'
-import TablaRutina from './components/rutina/TablaRutina'
+import Carrusel from './components/Carrusel/Carrusel'
+
+import MetodoPago from './components/metodoPago/MetodoPago.jsx'
+import Inscripcion from './components/inscripcion/Inscripcion.jsx'
+import IndexAdmin from './components/indexAdmin/IndexAdmin.jsx'
+import Banner from './components/banner/Banner.jsx'
+import Cards from './components/card-prod/Cards.jsx'
 
 function App() {
-  
+
 
   return (
     <>
-      
-      <TablaRutina></TablaRutina>
+      <Header></Header>
+      <Banner />  
+      <Cards />
       <Footer></Footer>
+      <Carrusel />
+      <IndexAdmin />
+
+      <Inscripcion />
+      <MetodoPago />
     </>
   )
 }

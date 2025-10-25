@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./dropdown.css";
-
+import {Link} from "react-router-dom";
 const Dropdown = ({ options }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -10,6 +10,14 @@ const Dropdown = ({ options }) => {
     setSelected(option);
     setIsOpen(false);
   };
+  const routes = {
+  Perfil: "/perfil",
+  Blog: "/blog",
+  Rutina: "/rutina",
+  Progreso: "/progreso",
+  Consulta: "/consulta",
+  "Cerrar sesion": "/logout",
+};
 
   return (
     <div className="dropdown">
@@ -28,9 +36,17 @@ const Dropdown = ({ options }) => {
             className={selected === option ? "active" : ""}
             onClick={() => handleSelect(option)}
           >
-            <a href="#" className="login-links">
+            {routes[option] ? (
+            <Link
+            to={routes[option]}
+            className="login-links"
+            onClick={()=>setIsOpen(false)}
+            >
               {option}
-            </a>
+            </Link>
+            ) : (
+              <span className="login-links">{option}</span>
+            )}
           </li>
         ))}
       </ul>

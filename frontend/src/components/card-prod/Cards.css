@@ -4,9 +4,10 @@
   flex-direction: column;
   align-items: center;
   margin: 3rem 0;
+  /* height: 120vh; */
 }
 .sub-productos {
-  color: var(--negro);
+  color: var(--blanco);
   font-size: 1.6rem;
   margin-bottom: 2rem;
 }

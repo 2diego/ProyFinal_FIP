@@ -123,12 +123,12 @@
 
   
 /* Texto ilustrativo */
-.texto.container {
+.texto-container {
   display: flex;
   align-items: center;
   margin: 1.5rem 0 0;
 }
-.texto.container h3 {
+.texto-container h3 {
   position: relative;
 
   font-size: 1.5rem;
@@ -137,7 +137,7 @@
   color: var(--blanco);
   margin-left: 20%;
 }
-.texto.container h3::after {
+.texto-container h3::after {
   content: '';
   display: block;
   margin-top: 0.5rem;
