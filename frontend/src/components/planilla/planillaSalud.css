@@ -94,7 +94,9 @@ legend::after {
     font-weight: 600;
     border: none;
 }
-
+.contenedor-checkboxs{
+    height: 6rem;
+}
 .checkboxs {
     display: flex;
     align-items: center;
