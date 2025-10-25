@@ -39,7 +39,7 @@ export default function Planilla() {
                         <div className="input-container">
                             <LabelPlanilla htmlFor="dni" children="DNI" />
                             <div className="inputs">
-                                <InputPlanilla type="number" min="0" name="dni" id="dni" placeholder="Dni" {...register("dni", {
+                                <InputPlanilla type="number" min="0" id="dni" placeholder="Dni" {...register("dni", {
                                     required: {
                                         value: true,
                                         message: "El DNI es obligatorio"
@@ -58,13 +58,13 @@ export default function Planilla() {
                                     }
                                 })} />
                             </div>
-                            {errors.dni && <p className="error">{errors.dni.message}</p>}
+                            {errors.dni && <span className="error">{errors.dni.message}</span>}
                         </div>
 
                         <div className="input-container">
                             <LabelPlanilla htmlFor="fechaNacimiento" children="Fecha de nacimiento" />
                             <div className="inputs">
-                                <InputPlanilla type="date" name="fechaNacimiento" id="fechaNacimiento" {...register("fechaNacimiento", {
+                                <InputPlanilla type="date" id="fechaNacimiento" {...register("fechaNacimiento", {
                                     required: {
                                         value: true,
                                         message: "La fecha de nacimiento es obligatoria"
@@ -79,13 +79,13 @@ export default function Planilla() {
 
                                 })} />
                             </div>
-                            {errors.fechaNacimiento && <p className="error">{errors.fechaNacimiento.message}</p>}
+                            {errors.fechaNacimiento && <span className="error">{errors.fechaNacimiento.message}</span>}
                         </div>
 
                         <div className="input-container">
                             <LabelPlanilla htmlFor="direccion" children="Dirección" />
                             <div className="inputs">
-                                <InputPlanilla type="text" name="direccion" id="direccion" placeholder="Dirección" {...register("direccion",
+                                <InputPlanilla type="text" id="direccion" placeholder="Dirección" {...register("direccion",
                                     {
                                         required: {
                                             value: true,
@@ -97,13 +97,13 @@ export default function Planilla() {
                                         },
                                     })} />
                             </div>
-                            {errors.direccion && <p className="error">{errors.direccion.message}</p>}
+                            {errors.direccion && <span className="error">{errors.direccion.message}</span>}
                         </div>
 
                         <div className="input-container">
                             <LabelPlanilla htmlFor="ciudad" children="Ciudad" />
                             <div className="inputs">
-                                <InputPlanilla type="text" name="ciudad" id="ciudad" placeholder="Ciudad" {...register("ciudad",
+                                <InputPlanilla type="text" id="ciudad" placeholder="Ciudad" {...register("ciudad",
                                     {
                                         required: {
                                             value: true,
@@ -115,13 +115,13 @@ export default function Planilla() {
                                         },
                                     })} />
                             </div>
-                            {errors.ciudad && <p className="error">{errors.ciudad.message}</p>}
+                            {errors.ciudad && <span className="error">{errors.ciudad.message}</span>}
                         </div>
 
                         <div className="input-container">
                             <LabelPlanilla htmlFor="provincia" children="Provincia" />
                             <div className="inputs">
-                                <InputPlanilla type="text" name="provincia" id="provincia" placeholder="Provincia" {...register("provincia",
+                                <InputPlanilla type="text" id="provincia" placeholder="Provincia" {...register("provincia",
                                     {
                                         required: {
                                             value: true,
@@ -133,13 +133,13 @@ export default function Planilla() {
                                         },
                                     })} />
                             </div>
-                            {errors.provincia && <p className="error">{errors.provincia.message}</p>}
+                            {errors.provincia && <span className="error">{errors.provincia.message}</span>}
                         </div>
 
                         <div className="input-container">
                             <LabelPlanilla htmlFor="pais" children="País" />
                             <div className="inputs">
-                                <InputPlanilla type="text" name="pais" id="pais" placeholder="País" {...register("pais",
+                                <InputPlanilla type="text" id="pais" placeholder="País" {...register("pais",
                                     {
                                         required: {
                                             value: true,
@@ -151,12 +151,12 @@ export default function Planilla() {
                                         },
                                     })} />
                             </div>
-                            {errors.pais && <p className="error">{errors.pais.message}</p>}
+                            {errors.pais && <span className="error">{errors.pais.message}</span>}
                         </div>
 
                         <div className="input-container">
                             <label htmlFor="sexo">SEXO</label>
-                            <select name="sexo" id="sexo" className="form-input" {...register("sexo")}>
+                            <select id="sexo" className="form-input" {...register("sexo")}>
                                 <option value="masculino">Masculino</option>
                                 <option value="femenino">Femenino</option>
                                 <option value="otro">Sin especificar</option>
@@ -165,7 +165,7 @@ export default function Planilla() {
 
                         <div className="input-container">
                             <label htmlFor="clase">Tipo de clases</label>
-                            <select name="clase" id="clase" className="form-input" {...register("clase")}>
+                            <select id="clase" className="form-input" {...register("clase")}>
                                 <option value="presencial">Presencial</option>
                                 <option value="online">Online</option>
                                 <option value="mixto">Mixto</option>
@@ -178,73 +178,104 @@ export default function Planilla() {
                     <fieldset className='informacion'>
                         <legend>Información importante</legend>
                         <div className="check-contenedor">
-                            <div className="checkboxs">
-                                <LabelRadio htmlFor="condicion" children="¿PADECE ALGUNA CONDICIÓN MEDICA?" />
-                                <InputRadio name="condicion" value="si" id="si-condicion" {...register("condicion")} />SI
-                                <InputRadio name="condicion" value="no" id="no-condicion"  {...register("condicion")} />NO
+                            <div className='contenedor-checkboxs'>
+                                <div className="checkboxs">
+                                    <LabelRadio htmlFor="condicion" children="¿PADECE ALGUNA CONDICIÓN MEDICA?" />
+                                    <InputRadio value="si" id="si-condicion" {...register("condicion",
+                                        {
+                                            required: "Debe seleccionar una opción"
+                                        }
+                                    )} />SI
+                                    <InputRadio value="no" id="no-condicion"  {...register("condicion",
+                                        {
+                                            required: "Debe seleccionar una opción"
+                                        }
+                                    )} />NO
+                                </div>
+                                {errors.condicion && <span className="error">{errors.condicion.message}</span>}
                             </div>
                             <div className="input-contenedor">
                                 <LabelPlanilla htmlFor="lesion" children="SI ES AFIRMATIVO ESPECIFIQUE:" />
                                 <div className="textarea-form">
-                                    <Textarea name="lesion" id="lesion" placeholder="Especifique la condicion" disabled={watch("condicion") === "no"} {...register("lesion",
+                                    <Textarea id="lesion" placeholder="Especifique la condicion" disabled={watch("condicion") === "no"} {...register("lesion",
                                         {
                                             validate: () => {
                                                 if (watch("condicion") === "si" && watch("lesion") === "") {
                                                     return "Campo requerido"
                                                 }
+                                                if (watch("condicion") === "si" && watch("lesion").length < 10) {
+                                                    return "Debe tener al menos 10 caracteres"
 
+                                                }
                                             },
-                                            minLength: {
-                                                value: 10,
-                                                message: "Debe tener al menos 10 caracteres"
-                                            },
+
 
                                         }
                                     )} />
                                 </div>
-                                {errors.lesion && <p className="error">{errors.lesion.message}</p>}
+                                {errors.lesion && <span className="error">{errors.lesion.message}</span>}
                             </div>
                         </div>
 
                         <div className="check-contenedor">
-                            <div className="checkboxs">
-                                <LabelRadio htmlFor="medicacion" children="¿ESTA TOMANDO ALGUNA MEDICACIÓN?" />
-                                <InputRadio name="medicacion" value="si" id="si-medicacion" {...register("medicacion")} />SI
-                                <InputRadio name="medicacion" value="no" id="no-medicacion" {...register("medicacion")} />NO
+                            <div className='contenedor-checkboxs'>
+                                <div className="checkboxs">
+                                    <LabelRadio htmlFor="medicacion" children="¿ESTA TOMANDO ALGUNA MEDICACIÓN?" />
+                                    <InputRadio value="si" id="si-medicacion" {...register("medicacion",
+                                        {
+                                            required: "Debe seleccionar una opción"
+                                        }
+                                    )} />SI
+                                    <InputRadio value="no" id="no-medicacion" {...register("medicacion",
+                                        {
+                                            required: "Debe seleccionar una opción"
+                                        }
+                                    )} />NO
+                                </div>
+                                {errors.medicacion && <span className="error">{errors.medicacion.message}</span>}
                             </div>
                             <div className="input-contenedor">
                                 <LabelPlanilla htmlFor="medicamento" children="SI ES AFIRMATIVO ESPECIFIQUE:" />
                                 <div className="textarea-form">
-                                    <Textarea name="medicamento" id="medicamento" placeholder="Especifique la condicion: " disabled={watch("medicacion") === "no"} {...register("medicamento",
+                                    <Textarea id="medicamento" placeholder="Especifique la condicion: " disabled={watch("medicacion") === "no"} {...register("medicamento",
                                         {
                                             validate: () => {
                                                 if (watch("medicacion") === "si" && watch("medicamento") === "") {
                                                     return "Campo requerido"
                                                 }
-                                            },
-                                            minLength: {
-                                                value: 10,
-                                                message: "Debe tener al menos 10 caracteres"
-                                            },
+                                                if (watch("medicacion") === "si" && watch("medicamento").length < 10) {
+                                                    return "Debe tener al menos 10 caracteres"
 
+                                                }
+                                            },
                                         }
                                     )} />
                                 </div>
-                                {errors.medicamento && <p className="error">{errors.medicamento.message}</p>}
+                                {errors.medicamento && <span className="error">{errors.medicamento.message}</span>}
                             </div>
                         </div>
 
                         <div className="check-contenedor">
-                            <div className="checkboxs">
-                                <LabelRadio htmlFor="experiencia" children="¿TIENE EXPERIENCIA ENTRENANDO?" />
-                                <InputRadio name="entreno" value="si" id="si-entreno" {...register("exp-entrenando")} />SI
-                                <InputRadio name="entreno" value="no" id="no-entreno" {...register("exp-entrenando")} />NO
+                            <div className='contenedor-checkboxs'>
+                                <div className="checkboxs">
+                                    <LabelRadio htmlFor="experiencia" children="¿TIENE EXPERIENCIA ENTRENANDO?" />
+                                    <InputRadio value="si" id="si-entreno" {...register("expEntrenando",
+                                        {
+                                            required: "Debe seleccionar una opción"
+                                        }
+                                    )} />SI
+                                    <InputRadio value="no" id="no-entreno" {...register("expEntrenando",
+                                        {
+                                            required: "Debe seleccionar una opción"
+                                        }
+                                    )} />NO
+                                </div>
+                                {errors.expEntrenando && <span className="error">{errors.expEntrenando.message}</span>}
                             </div>
-                            
                             <div className="input-contenedor">
                                 <LabelPlanilla htmlFor="objetivo" children="OBJETIVOS:" />
                                 <div className="textarea-form">
-                                    <Textarea name="objetivo" id="objetivo" placeholder="Objetivos" {...register("objetivos",
+                                    <Textarea id="objetivo" placeholder="Objetivos" {...register("objetivos",
                                         {
                                             required: {
                                                 value: true,
@@ -257,7 +288,7 @@ export default function Planilla() {
                                         }
                                     )} />
                                 </div>
-                                {errors.objetivos && <p className="error">{errors.objetivos.message}</p>}
+                                {errors.objetivos && <span className="error">{errors.objetivos.message}</span>}
                             </div>
                         </div>
 
