@@ -18,14 +18,14 @@ function MetodoPago() {
 
 
     return (
-        <div>
+        <>
             <h2 className="titulo-pago">Metodos de pago</h2>
             <div className="contenedor-pago">
                 <CardMetodoPago title="Tarjeta de credito" metodos={tarjeta} clase="lista-tarjetas" />
                 <CardMetodoPago title="Tarjeta de debito" metodos={tarjeta}  clase="lista-tarjetas"/>
                 <CardMetodoPago title="Transferencia bancaria" metodos={transferencia} clase="metodos-pago-list" />
             </div>
-        </div>
+        </>
     );
 };
 
