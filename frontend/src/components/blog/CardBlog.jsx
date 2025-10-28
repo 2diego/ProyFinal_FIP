@@ -1,5 +1,5 @@
 import './CardBlog.css';
-import { Link } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 
 function CardBlog({ id, img, category, titulo, glosario, contenido }) {
 
@@ -8,7 +8,7 @@ function CardBlog({ id, img, category, titulo, glosario, contenido }) {
 
   return (
     <div className="container-tarjet">
-        <Link to={`/blog/${id}`} state={{id,img,category,titulo,glosario,contenido}} className='link-card'>
+        <NavLink to={`/blog/${id}`} state={{id,img,category,titulo,glosario,contenido}} className='link-card'>
        <div className="cardBlog" id={`card-${id}`}>
         <img decoding='async' className="images" src={img} alt={titulo}/> 
         <div className="text-tarjet">
@@ -20,7 +20,7 @@ function CardBlog({ id, img, category, titulo, glosario, contenido }) {
           <p className='"contenido-card'>{contenido}</p>
         </div>
       </div>
-        </Link>
+        </NavLink>
       </div>
   
   );

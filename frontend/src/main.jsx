@@ -22,7 +22,7 @@ import AdminTienda from './pages/admin/AdminTienda.jsx'
 import PlanillaSalud from './pages/planillaSalud/PlanillaSalud.jsx'
 import Registro from './pages/registro/Registro.jsx'
 import Login from './pages/login/Login.jsx'
-
+import SeccionPlanes from './pages/inscripcionDetalle/SeleccionPlan.jsx'
 
 const router = createBrowserRouter([
   {
@@ -72,7 +72,15 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login/>
-  }
+  },
+  {
+    path: '/plan',
+    element: <Inscripcion/>
+  },
+  {
+    path: '/inscripciondetalle',
+    element: <SeccionPlanes/>
+  },
 ]);
 
 const rootElement = document.getElementById('root');
