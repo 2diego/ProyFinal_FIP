@@ -32,7 +32,7 @@ export default function FormContacto() {
                         <Label htmlFor="name" children="Nombre completo" />
                         <div className="input-wrapper">
                             <i className="fa-regular fa-user icon-register"></i>
-                            <Input type="text" name="name" id="name" placeholder="Nombre Completo"  {...register("nombre",
+                            <Input type="text" id="name" placeholder="Nombre Completo"  {...register("nombre",
                                 {
                                     required: {
                                         value: true,
@@ -56,7 +56,7 @@ export default function FormContacto() {
                         <Label htmlFor="email" children="Correo electrónico" />
                         <div className="input-wrapper">
                             <i className="fa-regular fa-envelope form-icon"></i>
-                            <Input type="email" name="email" id="email" placeholder="ejemplo123@gmail.com" {...register("email",
+                            <Input type="email" id="email" placeholder="ejemplo123@gmail.com" {...register("email",
                                 {
                                     required: {
                                         value: true,
@@ -73,7 +73,7 @@ export default function FormContacto() {
 
                     <div className="input-group">
                         <Label htmlFor="consulta" children="Consulta" />
-                        <textarea name="consulta" id="consulta" placeholder="Escribi tu consulta" {...register("consulta",
+                        <textarea id="consulta" placeholder="Escribi tu consulta" {...register("consulta",
                             {
                                 required: {
                                     value: true,

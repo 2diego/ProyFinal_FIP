@@ -6,6 +6,7 @@ import Modal from "../modal/Modal";
 import Input from "../input-icon/Input";
 import Label from "../labelContacto/Label";
 import BotonLogin from "../botonLogin/BotonLogin";
+import { Link } from "react-router-dom";
 export default function FormLogin() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -73,7 +74,7 @@ export default function FormLogin() {
                     <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
 
                     <BotonLogin type="submit" id="showPopup" className="btn btn-login">Iniciar sesion</BotonLogin>
-                    <a href="/registro" className="btn btn-register" >Registrarse</a>
+                    <Link to="/registro" className="btn btn-register" >Registrarse</Link>
 
                 </form>
                 <Modal mensaje="Inicio de sesion exitoso" />
