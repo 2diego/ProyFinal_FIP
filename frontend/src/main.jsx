@@ -15,6 +15,10 @@ import AdminTienda from './pages/admin/AdminTienda.jsx'
 import AdminPerfil from './pages/admin/AdminPerfil.jsx'
 import Inscribite from './pages/inscripcion/Inscribite.jsx'
 
+import PlanillaSalud from './pages/planillaSalud/PlanillaSalud.jsx'
+import Registro from './pages/registro/Registro.jsx'
+import Login from './pages/login/Login.jsx'
+import SeccionPlanes from './pages/inscripcionDetalle/SeleccionPlan.jsx'
 
 const router = createBrowserRouter([
   {
@@ -60,7 +64,27 @@ const router = createBrowserRouter([
   {
     path: '/inscribite',
     element: <Inscribite />,
-  }
+  },
+  {
+    path: '/planillaSalud',
+    element: <PlanillaSalud />,
+  },
+  {
+    path: '/registro',
+    element: <Registro />,
+  },
+  {
+    path: '/login',
+    element: <Login/>
+  },
+  {
+    path: '/plan',
+    element: <Inscripcion/>
+  },
+  {
+    path: '/inscripciondetalle',
+    element: <SeccionPlanes/>
+  },
 ]);
 
 const rootElement = document.getElementById('root');

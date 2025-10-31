@@ -1,12 +1,12 @@
+import "./inputRadio.css"
+import React from "react";
 
-
-export default function InputRadio({titulo,name}) {
+const InputRadio = React.forwardRef((props,ref) =>{
 
     return (
-        <div className="checkboxs">
-            <label for="name" className="form-label">{titulo}</label>
-            <input type="radio" name={name} value="si" id="si-condicion" />SI
-            <input type="radio" name={name} value="no" id="no-condicion" />NO
-        </div>
+
+        <input type="radio" ref={ref} {...props} />
+
     )
-}
+})
+export default InputRadio;

@@ -28,8 +28,8 @@ const Index = () => {
       <Inscripcion />
 
       {/* Seccion remeras */}
-    <section class="seccion-remeras">
-      <div class="descripcion-remera">
+    <section className="seccion-remeras">
+      <div className="descripcion-remera">
         <div>
           <h2 className="entrena">Entrena con estilo. Viste la fuerza de Superarse Gym</h2>
           <img src={bannerRemeras} alt="banner remeras" className="banner-remeras" />
