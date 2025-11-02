@@ -9,11 +9,21 @@ export default function FormContacto() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = handleSubmit((data) => {
-        console.log(data)
+    const onSubmit = handleSubmit(async (data) =>{
+        try{
+            const respuesta = await fetch('http://localhost:3000/api/contacto',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            });
+            const resultado = await respuesta.json();
+            console.log('respuesta del backend',resultado);
+        }catch(error){
+            console.log('Error al enviar el formulario',error);
+        }
         favDialog.showModal();
-        //guardo la data en localStorage
-        localStorage.setItem("data", JSON.stringify(data));
     })
 
     return (
@@ -32,7 +42,7 @@ export default function FormContacto() {
                         <Label htmlFor="name" children="Nombre completo" />
                         <div className="input-wrapper">
                             <i className="fa-regular fa-user icon-register"></i>
-                            <Input type="text" id="name" placeholder="Nombre Completo"  {...register("nombre",
+                            <Input type="text" id="name" placeholder="Nombre Completo"  {...register("Nombre",
                                 {
                                     required: {
                                         value: true,
@@ -45,18 +55,22 @@ export default function FormContacto() {
                                     minLength: {
                                         value: 3,
                                         message: "El nombre debe tener al menos 3 caracteres"
+                                    },
+                                    maxLength: {
+                                        value: 30,
+                                        message: "El nombre debe tener menos de 30 caracteres"
                                     }
                                 }
                             )} />
                         </div>
-                        {errors.nombre && <span className="error">{errors.nombre.message}</span>}
+                        {errors.Nombre && <span className="error">{errors.Nombre.message}</span>}
                     </div>
 
                     <div className="input-group">
                         <Label htmlFor="email" children="Correo electrónico" />
                         <div className="input-wrapper">
                             <i className="fa-regular fa-envelope form-icon"></i>
-                            <Input type="email" id="email" placeholder="ejemplo123@gmail.com" {...register("email",
+                            <Input type="email" id="email" placeholder="ejemplo123@gmail.com" {...register("Email",
                                 {
                                     required: {
                                         value: true,
@@ -68,12 +82,12 @@ export default function FormContacto() {
                                     }
                                 })} />
                         </div>
-                        {errors.email && <span className="error">{errors.email.message}</span>}
+                        {errors.Email && <span className="error">{errors.Email.message}</span>}
                     </div>
 
                     <div className="input-group">
                         <Label htmlFor="consulta" children="Consulta" />
-                        <textarea id="consulta" placeholder="Escribi tu consulta" {...register("consulta",
+                        <textarea id="consulta" placeholder="Escribi tu consulta" {...register("Consulta",
                             {
                                 required: {
                                     value: true,
@@ -82,10 +96,13 @@ export default function FormContacto() {
                                 minLength: {
                                     value: 10,
                                     message: "La consulta debe tener al menos 10 caracteres"
-
+                                },
+                                maxLength: {
+                                    value: 200,
+                                    message: "La consulta debe tener menos de 200 caracteres"
                                 }
                             })} ></textarea>
-                        {errors.consulta && <span className="error">{errors.consulta.message}</span>}
+                        {errors.Consulta && <span className="error">{errors.Consulta.message}</span>}
                     </div>
 
                     <BotonForm type="submit" id="showPopup" >Enviar</BotonForm>

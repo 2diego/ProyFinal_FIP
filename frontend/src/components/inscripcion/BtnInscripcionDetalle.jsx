@@ -7,7 +7,7 @@ export default function btnInscripcion(){
 return(
     <>   
 
-         <div className="botones">
+         <div className="botones-inscrip">
 
         <button type="submit"
         className="btn-detalle-compra">Detalle de Compra</button>

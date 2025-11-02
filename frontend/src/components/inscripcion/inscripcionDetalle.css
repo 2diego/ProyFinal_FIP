@@ -2,13 +2,10 @@ body {
   height: 100vh;
 }
 
-.contenedor-inscripcion {
-  width: 350px;
-  height: 600px;
-}
+
 
 .titulo {
-  font-size: 3rem;
+  /* font-size: 3rem; */
   font-weight: 900;
   margin-top: 100px;
 }
@@ -28,7 +25,7 @@ body {
   font-weight: 900;
 }
 
-.botones {
+.botones-inscrip {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;

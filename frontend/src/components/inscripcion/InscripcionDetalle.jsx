@@ -3,8 +3,8 @@ import CardInscripcion from "../card-inscripcion/CardInscripcion";
 import MetodoPago from "../metodoPago/MetodoPago";
 import { useLocation } from "react-router-dom";
 import "./inscripcionDetalle.css";
-import "../metodoPago/metodoPago.css";
-import "./inscripcion.css";
+// import "../metodoPago/metodoPago.css";
+// import "./inscripcion.css";
 
 
 

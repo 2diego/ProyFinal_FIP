@@ -26,7 +26,7 @@ const Perfil = () => {
 
               <div className="form-actions">
                 <button type="submit" className="btn-save">Guardar Cambios</button>
-                <button type="button" className="btn-cancel" onClick={() => window.location.href='admin-index.html'}>Cancelar</button>
+                <button type="button" className="btn-cancel" onClick={() => window.location.href='/admin'}>Cancelar</button>
               </div>
             </form>
           </div>
