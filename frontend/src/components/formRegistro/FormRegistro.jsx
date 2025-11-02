@@ -6,6 +6,7 @@ import Modal from "../modal/Modal";
 import Input from "../input-icon/Input";
 import Label from "../labelContacto/Label";
 import BotonLogin from "../botonLogin/BotonLogin";
+import { Link } from "react-router-dom";
 export default function FormRegistro() {
 
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
@@ -38,6 +39,10 @@ export default function FormRegistro() {
                                     value: true,
                                     message: "El nombre es requerido"
                                 },
+                                pattern: {
+                                    value: /^[A-Za-z\s]+$/,
+                                    message: "El nombre solo puede contener letras y espacios"
+                                },
                                 minLength: {
                                     value: 3,
                                     message: "El nombre debe tener al menos 3 caracteres"
@@ -55,6 +60,10 @@ export default function FormRegistro() {
                                 required: {
                                     value: true,
                                     message: "El apellido es requerido"
+                                },
+                                pattern: {
+                                    value: /^[A-Za-z\s]+$/,
+                                    message: "El apellido solo puede contener letras y espacios"
                                 },
                                 minLength: {
                                     value: 3,
@@ -118,7 +127,7 @@ export default function FormRegistro() {
                                         value: true,
                                         message: "La contraseña es requerida"
                                     },
-                                    minLength:{
+                                    minLength: {
                                         value: 6,
                                         message: "La contraseña debe tener al menos 6 caracteres"
                                     },
@@ -143,7 +152,7 @@ export default function FormRegistro() {
                                         message: "Por favor confirme su contraseña"
                                     },
                                     validate: (value) => {
-                                        if(value === watch('password')) return true;
+                                        if (value === watch('password')) return true;
                                         return "Las contraseñas no coinciden"
                                     }
 
@@ -179,9 +188,9 @@ export default function FormRegistro() {
                     <BotonLogin type="submit" id="showPopup" className="btn btn-register">Registrarse</BotonLogin>
 
                     <div className="go-login">
-                        <a href="/login" className="go-login">¿Ya tienes una cuenta?</a>
+                        <Link to="/login" className="go-login">¿Ya tienes una cuenta?</Link>
                     </div>
-                        
+
                 </form>
                 <Modal mensaje="Registro exitoso" />
             </section>

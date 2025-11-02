@@ -36,8 +36,8 @@ const { state } = useLocation();
         </section>
         <section className="finalizar-compra">
         <BtnInscripcionDetalle/>  
-        <MetodoPago/>
         </section>
+        <MetodoPago/>
         
         </>
 

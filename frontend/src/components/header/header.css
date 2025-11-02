@@ -134,3 +134,11 @@ ul .nav-inscribite {
   border-radius: 50px;
   width: 42px;
 }
+
+
+@media (max-width: 640px) {
+  .navigation{
+      gap: 1rem;
+      padding: 0 1rem;
+  }
+}
