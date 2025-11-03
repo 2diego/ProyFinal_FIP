@@ -61,7 +61,13 @@ border-radius: 20px;
 /* fin de span de error para los formularios  */
 
 
+@media (max-width: 1024px) {
+  .content-banner img{
+      width: 100%;
+      min-height: 14rem;
+  }
 
+}
 @media (max-width: 760px) {
   .content-banner img{
       width: 100%;

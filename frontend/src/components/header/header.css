@@ -44,7 +44,6 @@
   display: flex;
   align-items: center;
   gap: 5.5rem;
-
 }
 
 .nav-list {
@@ -135,7 +134,11 @@ ul .nav-inscribite {
   width: 42px;
 }
 
-
+@media (max-width: 1024px) {
+  .navigation{
+      gap: 1rem;
+  }
+}
 @media (max-width: 640px) {
   .navigation{
       gap: 1rem;

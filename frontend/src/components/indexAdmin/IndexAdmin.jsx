@@ -19,6 +19,7 @@ export default function IndexAdmin(){
                     <CardAdmin titulo="Administrar Rutinas" descripcion="Crear y modificar rutinas de entrenamiento" onClick={() => handleNavigate('/administrar-rutinas')} />
                     <CardAdmin titulo="Administrar Ejercicios" descripcion="Gestionar catálogo de ejercicios" onClick={() => handleNavigate('/administrar-ejercicios')} />
                     <CardAdmin titulo="Administrar Tienda" descripcion="Gestionar productos y ventas" onClick={() => handleNavigate('/administrar-tienda')} />
+                    <CardAdmin titulo="Administrar Consultas" descripcion="Gestionar consultas y respuestas" onClick={() => handleNavigate('/adminContacto')} />
                 </div>
             </div>
         </section>
