@@ -136,6 +136,28 @@ export default function Planilla() {
                             {errors.provincia && <span className="error">{errors.provincia.message}</span>}
                         </div>
 
+                         <div className="input-container">
+                            <LabelPlanilla htmlFor="codigoPostal" children="Código Postal" />
+                            <div className="inputs">
+                                <InputPlanilla type="number" min="0" id="codigoPostal" placeholder="Codigo Postal" {...register("codigoPostal",
+                                    {
+                                        required: {
+                                            value: true,
+                                            message: "El código postal es obligatorio"
+                                        },
+                                        minLength: {
+                                            value: 3,
+                                            message: "El código postal debe tener al menos 3 caracteres"
+                                        },
+                                        maxLength: {
+                                            value: 6,
+                                            message: "El código postal debe tener maximo 6 caracteres"
+                                        },
+                                    })} />
+                            </div>
+                            {errors.codigoPostal && <span className="error">{errors.codigoPostal.message}</span>}
+                        </div>
+
                         <div className="input-container">
                             <LabelPlanilla htmlFor="pais" children="País" />
                             <div className="inputs">
@@ -155,7 +177,7 @@ export default function Planilla() {
                         </div>
 
                         <div className="input-container">
-                            <label htmlFor="sexo">SEXO</label>
+                            <label htmlFor="sexo">Sexo</label>
                             <select id="sexo" className="form-input" {...register("sexo")}>
                                 <option value="masculino">Masculino</option>
                                 <option value="femenino">Femenino</option>

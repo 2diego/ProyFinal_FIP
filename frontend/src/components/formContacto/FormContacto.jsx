@@ -42,7 +42,7 @@ export default function FormContacto() {
                         <Label htmlFor="name" children="Nombre completo" />
                         <div className="input-wrapper">
                             <i className="fa-regular fa-user icon-register"></i>
-                            <Input type="text" id="name" placeholder="Nombre Completo"  {...register("Nombre",
+                            <Input type="text" id="name" placeholder="Nombre Completo"  {...register("nombre",
                                 {
                                     required: {
                                         value: true,
@@ -63,14 +63,14 @@ export default function FormContacto() {
                                 }
                             )} />
                         </div>
-                        {errors.Nombre && <span className="error">{errors.Nombre.message}</span>}
+                        {errors.nombre && <span className="error">{errors.nombre.message}</span>}
                     </div>
 
                     <div className="input-group">
                         <Label htmlFor="email" children="Correo electrónico" />
                         <div className="input-wrapper">
                             <i className="fa-regular fa-envelope form-icon"></i>
-                            <Input type="email" id="email" placeholder="ejemplo123@gmail.com" {...register("Email",
+                            <Input type="email" id="email" placeholder="ejemplo123@gmail.com" {...register("email",
                                 {
                                     required: {
                                         value: true,
@@ -82,12 +82,12 @@ export default function FormContacto() {
                                     }
                                 })} />
                         </div>
-                        {errors.Email && <span className="error">{errors.Email.message}</span>}
+                        {errors.email && <span className="error">{errors.email.message}</span>}
                     </div>
 
                     <div className="input-group">
                         <Label htmlFor="consulta" children="Consulta" />
-                        <textarea id="consulta" placeholder="Escribi tu consulta" {...register("Consulta",
+                        <textarea id="consulta" placeholder="Escribi tu consulta" {...register("consulta",
                             {
                                 required: {
                                     value: true,
@@ -102,7 +102,7 @@ export default function FormContacto() {
                                     message: "La consulta debe tener menos de 200 caracteres"
                                 }
                             })} ></textarea>
-                        {errors.Consulta && <span className="error">{errors.Consulta.message}</span>}
+                        {errors.consulta && <span className="error">{errors.consulta.message}</span>}
                     </div>
 
                     <BotonForm type="submit" id="showPopup" >Enviar</BotonForm>
