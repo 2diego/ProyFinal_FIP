@@ -7,7 +7,7 @@ import Inscripcion from './components/inscripcion/Inscripcion.jsx'
 import IndexAdmin from './components/indexAdmin/IndexAdmin.jsx'
 import Banner from './components/banner/Banner.jsx'
 import Cards from './components/card-prod/Cards.jsx'
-
+import InscripcionDetalle from './components/inscripcion/inscripcionDetalle.jsx'
 function App() {
 
 
@@ -21,6 +21,7 @@ function App() {
       <IndexAdmin />
 
       <Inscripcion />
+      <InscripcionDetalle/>
       <MetodoPago />
     </>
   )

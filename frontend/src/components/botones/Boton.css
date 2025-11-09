@@ -1,7 +1,6 @@
 .botones {
   display: flex;
   gap: 0 0.6rem;
-  padding: 1rem 0;
 }
 
 .comprarAhora {
@@ -23,7 +22,7 @@
   background-color: var(--gris-osc);
   color: var(--blanco);
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 5px;
   font-weight: 600;
   transition: background 0.3s;
