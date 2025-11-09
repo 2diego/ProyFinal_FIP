@@ -11,7 +11,7 @@ import MetodoPago from './components/metodoPago/MetodoPago.jsx'
 import Inscripcion from './components/inscripcion/Inscripcion.jsx'
 import IndexAdmin from './components/indexAdmin/IndexAdmin.jsx'
 import SeccionBlog from  './pages/pageBlog/SeccionBlog.jsx'
-
+import Carrito from './pages/carrito/Carrito.jsx'
 import Productos from './pages/productos/Productos.jsx'
 import ContenidoDetalladoBlog from './pages/pageBlog/ContenidoDetalladoBlog.jsx'
 import Admin from './pages/admin/Admin.jsx'
@@ -22,6 +22,7 @@ import AdminTienda from './pages/admin/AdminTienda.jsx'
 import PlanillaSalud from './pages/planillaSalud/PlanillaSalud.jsx'
 import Registro from './pages/registro/Registro.jsx'
 import Login from './pages/login/Login.jsx'
+import CompraDirecta from './pages/compraDirecta/CompraDirecta.jsx'
 
 
 const router = createBrowserRouter([
@@ -58,8 +59,14 @@ const router = createBrowserRouter([
   {  path: '/blog/:id',
      element: <ContenidoDetalladoBlog/>,
   },
+  {  path: '/carrito',
+     element: <Carrito/>,
+  },
   {  path: '/contacto',
      element: <Contacto/>,
+  },
+  {  path: '/compradirecta',
+     element: <CompraDirecta/>,
   },
   {
     path: '/planillaSalud',

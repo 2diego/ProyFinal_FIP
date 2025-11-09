@@ -1,6 +1,6 @@
 import "./CompraDirecta.css";
 
-const CompraDirecta = () => {
+const CompraDirectaComp = () => {
     return (
         <>
             <div className="compraDirecta-content">
@@ -11,4 +11,4 @@ const CompraDirecta = () => {
     );
 };
 
-export default CompraDirecta;
+export default CompraDirectaComp;
