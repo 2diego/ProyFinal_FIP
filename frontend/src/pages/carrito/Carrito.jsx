@@ -1,15 +1,14 @@
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import CarritoComponet from "../../components/carrito/Carrito";
+import CarritoComponent from "../../components/carrito/CarritoComp";
 
 const Carrito = () => {
-    return(
+    return (
         <>
-        <Header></Header>
-        <CarritoComponet></CarritoComponet>
-        <Footer></Footer>
+            <Header />
+            <CarritoComponent/>
+            <Footer />
         </>
-    )    
-};
-
+    )
+}
 export default Carrito;
