@@ -1,6 +1,6 @@
 import "./Carrito.css"; 
 
-const Carrito = () => {
+const CarritoComponent = () => {
   return (
     <div className="carrito">
       <section className="carrito-content" id="carritoContainer"></section>
@@ -42,4 +42,4 @@ const Carrito = () => {
   );
 };
 
-export default Carrito;
+export default CarritoComponent;
