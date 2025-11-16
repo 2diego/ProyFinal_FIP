@@ -12,9 +12,17 @@ class UsuarioService {
     return apiClient.get(`/usuario/${id}`);
   }
 
+  async getUserByEmail(email){
+    return apiClient.get(`/usuario/email/${email}`);
+  }
+
   // Devuelve un {Promise<Object>}
-  async createUsuario(usuarioData) {
-    return apiClient.post('/usuario', usuarioData);
+  async register(usuarioData) {
+    return apiClient.post('/usuario/registro', usuarioData);
+  }
+
+  async login(usuarioData) {
+    return apiClient.post('/usuario/login', usuarioData);
   }
 
   // Devuelve un {Promise<Object>}

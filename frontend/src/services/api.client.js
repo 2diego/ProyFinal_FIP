@@ -26,6 +26,7 @@ class ApiClient {
   async get(endpoint) {
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       method: 'GET',
+      credentials: 'include',//para manejar el token de la cookie
       headers: {
         'Content-Type': 'application/json',
       },
@@ -37,6 +38,7 @@ class ApiClient {
   async post(endpoint, data) {
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -49,6 +51,7 @@ class ApiClient {
   async put(endpoint, data) {
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       method: 'PUT',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -61,6 +64,7 @@ class ApiClient {
   async patch(endpoint, data) {
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -73,6 +77,7 @@ class ApiClient {
   async delete(endpoint) {
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
