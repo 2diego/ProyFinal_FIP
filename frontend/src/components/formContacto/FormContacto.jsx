@@ -4,26 +4,30 @@ import Input from "../input-icon/Input";
 import Label from "../labelContacto/Label";
 import BotonForm from "../botonForm/BotonForm";
 import contactLogo from "../../assets/images/logo2.png";
-import Modal from "../modal/Modal";
+// import Modal from "../modal/Modal";
+import ContactoService from "../../services/contacto.service";
+import { useState } from "react";
+import Swal from 'sweetalert2';
 export default function FormContacto() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    const onSubmit = handleSubmit(async (data) =>{
-        try{
-            const respuesta = await fetch('http://localhost:3000/api/contacto',{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data),
-            });
-            const resultado = await respuesta.json();
-            console.log('respuesta del backend',resultado);
-        }catch(error){
-            console.log('Error al enviar el formulario',error);
-        }
-        favDialog.showModal();
+    const [data, setData] = useState([]);
+    const enviarContacto = async (contactoData) => {
+        const contacto = await ContactoService.createContacto(contactoData);
+        setData(contacto);
+    }
+    const onSubmit = handleSubmit(async (data) => {
+        Swal.fire({
+            title: '¡Gracias!',
+            text: 'Tu consulta ha sido enviada correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        }).then(() => {
+            reset();
+        });
+
+        enviarContacto(data);
     })
 
     return (
@@ -87,7 +91,7 @@ export default function FormContacto() {
 
                     <div className="input-group">
                         <Label htmlFor="consulta" children="Consulta" />
-                        <textarea id="consulta" placeholder="Escribi tu consulta" {...register("consulta",
+                        <textarea className="input-info" id="consulta" placeholder="Escribi tu consulta" {...register("consulta",
                             {
                                 required: {
                                     value: true,
@@ -107,7 +111,7 @@ export default function FormContacto() {
 
                     <BotonForm type="submit" id="showPopup" >Enviar</BotonForm>
                 </form>
-                <Modal mensaje="Tu consulta ha sido enviada con exito" />
+                {/* <Modal mensaje="Tu consulta ha sido enviada con exito" /> */}
             </section>
         </>
     );
