@@ -297,7 +297,7 @@ export default function Planilla() {
                             <div className="input-contenedor">
                                 <LabelPlanilla htmlFor="objetivo" children="OBJETIVOS:" />
                                 <div className="textarea-form">
-                                    <Textarea id="objetivo" placeholder="Objetivos" {...register("objetivos",
+                                    <Textarea  id="objetivo" placeholder="Objetivos" {...register("objetivos",
                                         {
                                             required: {
                                                 value: true,

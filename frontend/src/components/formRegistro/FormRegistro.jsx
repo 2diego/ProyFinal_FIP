@@ -1,27 +1,42 @@
 import { useForm } from "react-hook-form";
 import "./FormRegistro.css";
-import "../formContacto/formContacto.css";
+// import "../formContacto/formContacto.css";
 import logo2 from "../../assets/images/logo2.png";
-import Modal from "../modal/Modal";
+// import Modal from "../modal/Modal";
 import Input from "../input-icon/Input";
 import Label from "../labelContacto/Label";
 import BotonLogin from "../botonLogin/BotonLogin";
 import { Link } from "react-router-dom";
+import usuarioService from "../../services/usuario.service";
+import { useState } from "react";
+import Swal from 'sweetalert2';
+import { useNavigate  } from "react-router-dom";
+
 export default function FormRegistro() {
 
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const navigate = useNavigate ();
+    
+    const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
+
+    const [data, setData] = useState([]);
+
+    const registro = async (usuarioData) => {
+        const crearUsuario = await usuarioService.register(usuarioData);
+        setData(crearUsuario);
+    }
 
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
-        favDialog.showModal();
-        //guardo la data en localStorage
-        localStorage.setItem("usuario", JSON.stringify(data));
+        Swal.fire({
+            title: 'Registro exitoso!',
+            text: 'Tu cuenta ha sido creada correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        }).then(() => {
+            reset();
+            navigate('/login');
+        });
+        registro(data);
     })
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     favDialog.showModal();
-    // }
 
     return (
         <>
@@ -192,7 +207,7 @@ export default function FormRegistro() {
                     </div>
 
                 </form>
-                <Modal mensaje="Registro exitoso" />
+                {/* <Modal mensaje="Registro exitoso" /> */}
             </section>
         </>
     );

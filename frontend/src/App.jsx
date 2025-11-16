@@ -18,7 +18,7 @@ import PlanillaSalud from './pages/planillaSalud/PlanillaSalud.jsx';
 import Registro from './pages/registro/Registro.jsx';
 import Login from './pages/login/Login.jsx';
 import SeccionPlanes from './pages/inscripcionDetalle/SeleccionPlan.jsx';
-
+import Perfil from './pages/perfil/Perfil.jsx';
 export default function App() {
   const router = createBrowserRouter([
     { path: '/', element: <Index /> },
@@ -40,6 +40,7 @@ export default function App() {
     { path: '/login', element: <Login /> },
     { path: '/inscripciondetalle', element: <SeccionPlanes /> },
     { path: '/adminContacto', element: <AdminContacto /> },
+    { path: '/perfil', element: <Perfil /> },
   ]);
 
   return <RouterProvider router={router} />;

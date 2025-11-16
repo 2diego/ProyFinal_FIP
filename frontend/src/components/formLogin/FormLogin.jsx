@@ -1,27 +1,30 @@
 import { useForm } from "react-hook-form";
 import "./FormLogin.css";
-import "../formContacto/formContacto.css";
+// import "../formContacto/formContacto.css";
 import logo2 from "../../assets/images/logo2.png";
-import Modal from "../modal/Modal";
+// import Modal from "../modal/Modal";
 import Input from "../input-icon/Input";
 import Label from "../labelContacto/Label";
 import BotonLogin from "../botonLogin/BotonLogin";
 import { Link } from "react-router-dom";
+import usuarioService from "../../services/usuario.service";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function FormLogin() {
+
+    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+    const [data, setData] = useState([]);
+    const login = async (usuarioData) => {
+        const iniciarSesion = await usuarioService.login(usuarioData);
+        setData(iniciarSesion);
+    }
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
-        favDialog.showModal();
-        //guardo la data en localStorage
-        localStorage.setItem("usuarioLog", JSON.stringify(data));
+        navigate('/');
+        login(data);
     })
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     favDialog.showModal();
-    // }
 
     return (
         <>
@@ -43,6 +46,17 @@ export default function FormLogin() {
                                     pattern: {
                                         value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
                                         message: "El correo no es valido"
+                                    },
+                                    validate: async (value) => {
+                                        try {
+                                            const user = await usuarioService.getUserByEmail(value);
+                                            if (!user) {
+                                                return "El correo no existe";
+                                            }
+                                            return true;
+                                        } catch (error) {
+                                            return `Usuario con correo ${value} no existe`;
+                                        }
                                     }
                                 })} />
                         </div>
@@ -67,8 +81,8 @@ export default function FormLogin() {
                     </div>
 
                     <div className="remember-me">
-                        <input type="checkbox" id="remember-me"/>
-                            <span>Recuerdame</span>
+                        <input type="checkbox" id="remember-me" />
+                        <span>Recuerdame</span>
                     </div>
 
                     <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
@@ -77,7 +91,7 @@ export default function FormLogin() {
                     <Link to="/registro" className="btn btn-register" >Registrarse</Link>
 
                 </form>
-                <Modal mensaje="Inicio de sesion exitoso" />
+                {/* <Modal mensaje="Inicio de sesion exitoso" /> */}
             </section>
         </>
     );
