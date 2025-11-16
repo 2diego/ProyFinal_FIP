@@ -70,3 +70,24 @@
     color: var(--blanco);
     
 }
+@media (max-width: 1024px) {
+    .contenedor-inscripcion {
+        width: 340px;
+        height: 500px;
+    }
+
+    .plan .descripcion{
+        font-size: 2.5rem;
+    }
+    .plan .precio{
+        font-size: 1.9rem;
+    }
+    .beneficios {
+        font-size: 1.4rem;
+    }
+    .btn-inscripcion{
+        width: 50%;
+        height: 2rem;
+        font-size: 1rem;
+    }
+}

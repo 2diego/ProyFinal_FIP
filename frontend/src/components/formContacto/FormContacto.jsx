@@ -9,11 +9,21 @@ export default function FormContacto() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = handleSubmit((data) => {
-        console.log(data)
+    const onSubmit = handleSubmit(async (data) =>{
+        try{
+            const respuesta = await fetch('http://localhost:3000/api/contacto',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            });
+            const resultado = await respuesta.json();
+            console.log('respuesta del backend',resultado);
+        }catch(error){
+            console.log('Error al enviar el formulario',error);
+        }
         favDialog.showModal();
-        //guardo la data en localStorage
-        localStorage.setItem("data", JSON.stringify(data));
     })
 
     return (
@@ -32,7 +42,7 @@ export default function FormContacto() {
                         <Label htmlFor="name" children="Nombre completo" />
                         <div className="input-wrapper">
                             <i className="fa-regular fa-user icon-register"></i>
-                            <Input type="text" name="name" id="name" placeholder="Nombre Completo"  {...register("nombre",
+                            <Input type="text" id="name" placeholder="Nombre Completo"  {...register("nombre",
                                 {
                                     required: {
                                         value: true,
@@ -45,6 +55,10 @@ export default function FormContacto() {
                                     minLength: {
                                         value: 3,
                                         message: "El nombre debe tener al menos 3 caracteres"
+                                    },
+                                    maxLength: {
+                                        value: 30,
+                                        message: "El nombre debe tener menos de 30 caracteres"
                                     }
                                 }
                             )} />
@@ -56,7 +70,7 @@ export default function FormContacto() {
                         <Label htmlFor="email" children="Correo electrónico" />
                         <div className="input-wrapper">
                             <i className="fa-regular fa-envelope form-icon"></i>
-                            <Input type="email" name="email" id="email" placeholder="ejemplo123@gmail.com" {...register("email",
+                            <Input type="email" id="email" placeholder="ejemplo123@gmail.com" {...register("email",
                                 {
                                     required: {
                                         value: true,
@@ -73,7 +87,7 @@ export default function FormContacto() {
 
                     <div className="input-group">
                         <Label htmlFor="consulta" children="Consulta" />
-                        <textarea name="consulta" id="consulta" placeholder="Escribi tu consulta" {...register("consulta",
+                        <textarea id="consulta" placeholder="Escribi tu consulta" {...register("consulta",
                             {
                                 required: {
                                     value: true,
@@ -82,7 +96,10 @@ export default function FormContacto() {
                                 minLength: {
                                     value: 10,
                                     message: "La consulta debe tener al menos 10 caracteres"
-
+                                },
+                                maxLength: {
+                                    value: 200,
+                                    message: "La consulta debe tener menos de 200 caracteres"
                                 }
                             })} ></textarea>
                         {errors.consulta && <span className="error">{errors.consulta.message}</span>}
