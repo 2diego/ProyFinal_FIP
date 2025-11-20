@@ -1,14 +1,18 @@
 import './AdminBar.css';
 
-const AdminBar = ({ onClick, placeholder }) => {
+const AdminBar = ({ onClick, placeholder, showAddButton = true }) => {
+  const actionButtonsClass = showAddButton ? 'action-buttons' : 'action-buttons action-buttons--placeholder';
+
   return (
     <>
       <div className="action-bar">
-        <div className="action-buttons">
-          <button className="btn-add" onClick={onClick}>
-            <i className="fas fa-plus"></i>
-            Agregar {placeholder}
-          </button>
+        <div className={actionButtonsClass}>
+          {showAddButton && (
+            <button className="btn-add" onClick={onClick}>
+              <i className="fas fa-plus"></i>
+              Agregar {placeholder}
+            </button>
+          )}
         </div>
         
         <div className="search-section">

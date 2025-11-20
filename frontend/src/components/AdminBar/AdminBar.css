@@ -14,6 +14,10 @@
   gap: 1rem;
 }
 
+.action-buttons--placeholder {
+  visibility: hidden;
+}
+
 .btn-add {
   background-color: var(--naranja);
   color: var(--blanco);
