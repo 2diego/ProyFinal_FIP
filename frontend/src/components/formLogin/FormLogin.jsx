@@ -11,6 +11,7 @@ import usuarioService from "../../services/usuario.service";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import authService from "../../services/auth.service";
 export default function FormLogin() {
 
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function FormLogin() {
     const [data, setData] = useState([]);
     const login = async (usuarioData) => {
         try {
-            const iniciarSesion = await usuarioService.login(usuarioData);
+            const iniciarSesion = await authService.login(usuarioData);
             setData(iniciarSesion);
             navigate('/');
         } catch (error) {
