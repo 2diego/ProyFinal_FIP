@@ -21,20 +21,29 @@ export default function FormRegistro() {
     const [data, setData] = useState([]);
 
     const registro = async (usuarioData) => {
-        const crearUsuario = await usuarioService.register(usuarioData);
-        setData(crearUsuario);
+        try {
+            const crearUsuario = await usuarioService.register(usuarioData);
+            setData(crearUsuario);
+            Swal.fire({
+                title: 'Registro exitoso!',
+                text: 'Tu cuenta ha sido creada correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                reset();
+                navigate('/login');
+            });
+        } catch (error) {
+            Swal.fire({
+                title: 'Correo ya registrado!',
+                text: 'El correo ingresado ya se encuentra registrado.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            })
+        }
     }
 
     const onSubmit = handleSubmit((data) => {
-        Swal.fire({
-            title: 'Registro exitoso!',
-            text: 'Tu cuenta ha sido creada correctamente.',
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-        }).then(() => {
-            reset();
-            navigate('/login');
-        });
         registro(data);
     })
 

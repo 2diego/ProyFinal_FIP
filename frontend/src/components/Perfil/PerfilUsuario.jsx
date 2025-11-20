@@ -2,6 +2,8 @@ import "./perfilUsuario.css"
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import usuarioService from "../../services/usuario.service";
+import TablaRutina from "../rutina/TablaRutina";
+import Rutina from "../rutina/Rutina";
 const sections = [
     { id: "nombre", title: "Modificar Nombre" },
     { id: "correo", title: "Modificar Correo" },
@@ -10,6 +12,7 @@ const sections = [
     { id: "direccion", title: "Modificar Dirección" },
     { id: "plan", title: "Modificar Plan" },
     { id: "planilla", title: "Mi planilla" },
+    { id: "rutina", title: "Mis Rutinas" },
 ]
 
 const PerfilUsuario = () => {
@@ -18,7 +21,7 @@ const PerfilUsuario = () => {
 
     const [data, setData] = useState([]);
     const getUsuario = async () => {
-        const data = await usuarioService.getUsuarioById(1);
+        const data = await usuarioService.getUsuarioById(6);
         setData(data);
     }
 
@@ -64,7 +67,7 @@ const PerfilUsuario = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="apellido">Nuevo Apellido</label>
-                                <input type="text" id="apellido"  placeholder="Ingrese su nombre completo" required />
+                                <input type="text" id="apellido" placeholder="Ingrese su nombre completo" required />
                             </div>
                             <div className="form-actions">
                                 <button type="submit" className="btn-save">Guardar Cambios</button>
@@ -91,7 +94,7 @@ const PerfilUsuario = () => {
 
                             <div className="form-group">
                                 <label htmlFor="nuevoEmail">Correo Nuevo</label>
-                                <input type="email" id="nuevoEmail"placeholder="Ingrese su nuevo correo" required />
+                                <input type="email" id="nuevoEmail" placeholder="Ingrese su nuevo correo" required />
                             </div>
 
                             <div className="form-group">
@@ -245,6 +248,11 @@ const PerfilUsuario = () => {
                             </div>
                         </form>
                     </div>
+                </div>
+
+                <div className={`profile-section ${sectionActiva === "rutina" ? "profile-active" : ""}`}>
+                    <Rutina/>
+                    <TablaRutina />
                 </div>
 
             </div>
