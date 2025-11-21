@@ -9,16 +9,30 @@ import InputPlanilla from '../inputPlanillaSalud/InputPlanilla';
 import BotonForm from "../botonForm/BotonForm";
 import BannerImg from "../../assets/images/fondo-mejorado.png"
 import Modal from "../modal/Modal";
-
-
+import { useState } from 'react';
+import FichaSaludService from '../../services/fichaSalud.service';
 
 export default function Planilla() {
 
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
+    const [data, setData] = useState([]);
+
+    const enviarPlanilla = async (usuarioData) => {
+            try {
+                const postPlanilla = await FichaSaludService.createFichaSalud(usuarioData);
+                setData(postPlanilla);
+                navigate('/');
+            } catch (error) {
+                console.log(error);
+            }
+    
+        }
+
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
-        favDialog.showModal();
+        // console.log(data)
+        enviarPlanilla(data)
+        // favDialog.showModal();
 
     })
 
