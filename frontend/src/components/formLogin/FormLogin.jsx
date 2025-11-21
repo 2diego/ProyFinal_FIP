@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import usuarioService from "../../services/usuario.service";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import authService from "../../services/auth.service";
 export default function FormLogin() {
 
     const navigate = useNavigate();
@@ -18,12 +20,22 @@ export default function FormLogin() {
 
     const [data, setData] = useState([]);
     const login = async (usuarioData) => {
-        const iniciarSesion = await usuarioService.login(usuarioData);
-        setData(iniciarSesion);
+        try {
+            const iniciarSesion = await authService.login(usuarioData);
+            setData(iniciarSesion);
+            navigate('/');
+        } catch (error) {
+            Swal.fire({
+                title: 'Inicio de sesión fallido',
+                text: "Email o contraseña incorrectas",
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
     }
     const onSubmit = handleSubmit((data) => {
-        navigate('/');
-        login(data);
+        login(data)
     })
 
     return (
@@ -47,17 +59,6 @@ export default function FormLogin() {
                                         value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
                                         message: "El correo no es valido"
                                     },
-                                    validate: async (value) => {
-                                        try {
-                                            const user = await usuarioService.getUserByEmail(value);
-                                            if (!user) {
-                                                return "El correo no existe";
-                                            }
-                                            return true;
-                                        } catch (error) {
-                                            return `Usuario con correo ${value} no existe`;
-                                        }
-                                    }
                                 })} />
                         </div>
                         {errors.email && <span className="error">{errors.email.message}</span>}
