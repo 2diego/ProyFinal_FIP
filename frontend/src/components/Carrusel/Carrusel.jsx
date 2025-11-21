@@ -26,7 +26,7 @@ const Carrusel = () => {
   // Cargar productos desde JSON (igual que en el JS original + useState)
   const cargarProductos = async () => {
     try {
-      const response = await fetch('/data/listaProductos.json');
+      const response = await fetch('http://localhost:3000/api/productos');
       if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);
       }

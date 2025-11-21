@@ -10,7 +10,7 @@ function Cards(){
 
 
      useEffect(() => { 
-        fetch("/public/data/listaProductos.json")
+        fetch("http://localhost:3000/api/productos")
         .then((res)=>{
           if (!res.ok) throw new Error("Error al cargar los productos")
             return res.json();
@@ -39,7 +39,7 @@ return (
         {productos.map((p ,index)=>(
         <CardPro
         key={index}
-        img={p.img}
+        img={p.imagen}
         nombre ={p.nombre}
         precio ={p.precio}
         stock ={p.stock}
