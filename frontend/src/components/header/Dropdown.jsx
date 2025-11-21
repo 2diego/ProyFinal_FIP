@@ -13,8 +13,10 @@ const Dropdown = ({ options }) => {
   const routes = {
   Perfil: "/perfil",
   Blog: "/blog",
+  Administrador: "/admin",
   Rutina: "/rutina",
-  Progreso: "/progreso",
+  Acceder: "/login",
+  "Crear cuenta": "/registro",
   Consulta: "/consulta",
   "Cerrar sesion": "/logout",
 };

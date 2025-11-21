@@ -21,7 +21,7 @@ const PerfilUsuario = () => {
 
     const [data, setData] = useState([]);
     const getUsuario = async () => {
-        const data = await usuarioService.getUsuarioById(6);
+        const data = await usuarioService.getUsuarioById();
         setData(data);
     }
 
