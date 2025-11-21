@@ -21,9 +21,9 @@ class UsuarioService {
     return apiClient.post('/usuario/registro', usuarioData);
   }
 
-  async login(usuarioData) {
-    return apiClient.post('/usuario/login', usuarioData);
-  }
+  // async login(usuarioData) {
+  //   return apiClient.post('/usuario/login', usuarioData);
+  // }
 
   // Devuelve un {Promise<Object>}
   async updateUsuario(id, usuarioData) {
