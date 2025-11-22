@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Layout from './components/Layout.jsx';
 import Index from './pages/index/index.jsx';
 import Contacto from './pages/contacto/Contacto.jsx';
 import SeccionBlog from './pages/pageBlog/SeccionBlog.jsx';
@@ -21,26 +22,29 @@ import SeccionPlanes from './pages/inscripcionDetalle/SeleccionPlan.jsx';
 import Perfil from './pages/perfil/Perfil.jsx';
 export default function App() {
   const router = createBrowserRouter([
-    { path: '/', element: <Index /> },
-    { path: '/admin', element: <Admin /> },
-    { path: '/administrar-clientes', element: <AdminClientes /> },
-    { path: '/administrar-rutinas', element: <AdminRutinas /> },
-    { path: '/administrar-ejercicios', element: <AdminEjercicios /> },
-    { path: '/administrar-tienda', element: <AdminTienda /> },
-    { path: '/administrar-perfil', element: <AdminPerfil /> },
-    { path: '/productos', element: <Productos /> },
-    { path: '/blog', element: <SeccionBlog /> },
-    { path: '/blog/:id', element: <ContenidoDetalladoBlog /> },
-    { path: '/carrito', element: <Carrito /> },
-    { path: '/contacto', element: <Contacto /> },
-    { path: '/compraDirecta', element: <CompraDirecta /> },
-    { path: '/inscribite', element: <Inscribite /> },
-    { path: '/planillaSalud', element: <PlanillaSalud /> },
-    { path: '/registro', element: <Registro /> },
-    { path: '/login', element: <Login /> },
-    { path: '/inscripciondetalle', element: <SeccionPlanes /> },
-    { path: '/adminContacto', element: <AdminContacto /> },
-    { path: '/perfil', element: <Perfil /> },
+    { path: '/', element: (<Layout><Index /></Layout>), },
+    { path: '/admin', element: (<Layout><Admin /></Layout>), },
+    { path: '/administrar-clientes', element: (<Layout><AdminClientes /></Layout>), },
+    { path: '/administrar-rutinas', element: (<Layout><AdminRutinas /></Layout>), },
+    { path: '/administrar-ejercicios', element: (<Layout><AdminEjercicios /></Layout>), },
+    { path: '/administrar-tienda', element: (<Layout><AdminTienda /></Layout>), },
+    { path: '/administrar-perfil', element: (<Layout><AdminPerfil /></Layout>), },
+    { path: '/productos', element: (<Layout><Productos /></Layout>), },
+    { path: '/blog', element: (<Layout><SeccionBlog /></Layout>), },
+    { path: '/blog/:id', element: (<Layout><ContenidoDetalladoBlog /></Layout>), },
+    { path: '/carrito', element: (<Layout><Carrito /></Layout>), },
+    { path: '/contacto', element: (<Layout><Contacto /></Layout>), },
+    { path: '/compraDirecta', element: (<Layout><CompraDirecta /></Layout>), },
+    { path: '/inscribite', element: (<Layout><Inscribite /></Layout>), },
+    { path: '/planillaSalud', element: (<Layout><PlanillaSalud /></Layout>), },
+    { path: '/registro', element: (<Layout><Registro /></Layout>), },
+    { path: '/login', element: (<Layout><Login /></Layout>), },
+    { path: '/inscripciondetalle', element: (<Layout><SeccionPlanes /></Layout>), },
+    { path: '/adminContacto', element: (<Layout><AdminContacto /></Layout>), },
+    { path: '/perfil', element: (<Layout><Perfil /></Layout>), },
+    { path: '/success', element: (<Layout><h1>Pago aprobado</h1></Layout>) },
+    { path: '/failure', element: (<Layout><h1>Pago fallido</h1></Layout>) },
+    { path: '/pending', element: (<Layout><h1>Pago pendiente</h1></Layout>) },
   ]);
 
   return <RouterProvider router={router} />;

@@ -1,4 +1,5 @@
 import "./Carrito.css"; 
+import { Link } from "react-router-dom";
 
 const CarritoComponent = () => {
   return (
@@ -33,9 +34,9 @@ const CarritoComponent = () => {
             </div>
           </div>
 
-          <a href="compraDirecta.html" aria-label="Continuar compra">
-            <button className="continuar-compra">Continuar compra</button>
-          </a>
+          
+          <Link to="/compraDirecta"><button className="continuar-compra">Continuar Compra</button></Link>
+          
         </div>
       </section>
     </div>
