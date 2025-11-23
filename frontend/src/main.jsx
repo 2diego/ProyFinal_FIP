@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
+import { AuthProvider } from './context/AuthProvider.jsx';
 import { initMercadoPago } from '@mercadopago/sdk-react';
 
 initMercadoPago(import.meta.env.VITE_PUBLIC_KEY);
@@ -11,6 +12,9 @@ if (!rootElement) throw new Error('Failed to find the root element');
 
 createRoot(rootElement).render(
   <StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+
   </StrictMode>
 );

@@ -34,12 +34,10 @@ export default function Header() {
                         <Dropdown options={["Perfil", "Blog", "Cerrar sesión"]} />
                         //usuario es admin 
                     ) : user.rol === "admin" ? (
-                        <Dropdown options={["Administrador","Perfil", "Blog", "Cerrar sesión"]} />
+                        <Dropdown options={["Panel administrador","Perfil", "Blog", "Cerrar sesión"]} />
                     ) : (
                         <Dropdown options={["Acceder", "Crear cuenta"]} />
                     )}
-
-
                 </div>
             </nav>
         </header>

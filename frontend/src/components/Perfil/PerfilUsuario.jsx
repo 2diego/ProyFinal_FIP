@@ -14,6 +14,11 @@ const sections = [
     { id: "planilla", title: "Mi planilla" },
     { id: "rutina", title: "Mis Rutinas" },
 ]
+const beneficios = [
+    { id: "premium", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta ilimitadas", "Subscripción mensual", "Descuento en tienda 15%", "Entrenos one-one"] },
+    { id: "standard", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta limitadas", "Subscripcion mensual", "Descuento en tienda 10%", "3 entrenos diferentes"] },
+    { id: "basic", beneficios: ["Entrenamiento online", "Entrenamiento progresivo", "Clase consulta limitadas", "Subscripcion mensual", "Descuento en tienda 5%", "Entrenos 2 veces"] }
+];
 
 const PerfilUsuario = () => {
 
@@ -37,11 +42,24 @@ const PerfilUsuario = () => {
             {/* Columna izquierda - Navegación */}
             <div className="profile-sidebar">
                 <div className="profile-nav">
-                    {sections.map((section) => (
-                        <button key={section.id}
-                            className={`profile-nav-item ${sectionActiva === section.id ? "active" : ""} `}
-                            onClick={() => setSectionActiva(section.id)}>{section.title}</button>
-                    ))}
+                    {sections
+                        .filter((section) => {
+                            // Si el usuario no cumple la validación, ocultamos direccion, plan, planilla y rutina
+                            if (!data.estado_pago && ["direccion", "plan", "planilla", "rutina"].includes(section.id)) {
+                                return false;
+                            }
+                            return true;
+                        })
+                        .map((section) => (
+                            <button
+                                key={section.id}
+                                className={`profile-nav-item ${sectionActiva === section.id ? "active" : ""}`}
+                                onClick={() => setSectionActiva(section.id)}
+                            >
+                                {section.title}
+                            </button>
+                        ))}
+
                 </div>
             </div>
 
@@ -210,24 +228,25 @@ const PerfilUsuario = () => {
                     <div className="plan-info">
                         <div className="plan-card">
                             <div className="plan-header">
-                                <h3 id="planNombre">Plan Premium</h3>
+                                <h3 id="planNombre">Plan {data.plan?.nombre}</h3>
                                 <span className="plan-status" id="planStatus">Activo</span>
                             </div>
                             <div className="plan-details">
-                                <p><strong>Precio:</strong> <span id="planPrecio">$40.000</span></p>
+                                <p><strong>Precio:</strong> <span id="planPrecio">${data.plan?.precio}</span></p>
                                 <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">01/01/2025</span></p>
                                 <p><strong>Próximo pago:</strong> <span id="planProximoPago">01/02/2025</span></p>
                                 <p><strong>Estado:</strong> <span id="planEstado">Activo</span></p>
                             </div>
                             <div className="plan-benefits">
                                 <h4>Beneficios de tu plan:</h4>
-                                <ul id="planBeneficios">
-                                    <li>Entrenamiento online libre</li>
-                                    <li>Entrenamiento progresivo</li>
-                                    <li>Clase consulta ilimitadas</li>
-                                    <li>Subscripcion mensual</li>
-                                    <li>Descuento en tienda 15%</li>
+                                <ul className="lista-beneficios">
+                                    {beneficios
+                                        .find((bene) => bene.id === data.plan?.nombre)
+                                        ?.beneficios.map((item, index) => (
+                                            <li key={index}>{item}</li>
+                                        ))}
                                 </ul>
+
                             </div>
                             <div className="plan-actions">
                                 <button className="btn-save">Cambiar Plan</button>
@@ -251,7 +270,7 @@ const PerfilUsuario = () => {
                 </div>
 
                 <div className={`profile-section ${sectionActiva === "rutina" ? "profile-active" : ""}`}>
-                    <Rutina/>
+                    <Rutina />
                     <TablaRutina />
                 </div>
 

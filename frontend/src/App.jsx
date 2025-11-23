@@ -20,15 +20,18 @@ import Registro from './pages/registro/Registro.jsx';
 import Login from './pages/login/Login.jsx';
 import SeccionPlanes from './pages/inscripcionDetalle/SeleccionPlan.jsx';
 import Perfil from './pages/perfil/Perfil.jsx';
+
+import ProtectedRoute from './components/protectedRoutes/ProtectRoute.jsx';
+import PublicRoute from './components/publicRoute/PublicRoute.jsx';
+
+import { useAuth } from "./context/AuthProvider.jsx";
+
 export default function App() {
+
+  const { user } = useAuth();
+
   const router = createBrowserRouter([
     { path: '/', element: (<Layout><Index /></Layout>), },
-    { path: '/admin', element: (<Layout><Admin /></Layout>), },
-    { path: '/administrar-clientes', element: (<Layout><AdminClientes /></Layout>), },
-    { path: '/administrar-rutinas', element: (<Layout><AdminRutinas /></Layout>), },
-    { path: '/administrar-ejercicios', element: (<Layout><AdminEjercicios /></Layout>), },
-    { path: '/administrar-tienda', element: (<Layout><AdminTienda /></Layout>), },
-    { path: '/administrar-perfil', element: (<Layout><AdminPerfil /></Layout>), },
     { path: '/productos', element: (<Layout><Productos /></Layout>), },
     { path: '/blog', element: (<Layout><SeccionBlog /></Layout>), },
     { path: '/blog/:id', element: (<Layout><ContenidoDetalladoBlog /></Layout>), },
@@ -36,15 +39,45 @@ export default function App() {
     { path: '/contacto', element: (<Layout><Contacto /></Layout>), },
     { path: '/compraDirecta', element: (<Layout><CompraDirecta /></Layout>), },
     { path: '/inscribite', element: (<Layout><Inscribite /></Layout>), },
-    { path: '/planillaSalud', element: (<Layout><PlanillaSalud /></Layout>), },
-    { path: '/registro', element: (<Layout><Registro /></Layout>), },
-    { path: '/login', element: (<Layout><Login /></Layout>), },
     { path: '/inscripciondetalle', element: (<Layout><SeccionPlanes /></Layout>), },
-    { path: '/adminContacto', element: (<Layout><AdminContacto /></Layout>), },
-    { path: '/perfil', element: (<Layout><Perfil /></Layout>), },
     { path: '/success', element: (<Layout><h1>Pago aprobado</h1></Layout>) },
     { path: '/failure', element: (<Layout><h1>Pago fallido</h1></Layout>) },
     { path: '/pending', element: (<Layout><h1>Pago pendiente</h1></Layout>) },
+
+    {
+      // si el usuario no existe o no es admin no deja entrar a paginas admin 
+      element: <ProtectedRoute user={user} condition={(usuario) => usuario && (usuario.rol === 'admin')} />,
+      children: [
+        { path: '/admin', element: (<Layout><Admin /></Layout>), },
+        { path: '/administrar-clientes', element: (<Layout><AdminClientes /></Layout>), },
+        { path: '/administrar-rutinas', element: (<Layout><AdminRutinas /></Layout>), },
+        { path: '/administrar-ejercicios', element: (<Layout><AdminEjercicios /></Layout>), },
+        { path: '/administrar-tienda', element: (<Layout><AdminTienda /></Layout>), },
+        { path: '/administrar-perfil', element: (<Layout><AdminPerfil /></Layout>), },
+        { path: '/adminContacto', element: (<Layout><AdminContacto /></Layout>), },
+      ],
+    },
+    {
+      // si no existe usuario, o si rol no es admin o usuario no deja entrar a paginas de perfil
+      element: <ProtectedRoute user={user} condition={(usuario) => usuario && (usuario.rol === 'usuario' || usuario.rol === 'admin')} />,
+      children: [
+        { path: '/perfil', element: (<Layout><Perfil /></Layout>), },
+      ]
+    },
+    {
+      // si existe usuario no deja entrar a login ni a registro 
+      element: <PublicRoute user={user} redirectTo='/' />,
+      children: [
+        { path: '/registro', element: (<Layout><Registro /></Layout>), },
+        { path: '/login', element: (<Layout><Login /></Layout>), },
+      ],
+    },
+    {
+      element: <ProtectedRoute user={user} condition={(usuario) => usuario && (usuario.rol === 'usuario') && (usuario.estado_pago === true)} />,
+      children: [
+        { path: '/planillaSalud', element: (<Layout><PlanillaSalud /></Layout>), },
+      ]
+    },
   ]);
 
   return <RouterProvider router={router} />;
