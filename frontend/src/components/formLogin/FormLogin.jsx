@@ -24,6 +24,7 @@ export default function FormLogin() {
             const iniciarSesion = await authService.login(usuarioData);
             setData(iniciarSesion);
             navigate('/');
+            window.location.reload();
         } catch (error) {
             Swal.fire({
                 title: 'Inicio de sesión fallido',
