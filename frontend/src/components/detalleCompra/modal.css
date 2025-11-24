@@ -1,0 +1,117 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.botones-modal{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  width: 50vh;
+}
+.continuar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 30rem;
+  height: 40px;
+  transition: all 0.4s ease-in-out;
+  border: var(--naranja) 1px solid;
+  color: var(--blanco);
+  background-color: var(--naranja);
+
+}
+.crear-cuenta{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 30rem;
+  height: 40px;
+  transition: all 0.4s ease-in-out;
+  background-color: var(--blanco);
+  border: var(--naranja) 1px solid;
+  color: var(--naranja);
+}
+.titulo-modal{
+    font-family:fangsong;
+    color: black;
+    font-size: 30px;
+
+}
+
+
+.email input{
+    display: flex;
+    flex-direction: column;
+    width: 30rem;
+    height: 30px;
+    justify-content: center;
+    margin: 20px;
+    padding: 12px;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none; 
+   
+}
+.email input:focus {
+  border-bottom-color: #ba8762; /* color al hacer focus */
+}
+
+.contraseña-modal input {
+    display: flex;
+    flex-direction: column;
+    width: 30rem;
+    height: 30px;
+    justify-content: center;
+    margin: 20px;
+    padding: 12px;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none;
+}
+.contraseña-modal:focus{
+border-bottom-color: #ba8762; /* color al hacer focus */
+}
+
+.modal-content {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  min-width: 350px;
+  position: relative;
+  height: 40vh;
+  width: 70vh;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: white;
+  font-size: 18px;
+  cursor: pointer;
+}
