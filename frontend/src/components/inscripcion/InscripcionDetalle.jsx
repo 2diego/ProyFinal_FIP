@@ -25,8 +25,8 @@ const { state } = useLocation();
         <div class="contenedor-inscripcion">
         <CardInscripcion plan={plan} precio={precio} beneficio={beneficio} mostrarBotonInicial={false}
         clase={
-                plan.toLowerCase().includes("basico") ? "basico" :
-                plan.toLowerCase().includes("standar") ? "standar" :
+                plan.toLowerCase().includes("basic") ? "basic" :
+                plan.toLowerCase().includes("standard") ? "standard" :
                "premium"
         }
         
