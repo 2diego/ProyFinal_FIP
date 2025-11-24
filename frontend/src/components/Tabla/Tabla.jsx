@@ -4,7 +4,10 @@ import './Tabla.css';
 const Tabla = ({
   columns,
   data,
-  loading = false
+  loading = false,
+  onVer,
+  onEditar,
+  onEliminar
 }) => {
 
   const [sortConfig, setSortConfig] = useState(null);
@@ -75,7 +78,7 @@ const Tabla = ({
               <tbody className="table-body">
                 {loading ? (
                   <tr>
-                    <td colSpan={columns.length} className="loading-cell">
+                    <td colSpan={columns.length + 1} className="loading-cell">
                       <div className="loading-spinner">
                         <div className="spinner"></div>
                         <span>Cargando...</span>
@@ -89,22 +92,32 @@ const Tabla = ({
                       className={`table-row ${index % 2 === 0 ? 'even' : 'odd'}`}
                     >
                       {columns.map((column) => (
-                        <td key={column.key} className={column.clickable ? 'table-cell table-link' : 'table-cell'} >
+                        <td 
+                          key={column.key} 
+                          className={column.clickable ? 'table-cell table-link' : 'table-cell'}
+                          data-column={column.key}
+                        >
                           {renderCell(column, row)}
                         </td>
                       ))}
                       {/* Acciones */}
                       <td>
                         <div className="action-buttons-table">
-                            <button className="btn-view" onClick={() => console.log('Ver detalles de', row.id)} title="Ver detalles">
-                                <i className="fas fa-eye"></i> Ver
-                            </button>
-                            <button className="btn-edit" onClick={() => console.log('Editar', row.id)} title="Editar">
-                                <i className="fas fa-edit"></i> Editar
-                            </button>
-                            <button className="btn-delete" onClick={() => console.log('Eliminar', row.id)} title="Eliminar">
-                                <i className="fas fa-trash"></i> Eliminar
-                            </button>
+                            {onVer && (
+                              <button className="btn-view" onClick={() => onVer(row.id)} title="Ver detalles">
+                                  <i className="fas fa-eye"></i> Ver
+                              </button>
+                            )}
+                            {onEditar && (
+                              <button className="btn-edit" onClick={() => onEditar(row.id)} title="Editar">
+                                  <i className="fas fa-edit"></i> Editar
+                              </button>
+                            )}
+                            {onEliminar && (
+                              <button className="btn-delete" onClick={() => onEliminar(row.id)} title="Eliminar">
+                                  <i className="fas fa-trash"></i> Eliminar
+                              </button>
+                            )}
                         </div>
                       </td>
                     </tr>
