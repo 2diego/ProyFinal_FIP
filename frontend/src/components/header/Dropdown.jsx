@@ -1,19 +1,34 @@
 import { useState } from "react";
 import "./dropdown.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import authService from "../../services/auth.service.js";
+
 const Dropdown = ({ options }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [user, setUser] = useState([]);
+   const navigate = useNavigate();
 
   const toggleDropdown = () => setIsOpen(!isOpen);
-  const handleSelect = (option) => {
+  const handleSelect = async (option) => {
     setSelected(option);
     setIsOpen(false);
+
+    if (option === "Cerrar sesión") {
+      try{
+        await authService.logout();
+        setUser(null)
+      }catch(error){
+        console.log(error);
+      }
+      navigate("/");
+      window.location.reload();
+    }
   };
   const routes = {
   Perfil: "/perfil",
   Blog: "/blog",
-  Administrador: "/admin",
+  "Panel administrador": "/admin",
   Rutina: "/rutina",
   Acceder: "/login",
   "Crear cuenta": "/registro",

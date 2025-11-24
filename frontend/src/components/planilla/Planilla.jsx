@@ -8,32 +8,50 @@ import LabelPlanilla from '../labelPlanilla/LabelPlanilla';
 import InputPlanilla from '../inputPlanillaSalud/InputPlanilla';
 import BotonForm from "../botonForm/BotonForm";
 import BannerImg from "../../assets/images/fondo-mejorado.png"
-import Modal from "../modal/Modal";
+// import Modal from "../modal/Modal";
 import { useState } from 'react';
 import FichaSaludService from '../../services/fichaSalud.service';
-
+import usuarioService from '../../services/usuario.service';
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 export default function Planilla() {
 
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const navigate = useNavigate ();
+
+    const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
 
     const [data, setData] = useState([]);
 
-    const enviarPlanilla = async (usuarioData) => {
-            try {
-                const postPlanilla = await FichaSaludService.createFichaSalud(usuarioData);
-                setData(postPlanilla);
-                navigate('/');
-            } catch (error) {
-                console.log(error);
+    const enviarPlanilla = async (fichaSaludData) => {
+        try {
+            const usuario = await usuarioService.getUsuarioById();
+            const ficha = {
+                ...fichaSaludData,
+                id_usuario: usuario.id_usuario,
             }
-    
+            console.log(ficha);
+
+            const postPlanilla = await FichaSaludService.createFichaSalud(ficha);
+
+            setData(postPlanilla);
+            Swal.fire({
+                title: 'Formulario completado!',
+                text: 'Tu planilla ha sido enviada correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                reset();
+                navigate('/perfil');
+            });
+        } catch (error) {
+            console.log(error);
         }
 
-    const onSubmit = handleSubmit((data) => {
-        // console.log(data)
+    }
+
+    const onSubmit = handleSubmit(async (data) => {
         enviarPlanilla(data)
         // favDialog.showModal();
-
     })
 
 
@@ -150,7 +168,7 @@ export default function Planilla() {
                             {errors.provincia && <span className="error">{errors.provincia.message}</span>}
                         </div>
 
-                         <div className="input-container">
+                        <div className="input-container">
                             <LabelPlanilla htmlFor="codigoPostal" children="Código Postal" />
                             <div className="inputs">
                                 <InputPlanilla type="number" min="0" id="codigoPostal" placeholder="Codigo Postal" {...register("codigoPostal",
@@ -219,12 +237,16 @@ export default function Planilla() {
                                     <LabelRadio htmlFor="condicion" children="¿PADECE ALGUNA CONDICIÓN MEDICA?" />
                                     <InputRadio value="si" id="si-condicion" {...register("condicion",
                                         {
-                                            required: "Debe seleccionar una opción"
+                                            required: "Debe seleccionar una opción",
+                                            setValueAs: (v) => v === "si"
+
                                         }
                                     )} />SI
                                     <InputRadio value="no" id="no-condicion"  {...register("condicion",
                                         {
-                                            required: "Debe seleccionar una opción"
+                                            required: "Debe seleccionar una opción",
+                                            setValueAs: (v) => v === "si"
+
                                         }
                                     )} />NO
                                 </div>
@@ -259,12 +281,14 @@ export default function Planilla() {
                                     <LabelRadio htmlFor="medicacion" children="¿ESTA TOMANDO ALGUNA MEDICACIÓN?" />
                                     <InputRadio value="si" id="si-medicacion" {...register("medicacion",
                                         {
-                                            required: "Debe seleccionar una opción"
+                                            required: "Debe seleccionar una opción",
+                                            setValueAs: (v) => v === "si"
                                         }
                                     )} />SI
                                     <InputRadio value="no" id="no-medicacion" {...register("medicacion",
                                         {
-                                            required: "Debe seleccionar una opción"
+                                            required: "Debe seleccionar una opción",
+                                            setValueAs: (v) => v === "si"
                                         }
                                     )} />NO
                                 </div>
@@ -297,12 +321,14 @@ export default function Planilla() {
                                     <LabelRadio htmlFor="experiencia" children="¿TIENE EXPERIENCIA ENTRENANDO?" />
                                     <InputRadio value="si" id="si-entreno" {...register("expEntrenando",
                                         {
-                                            required: "Debe seleccionar una opción"
+                                            required: "Debe seleccionar una opción",
+                                            setValueAs: (v) => v === "si"
                                         }
                                     )} />SI
                                     <InputRadio value="no" id="no-entreno" {...register("expEntrenando",
                                         {
-                                            required: "Debe seleccionar una opción"
+                                            required: "Debe seleccionar una opción",
+                                            setValueAs: (v) => v === "si"
                                         }
                                     )} />NO
                                 </div>
@@ -311,7 +337,7 @@ export default function Planilla() {
                             <div className="input-contenedor">
                                 <LabelPlanilla htmlFor="objetivo" children="OBJETIVOS:" />
                                 <div className="textarea-form">
-                                    <Textarea  id="objetivo" placeholder="Objetivos" {...register("objetivos",
+                                    <Textarea id="objetivo" placeholder="Objetivos" {...register("objetivos",
                                         {
                                             required: {
                                                 value: true,
@@ -331,7 +357,7 @@ export default function Planilla() {
                     </fieldset>
                     <BotonForm type="submit" id="showPopup"  >Enviar</BotonForm>
                 </form>
-                <Modal mensaje="Planilla enviada" />
+                {/* <Modal mensaje="Planilla enviada" /> */}
             </div>
         </>
     )
