@@ -1,8 +1,9 @@
 import "./perfilUsuario.css"
+
 import { Link } from "react-router-dom";
 import TablaRutina from "../rutina/TablaRutina";
 import Rutina from "../rutina/Rutina";
-
+import Planilla from "../planilla/Planilla";
 // hook personalizado para useForm 
 import { UseFormPerfil } from "../../hooks/useFormPerfil";
 
@@ -11,7 +12,6 @@ const sections = [
     { id: "correo", title: "Modificar Correo" },
     { id: "password", title: "Modificar Contraseña" },
     { id: "telefono", title: "Modificar Teléfono" },
-    // { id: "direccion", title: "Modificar Dirección" },
     { id: "plan", title: "Modificar Plan" },
     { id: "planilla", title: "Mi planilla" },
     { id: "rutina", title: "Mis Rutinas" },
@@ -23,10 +23,11 @@ const beneficios = [
 ];
 
 const PerfilUsuario = () => {
+    
     const {
         data, sectionActiva, setSectionActiva, formNombre, formEmail, formTelefono, formPassword,
         editarNombre, editarEmail, editarTelefono, onSubmitEmail, onSubmitNombre, onSubmitTelefono, onsubmitPassword } = UseFormPerfil();
-
+    console.log(data);
     return (
 
         <div className="profile-container">
@@ -281,41 +282,6 @@ const PerfilUsuario = () => {
                     </div>
                 </div>
 
-                {/*Sección Modificar Dirección*/}
-                {/* <div className={`profile-section ${sectionActiva === "direccion" ? "profile-active" : ""}`}>
-                    <h2><i className="fas fa-map-marker-alt"></i> Modificar Dirección</h2>
-                    <div className="profile-form">
-                        <form id="profileFormAddress">
-                            <div className="form-group">
-                                <label htmlFor="direccion">Dirección Actual</label>
-                                {data && data.ficha?.direccion ? (
-                                    <input type="text" id="direccion" placeholder={data.ficha?.direccion} disabled={true} />
-                                ) : (
-                                    <input type="text" id="cargando" placeholder="Cargando..." disabled={true} />
-                                )}
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="nuevaDireccion">Nueva Dirección</label>
-                                <input type="text" id="nuevaDireccion" placeholder="Ingrese su nombre completo" required />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="ciudad">Ciudad</label>
-                                <input type="text" id="ciudad" placeholder="Ingrese su nombre completo" required />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="codigoPostal">Código Postal</label>
-                                <input type="text" id="codigoPostal" placeholder="Ingrese su nombre completo" required />
-                            </div>
-                            <div className="form-actions">
-                                <button type="submit" className="btn-save">Guardar Cambios</button>
-                                <button type="button" className="btn-cancel">Cancelar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div> */}
 
                 {/* Sección Modificar Plan*/}
                 <div className={`profile-section ${sectionActiva === "plan" ? "profile-active" : ""}`}>
@@ -376,7 +342,7 @@ const PerfilUsuario = () => {
                         <form id="profileFormPlanilla">
                             <div className="form-group">
                                 <label htmlFor="planilla">Mi planilla de salud</label>
-                                <Link className="btn-save btn-link" to="/planillaSalud">Planilla</Link>
+                                 <Link className="btn-save btn-link" to="/planillaSalud">Planilla</Link>
                             </div>
                         </form>
                     </div>
