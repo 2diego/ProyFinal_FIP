@@ -21,7 +21,7 @@ export default function inscripcionDetalle() {
     <>
       <section className="contenido">
         <h1 className="titulo">Has elegido {plan}</h1>
-        <div class="contenedor-inscripcion">
+        <div className="contenedor-inscripcion">
           <CardInscripcion plan={plan} precio={precio} beneficio={beneficio} mostrarBotonInicial={false}
             clase={
               plan.toLowerCase().includes("basic") ? "basic" :
