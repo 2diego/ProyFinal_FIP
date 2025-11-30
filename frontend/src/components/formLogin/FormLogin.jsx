@@ -52,12 +52,12 @@ export default function FormLogin() {
             }
 
             // --- SI HAY PRODUCTOS EN LOCALSTORAGE → SINCRONIZARLOS
-            if (carritoLocal.length > 0) {
-                carritoBackend = await carritoService.sincronizarCarrito(
-                    userId,
-                    carritoLocal
-                );
-            }
+            // if (carritoLocal.length > 0) {
+            //     carritoBackend = await carritoService.sincronizarCarrito(
+            //         userId,
+            //         carritoLocal
+            //     );
+            // }
 
             let items = carritoBackend.items;
 
