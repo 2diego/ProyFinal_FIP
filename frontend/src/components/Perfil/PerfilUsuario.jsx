@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import TablaRutina from "../rutina/TablaRutina";
 import Rutina from "../rutina/Rutina";
 import Planilla from "../planilla/Planilla";
+import Swal from "sweetalert2";
+import suscripcionService from "../../services/suscripcion.service";
 // hook personalizado para useForm 
 import { UseFormPerfil } from "../../hooks/useFormPerfil";
-
 const sections = [
     { id: "nombre", title: "Modificar Nombre" },
     { id: "correo", title: "Modificar Correo" },
@@ -23,10 +24,43 @@ const beneficios = [
 ];
 
 const PerfilUsuario = () => {
-    
+
     const {
         data, sectionActiva, setSectionActiva, formNombre, formEmail, formTelefono, formPassword,
         editarNombre, editarEmail, editarTelefono, onSubmitEmail, onSubmitNombre, onSubmitTelefono, onsubmitPassword } = UseFormPerfil();
+
+    const cancelarSuscripcion = async (preapprovalId) => {
+        Swal.fire({
+            title: 'Cancelar Suscripcion',
+            text: "¿Estás seguro de cancealr la suscripcion?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, cancelar',
+            cancelButtonText: 'Cancelar'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await suscripcionService.cancelar(preapprovalId);
+                    Swal.fire(
+                        'Cancelado!',
+                        'La suscripcion ha sido canceladad.',
+                        'success'
+                    ).then(() => {
+
+                        window.location.reload();
+                    });
+                } catch (error) {
+                    Swal.fire(
+                        'Error!',
+                        'No se pudo cancelar la suscripcion.',
+                        'error'
+                    );
+                }
+            }
+        });
+    };
     console.log(data);
     return (
 
@@ -328,8 +362,8 @@ const PerfilUsuario = () => {
 
                             </div>
                             <div className="plan-actions">
-                                <button className="btn-save">Cambiar Plan</button>
-                                <button className="btn-cancel">Cancelar Suscripción</button>
+                                <Link className="btn-save" to="/inscribite">Cambiar plan</Link>
+                                <button className="btn-cancel" onClick={() => cancelarSuscripcion(data?.suscripciones?.[0].preapprovalId)}>Cancelar Suscripción</button>
                             </div>
                         </div>
                     </div>
@@ -342,14 +376,13 @@ const PerfilUsuario = () => {
                         <form id="profileFormPlanilla">
                             <div className="form-group">
                                 <label htmlFor="planilla">Mi planilla de salud</label>
-                                 <Link className="btn-save btn-link" to="/planillaSalud">Planilla</Link>
+                                <Link className="btn-save btn-link" to="/planillaSalud">Planilla</Link>
                             </div>
                         </form>
                     </div>
                 </div>
 
                 <div className={`profile-section ${sectionActiva === "rutina" ? "profile-active" : ""}`}>
-                    <Rutina />
                     <TablaRutina />
                 </div>
 
