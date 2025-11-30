@@ -29,7 +29,7 @@ export default function btnInscripcion({plan,precio,beneficio}){
             </div>
             </div>
             <div className="precio-plan">
-            <div className="precio">el valor total es de ${precio}</div>
+            <div className="precio">el valor total es de {precio}</div>
             </div>
             <div className="mostrar-beneficios">beneficions adicionales 
                  <ul>
