@@ -6,7 +6,7 @@ import planService from "../../services/plan.service.js";
 import Swal from "sweetalert2";
 function SuscripcionButton({ clase, plan }) {
   const handleClick = async () => {
-    const usuario = await usuarioService.getUsuarioById();
+    const usuario = await usuarioService.getUsuarioById(id);
 
     let planData;
     if (plan.toLowerCase().includes("premium")) {
@@ -50,6 +50,7 @@ function SuscripcionButton({ clase, plan }) {
       window.location.href = suscripcion.init_point;
     }
   };
+  
 
 
   return (
