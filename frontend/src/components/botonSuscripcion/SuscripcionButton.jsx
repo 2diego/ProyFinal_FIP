@@ -6,7 +6,7 @@ import planService from "../../services/plan.service.js";
 
 function SuscripcionButton({ clase,plan }) {
   const handleClick = async () => {
-    const usuario = await usuarioService.getUsuarioById();
+    const usuario = await usuarioService.getUsuarioById(id);
 
     let planData;
     if (plan.toLowerCase().includes("premium")) {
@@ -17,14 +17,16 @@ function SuscripcionButton({ clase,plan }) {
       planData = await planService.getPlanById(3);
     }
 
-    const suscripcion = await suscripcionService.create({
+    const suscripcion = await suscripcionService.crear({
       id_usuario: usuario.id_usuario,
       id_plan: planData.id_plan,
       mesesContratados: 1
     });
 
-    window.location.href = suscripcion.init_point;
+    window.location.href = suscripcion.init_point; //suscripcion.init_url;
+    
   };
+  
 
   return (
     <button className={clase} plan={plan} onClick={handleClick}>

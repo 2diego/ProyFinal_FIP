@@ -1,33 +1,30 @@
 .modal-overlay {
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+  z-index: 99;
+  justify-content: flex-end;  /* empuja el modal hacia la derecha */
+  align-items: stretch;
 }
-.botones-modal{
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  width: 50vh;
+p{
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    font-size: 18px;
+    text-align: center;
 }
-.continuar{
+
+.indicador-pago{
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   font-size: 1.2rem;
   font-weight: 600;
-  cursor: pointer;
-  width: 30rem;
+  width: 25rem;
   height: 40px;
   transition: all 0.4s ease-in-out;
   border: var(--naranja) 1px solid;
@@ -35,21 +32,7 @@
   background-color: var(--naranja);
 
 }
-.crear-cuenta{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 30rem;
-  height: 40px;
-  transition: all 0.4s ease-in-out;
-  background-color: var(--blanco);
-  border: var(--naranja) 1px solid;
-  color: var(--naranja);
-}
+
 .titulo-modal{
     font-family:fangsong;
     color: black;
@@ -58,10 +41,10 @@
 }
 
 
-.email input{
+.plan-modal{
     display: flex;
     flex-direction: column;
-    width: 30rem;
+    width: 25rem;
     height: 30px;
     justify-content: center;
     margin: 20px;
@@ -71,39 +54,31 @@
     outline: none; 
    
 }
-.email input:focus {
-  border-bottom-color: #ba8762; /* color al hacer focus */
+
+.precio-plan{
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.contraseña-modal input {
-    display: flex;
-    flex-direction: column;
-    width: 30rem;
-    height: 30px;
-    justify-content: center;
-    margin: 20px;
-    padding: 12px;
-    border: none;
-    border-bottom: 2px solid var(--naranja);
-    outline: none;
-}
-.contraseña-modal:focus{
-border-bottom-color: #ba8762; /* color al hacer focus */
-}
-
-.modal-content {
+.modal-content-detalle-compra {
   display: flex;
-  justify-content: space-around;
   flex-direction: column;
-  align-content: center;
+  justify-content: space-between;
   align-items: center;
   background: #fff;
+  width: 450px;          /* tamaño del panel */
+  height: 90vh;         /* ocupa toda la altura */
   padding: 20px;
-  border-radius: 12px;
-  min-width: 350px;
-  position: relative;
-  height: 40vh;
-  width: 70vh;
+  border-left: 1px solid #ddd;
+  position: fixed;
+  border-radius: 10px;
+
+  border: 1px solid var(--naranja, #ff6a00);
+  color: var(--blanco, #fff);
+
 }
 
 .close-btn {
@@ -112,6 +87,19 @@ border-bottom-color: #ba8762; /* color al hacer focus */
   right: 10px;
   border: none;
   background: white;
-  font-size: 18px;
+  font-size: 25px;
   cursor: pointer;
+}
+.mostrar-beneficios ul li {
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.icono-check {
+  color: #2ecc71; /* Verde */
+  font-size: 1.3rem;
 }

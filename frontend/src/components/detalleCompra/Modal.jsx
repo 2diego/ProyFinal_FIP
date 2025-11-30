@@ -7,7 +7,7 @@ export default function Modal({ isOpen, onClose, children }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div
-        className="modal-content"
+        className="modal-content-detalle-compra"
         onClick={(e) => e.stopPropagation()} // Evita cerrar al hacer click adentro
       >
         <button className="close-btn" onClick={onClose}>

@@ -1,3 +1,4 @@
+/*
 .modal-contenedorRegistro {
  background: #fff;
   padding: 10px;
@@ -84,7 +85,7 @@ width: 50%;
     outline: none;
 }
 .nombre input:focus{
-  border-bottom-color: #ba8762; /* color al hacer focus */
+  border-bottom-color: #ba8762; /* color al hacer focus 
 }
 .apellido{
 
@@ -99,7 +100,7 @@ width: 50%;
     outline: none;
 }
 .apellido input:focus{
-  border-bottom-color: #ba8762; /* color al hacer focus */
+  border-bottom-color: #ba8762; /* color al hacer focus 
 }
 .email-registro{
     width: 100%;
@@ -116,7 +117,7 @@ width: 50%;
     outline: none;
 }
 .email-registro input:focus{
-  border-bottom-color: #ba8762; /* color al hacer focus */
+  border-bottom-color: #ba8762; /* color al hacer focus 
 }
 
 .btn-registrar {  
@@ -148,7 +149,7 @@ color: var(--naranja);
     outline: none;
 }
 .codigo-area input:focus{
-  border-bottom-color: #ba8762; /* color al hacer focus */
+  border-bottom-color: #ba8762; /* color al hacer focus 
 }
 .numero-tel{
   width: 50%;
@@ -162,7 +163,7 @@ color: var(--naranja);
     outline: none;
 }
 .numero-tel input:focus{
-  border-bottom-color: #ba8762; /* color al hacer focus */
+  border-bottom-color: #ba8762; /* color al hacer focus 
 }
 .contraseña{
   width: 50%;
@@ -176,7 +177,7 @@ color: var(--naranja);
     outline: none;
 }
 .contraseña input:focus{
-  border-bottom-color: #ba8762; /* color al hacer focus */
+  border-bottom-color: #ba8762; /* color al hacer focus 
 }
 .repetir-contraseña{
   width: 50%;
@@ -192,5 +193,6 @@ color: var(--naranja);
     
 }
 .repetir-contraseña input:focus{
-  border-bottom-color: #ba8762; /* color al hacer focus */
+  border-bottom-color: #ba8762; /* color al hacer focus 
 }
+*/
