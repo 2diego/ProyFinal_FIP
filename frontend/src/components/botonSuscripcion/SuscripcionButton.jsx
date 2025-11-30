@@ -6,7 +6,7 @@ import planService from "../../services/plan.service.js";
 import Swal from "sweetalert2";
 function SuscripcionButton({ clase, plan }) {
   const handleClick = async () => {
-    const usuario = await usuarioService.getUsuarioById(id);
+    const usuario = await usuarioService.getUsuarioById();
 
     let planData;
     if (plan.toLowerCase().includes("premium")) {
