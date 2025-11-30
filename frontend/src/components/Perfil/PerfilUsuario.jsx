@@ -323,9 +323,9 @@ const PerfilUsuario = () => {
                     <div className="plan-info">
                         <div className="plan-card">
                             <div className="plan-header">
-                                {data.estado_pago === true ? (
+                                {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
                                     <>
-                                        <h3 id="planNombre">Plan {data?.suscripciones?.[0]?.plan?.nombre}</h3>
+                                        <h3 id="planNombre">Plan {data.suscripciones[0].plan?.nombre || 'N/A'}</h3>
                                         <span className="plan-status" id="planStatus">Activo</span>
                                     </>
                                 ) : (
@@ -336,23 +336,23 @@ const PerfilUsuario = () => {
                                 )}
                             </div>
                             <div className="plan-details">
-                                {data.estado_pago === true ? (
+                                {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
                                     <>
-                                        <p><strong>Precio:</strong> <span id="planPrecio">${data?.suscripciones?.[0].plan?.precio}</span></p>
-                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{new Date(data?.suscripciones?.[0].fechaInicio).toLocaleDateString()}</span></p>
-                                        <p><strong>Próximo pago:</strong> <span id="planProximoPago">{new Date(data?.suscripciones?.[0].fechaFin).toLocaleDateString()}</span></p>
-                                        <p><strong>Estado:</strong> <span id="planEstado">{data?.suscripciones?.[0].estado}</span></p>
-                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${data?.suscripciones?.[0].montoPagado}</span></p>
+                                        <p><strong>Precio:</strong> <span id="planPrecio">${data.suscripciones[0].plan?.precio || 'N/A'}</span></p>
+                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{data.suscripciones[0].fechaInicio ? new Date(data.suscripciones[0].fechaInicio).toLocaleDateString() : 'N/A'}</span></p>
+                                        <p><strong>Próximo pago:</strong> <span id="planProximoPago">{data.suscripciones[0].fechaFin ? new Date(data.suscripciones[0].fechaFin).toLocaleDateString() : 'N/A'}</span></p>
+                                        <p><strong>Estado:</strong> <span id="planEstado">{data.suscripciones[0].estado || 'N/A'}</span></p>
+                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${data.suscripciones[0].montoPagado || '0'}</span></p>
                                     </>
                                 ) : (<p><strong>Plan:</strong> <span id="planPrecio">Gratis</span></p>)}
                             </div>
                             <div className="plan-benefits">
                                 <h4>Beneficios de tu plan:</h4>
                                 <ul className="lista-beneficios">
-                                    {data.estado_pago === true ? (
+                                    {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
                                         <>
                                             {beneficios
-                                                .find((bene) => bene.id === data?.suscripciones?.[0].plan?.nombre)
+                                                .find((bene) => bene.id === data.suscripciones[0].plan?.nombre)
                                                 ?.beneficios.map((item, index) => (
                                                     <li key={index}>{item}</li>
                                                 ))}
