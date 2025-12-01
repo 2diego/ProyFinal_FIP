@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
-import './Carrusel.css';
-
-//CHECK LOGIN COMENTADO
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import "./Carrusel.css";
+import ProductoService from "../../services/producto.service";
+import { useCarrito } from "../carrito/CarritoContext"; // <-- importamos el contexto
 
 const Carrusel = () => {
   const [productos, setProductos] = useState([]);
@@ -12,42 +12,38 @@ const Carrusel = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Cargar productos al montar componente
-  useEffect(() => {
-    cargarProductos();
-    updateVisibleCount();
-    window.addEventListener('resize', updateVisibleCount);
-    
-    return () => {
-      window.removeEventListener('resize', updateVisibleCount);
-    };
-  }, []);
+ 
+  const { agregarAlCarrito } = useCarrito();
 
-  // Cargar productos desde JSON (igual que en el JS original + useState)
+  
   const cargarProductos = async () => {
     try {
-      const response = await fetch('/data/listaProductos.json');
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      const data = await response.json();
-      setProductos(data);
+      const productoData = await ProductoService.getAllProductos();
+      setProductos(productoData);
     } catch (error) {
-      console.error('Error al cargar productos:', error);
+      console.error("Error al cargar productos:", error);
     }
   };
 
-  // Función para determinar productos visibles según pantalla (igual que en el JS original)
+  useEffect(() => {
+    cargarProductos();
+    updateVisibleCount();
+    window.addEventListener("resize", updateVisibleCount);
+
+    return () => {
+      window.removeEventListener("resize", updateVisibleCount);
+    };
+  }, []);
+
   const getVisibleCount = () => {
     const width = window.innerWidth;
-    if (width <= 480) return 2; // Cel pequeños
-    if (width <= 600) return 2; // Cel grandes
-    if (width <= 768) return 3; // Tablets pequeñas
-    if (width <= 900) return 3; // Tablets grandes
-    return 4; // Desktop
+    if (width <= 480) return 2;
+    if (width <= 600) return 2;
+    if (width <= 768) return 3;
+    if (width <= 900) return 3;
+    return 4;
   };
 
-  // Actualizar productos visibles (igual que en el JS original + useState)
   const updateVisibleCount = () => {
     const newVisibleCount = getVisibleCount();
     if (newVisibleCount !== visibleCount) {
@@ -55,90 +51,73 @@ const Carrusel = () => {
     }
   };
 
-  // Verificar si el usuario está logueado
-  // const checkLogin = () => {
-  //   const usuario = JSON.parse(localStorage.getItem("usuarioLog") || "false");
-    
-  //   if (!usuario) {
-  //     Swal.fire({
-  //       icon: 'warning',
-  //       title: 'Sesión requerida',
-  //       text: 'Debes iniciar sesión para comprar',
-  //       confirmButtonColor: '#ee5f0d'
-  //     });
-  //     window.location.href = "login.html";
-  //     return false;
-  //   }
-  //   return true;
-  // };
-
-  // Funcion para agregar al carrito
-  const addToCart = (producto) => {
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const index = carrito.findIndex(item => item.id === producto.id);
-    if (index !== -1) {
-      carrito[index].cantidad += 1;
-    } else {
-      producto.cantidad = 1;
-      carrito.push(producto);
-    }
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-  };
-
-  // Manejar agregar al carrito
+  
   const handleAddToCart = (producto) => {
-    //if (!checkLogin()) return;
-    
-    if (producto.stock <= 0) {
+    const p = {
+      id: producto.id_producto,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      stock: producto.stock,
+      descripcion: producto.descripcion,
+      img: producto.imagen,
+    };
+
+    if (p.stock <= 0) {
       Swal.fire({
-        icon: 'warning',
-        title: 'Sin stock',
-        text: 'No hay stock disponible',
-        confirmButtonColor: '#ee5f0d'
+        icon: "warning",
+        title: "Sin stock",
+        text: "No hay stock disponible",
+        confirmButtonColor: "#ee5f0d",
       });
-    } else {
-      addToCart(producto);
-      Swal.fire({
-        icon: 'success',
-        title: '¡Producto agregado!',
-        text: 'Producto agregado al carrito',
-        confirmButtonColor: '#ee5f0d'
-      });
-      // Aca se llamaria a contadorIconoCarrito()
+      return;
     }
+
+    agregarAlCarrito(p);
+
+    Swal.fire({
+      icon: "success",
+      title: "¡Producto agregado!",
+      showConfirmButton: false,
+      timer: 1300,
+    });
   };
 
-  // Manejar comprar ahora
   const handleBuyNow = (producto) => {
-    //if (!checkLogin()) return;
-    
-    if (producto.stock <= 0) {
+    const p = {
+      id: producto.id_producto,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      stock: producto.stock,
+      descripcion: producto.descripcion,
+      img: producto.imagen,
+    };
+
+    if (p.stock <= 0) {
       Swal.fire({
-        icon: 'warning',
-        title: 'Sin stock',
-        text: 'No hay stock disponible',
-        confirmButtonColor: '#ee5f0d'
+        icon: "warning",
+        title: "Sin stock",
+        text: "No hay stock disponible",
+        confirmButtonColor: "#ee5f0d",
       });
-    } else {
-      localStorage.setItem('compraDirecta', JSON.stringify(producto));
-      addToCart(producto);
-      window.location.href = 'compraDirecta.html';
+      return;
     }
+
+    
+    localStorage.setItem("compraDirecta", JSON.stringify(p));
+    agregarAlCarrito(p);
+    window.location.href = "/compraDirecta";
   };
 
-  // Mostrar modal de producto
   const handleShowProduct = (producto) => {
     setSelectedProduct(producto);
     setShowModal(true);
   };
 
-  // Cerrar modal
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedProduct(null);
   };
 
-  // Navegacion del carrusel
   const navigateLeft = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
@@ -153,7 +132,6 @@ const Carrusel = () => {
     setTimeout(() => setIsTransitioning(false), 300);
   };
 
-  // Obtener productos visibles
   const getVisibleProducts = () => {
     const visibleProducts = [];
     for (let i = 0; i < visibleCount; i++) {
@@ -163,11 +141,10 @@ const Carrusel = () => {
     return visibleProducts;
   };
 
-  // Si no hay productos, mostrar mensaje de error
   if (productos.length === 0) {
     return (
       <section className="carrusel-productos-container">
-        <div style={{ textAlign: 'center', color: '#ee5f0d', padding: '2rem' }}>
+        <div style={{ textAlign: "center", color: "#ee5f0d", padding: "2rem" }}>
           <p>Error al cargar los productos</p>
         </div>
       </section>
@@ -176,42 +153,41 @@ const Carrusel = () => {
 
   return (
     <>
-      {/* Carrusel de productos */}
       <section className="carrusel-productos-container">
-        <button 
-          className="carrusel-arrow left" 
+        <button
+          className="carrusel-arrow left"
           aria-label="Anterior"
           onClick={navigateLeft}
         >
           &#10094;
         </button>
-        
-        <div 
+
+        <div
           className="carrusel-productos"
           style={{
             opacity: isTransitioning ? 0.7 : 1,
-            transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
-            transition: 'opacity 0.3s ease, transform 0.3s ease'
+            transform: isTransitioning ? "translateX(20px)" : "translateX(0)",
+            transition: "opacity 0.3s ease, transform 0.3s ease",
           }}
         >
           {getVisibleProducts().map((producto) => (
-            <div key={producto.id} className="carrusel-producto">
-              <img 
-                src={producto.img} 
-                alt={producto.nombre} 
+            <div key={producto.id_producto} className="carrusel-producto">
+              <img
+                src={producto.imagen}
+                alt={producto.nombre}
                 className="carrusel-producto-img"
                 onClick={() => handleShowProduct(producto)}
               />
               <h4 className="carrusel-producto-nombre">{producto.nombre}</h4>
               <p className="carrusel-producto-precio">${producto.precio}</p>
               <div className="carrusel-botones">
-                <button 
+                <button
                   className="comprarAhora"
                   onClick={() => handleBuyNow(producto)}
                 >
                   Comprar Ahora
                 </button>
-                <button 
+                <button
                   className="agregarCarrito"
                   onClick={() => handleAddToCart(producto)}
                 >
@@ -221,9 +197,9 @@ const Carrusel = () => {
             </div>
           ))}
         </div>
-        
-        <button 
-          className="carrusel-arrow right" 
+
+        <button
+          className="carrusel-arrow right"
           aria-label="Siguiente"
           onClick={navigateRight}
         >
@@ -231,16 +207,24 @@ const Carrusel = () => {
         </button>
       </section>
 
-      {/* Modal de producto */}
       {showModal && selectedProduct && (
-        <div id="popup-producto" className="modal-overlay" onClick={handleCloseModal}>
-          <div className="producto-detail" onClick={(e) => e.stopPropagation()}>
-            <button id="cerrar-popup-producto" onClick={handleCloseModal}>&times;</button>
+        <div
+          id="popup-producto"
+          className="modal-overlay"
+          onClick={handleCloseModal}
+        >
+          <div
+            className="producto-detail"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button id="cerrar-popup-producto" onClick={handleCloseModal}>
+              &times;
+            </button>
             <div className="producto-container">
               <div className="product-images">
-                <img 
-                  src={selectedProduct.img} 
-                  alt={selectedProduct.nombre} 
+                <img
+                  src={selectedProduct.imagen}
+                  alt={selectedProduct.nombre}
                   className="product-main-image"
                 />
               </div>
@@ -253,9 +237,11 @@ const Carrusel = () => {
                 <div className="product-price">
                   <span>${selectedProduct.precio}</span>
                 </div>
-                <div className="stock-status">Stock disponible: {selectedProduct.stock}</div>
-                <button 
-                  className="comprarAhora" 
+                <div className="stock-status">
+                  Stock disponible: {selectedProduct.stock}
+                </div>
+                <button
+                  className="comprarAhora"
                   onClick={() => {
                     handleBuyNow(selectedProduct);
                     handleCloseModal();
@@ -263,8 +249,8 @@ const Carrusel = () => {
                 >
                   Comprar Ahora
                 </button>
-                <button 
-                  className="agregarCarrito" 
+                <button
+                  className="agregarCarrito"
                   onClick={() => {
                     handleAddToCart(selectedProduct);
                     handleCloseModal();
@@ -274,7 +260,9 @@ const Carrusel = () => {
                 </button>
                 <div className="product-description">
                   <h2>Descripción</h2>
-                  <div className="description-box">{selectedProduct.descripcion}</div>
+                  <div className="description-box">
+                    {selectedProduct.descripcion}
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,23 +1,46 @@
 import { useState } from "react";
 import "./dropdown.css";
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authService from "../../services/auth.service.js";
+
 const Dropdown = ({ options }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [user, setUser] = useState([]);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => setIsOpen(!isOpen);
-  const handleSelect = (option) => {
+  const handleSelect = async (option) => {
     setSelected(option);
     setIsOpen(false);
+
+    if (option === "Cerrar sesión") {
+      try {
+        await authService.logout();
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("carrito");
+        setUser(null)
+      } catch (error) {
+        console.log(error);
+      }
+      navigate("/");
+      window.location.reload();
+    }
   };
   const routes = {
-  Perfil: "/perfil",
-  Blog: "/blog",
-  Rutina: "/rutina",
-  Progreso: "/progreso",
-  Consulta: "/consulta",
-  "Cerrar sesion": "/logout",
-};
+    Perfil: "/perfil",
+    Blog: "/blog",
+    "Panel administrador": "/admin",
+    Rutina: "/rutina",
+    Acceder: "/login",
+    "Crear cuenta": "/registro",
+    Consulta: "/consulta",
+    "Cerrar sesion": "/logout",
+    Inicio: "/",
+    Productos: "/productos",
+    Contacto: "/contacto",
+    "¡Inscribite ya!": "/inscribite"
+  };
 
   return (
     <div className="dropdown">
@@ -37,13 +60,13 @@ const Dropdown = ({ options }) => {
             onClick={() => handleSelect(option)}
           >
             {routes[option] ? (
-            <Link
-            to={routes[option]}
-            className="login-links"
-            onClick={()=>setIsOpen(false)}
-            >
-              {option}
-            </Link>
+              <Link
+                to={routes[option]}
+                className="login-links"
+                onClick={() => setIsOpen(false)}
+              >
+                {option}
+              </Link>
             ) : (
               <span className="login-links">{option}</span>
             )}

@@ -6,7 +6,7 @@
   width: 100%;
   min-height: 6rem;
   background-color: var(--gris-osc);
-  z-index: 1000;
+  z-index: 99;
   top: 0;
 }
 
@@ -44,7 +44,6 @@
   display: flex;
   align-items: center;
   gap: 5.5rem;
-
 }
 
 .nav-list {
@@ -123,7 +122,6 @@ ul .nav-inscribite {
   padding: 0.10rem 0.4rem;
   font-size: 0.65rem;
   font-weight: bold;
-  visibility: hidden;
 }
 
 .user-container {
@@ -133,4 +131,16 @@ ul .nav-inscribite {
   height: 2.5rem;
   border-radius: 50px;
   width: 42px;
+}
+
+@media (max-width: 1024px) {
+  .navigation{
+      gap: 1rem;
+  }
+}
+@media (max-width: 640px) {
+  .navigation{
+      gap: 1rem;
+      padding: 0 1rem;
+  }
 }

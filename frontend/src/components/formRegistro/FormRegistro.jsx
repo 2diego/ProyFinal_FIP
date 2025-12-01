@@ -1,26 +1,51 @@
 import { useForm } from "react-hook-form";
 import "./FormRegistro.css";
-import "../formContacto/formContacto.css";
+// import "../formContacto/formContacto.css";
 import logo2 from "../../assets/images/logo2.png";
-import Modal from "../modal/Modal";
+// import Modal from "../modal/Modal";
 import Input from "../input-icon/Input";
 import Label from "../labelContacto/Label";
 import BotonLogin from "../botonLogin/BotonLogin";
+import { Link } from "react-router-dom";
+import usuarioService from "../../services/usuario.service";
+import { useState } from "react";
+import Swal from 'sweetalert2';
+import { useNavigate  } from "react-router-dom";
+
 export default function FormRegistro() {
 
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const navigate = useNavigate ();
+    
+    const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
+
+    const [data, setData] = useState([]);
+
+    const registro = async (usuarioData) => {
+        try {
+            const crearUsuario = await usuarioService.register(usuarioData);
+            setData(crearUsuario);
+            Swal.fire({
+                title: 'Registro exitoso!',
+                text: 'Tu cuenta ha sido creada correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                reset();
+                navigate('/login');
+            });
+        } catch (error) {
+            Swal.fire({
+                title: 'Correo ya registrado!',
+                text: 'El correo ingresado ya se encuentra registrado.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            })
+        }
+    }
 
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
-        favDialog.showModal();
-        //guardo la data en localStorage
-        localStorage.setItem("usuario", JSON.stringify(data));
+        registro(data);
     })
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     favDialog.showModal();
-    // }
 
     return (
         <>
@@ -37,6 +62,10 @@ export default function FormRegistro() {
                                 required: {
                                     value: true,
                                     message: "El nombre es requerido"
+                                },
+                                pattern: {
+                                    value: /^[A-Za-z\s]+$/,
+                                    message: "El nombre solo puede contener letras y espacios"
                                 },
                                 minLength: {
                                     value: 3,
@@ -55,6 +84,10 @@ export default function FormRegistro() {
                                 required: {
                                     value: true,
                                     message: "El apellido es requerido"
+                                },
+                                pattern: {
+                                    value: /^[A-Za-z\s]+$/,
+                                    message: "El apellido solo puede contener letras y espacios"
                                 },
                                 minLength: {
                                     value: 3,
@@ -99,7 +132,7 @@ export default function FormRegistro() {
                                         message: "El telefono debe tener al menos 6 caracteres"
                                     },
                                     pattern: {
-                                        value: /^(\+54 )?\d{3,4} \d{6}$/,
+                                        value: /^(\+54\s?)?\d{3,4}\s?\d{6}$/,
                                         message: "El telefono no es valido"
                                     }
                                 }
@@ -118,7 +151,7 @@ export default function FormRegistro() {
                                         value: true,
                                         message: "La contraseña es requerida"
                                     },
-                                    minLength:{
+                                    minLength: {
                                         value: 6,
                                         message: "La contraseña debe tener al menos 6 caracteres"
                                     },
@@ -143,7 +176,7 @@ export default function FormRegistro() {
                                         message: "Por favor confirme su contraseña"
                                     },
                                     validate: (value) => {
-                                        if(value === watch('password')) return true;
+                                        if (value === watch('password')) return true;
                                         return "Las contraseñas no coinciden"
                                     }
 
@@ -155,35 +188,41 @@ export default function FormRegistro() {
                     <div className="checkboxes">
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-emails" />
+                                <input type="checkbox" id="accept-emails" {...register("aceptarEmails")}/>
                                 Acepto recibir comunicaciones de Superarse Gym por email
                             </label>
                         </div>
 
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-whatsapp" />
+                                <input type="checkbox" id="accept-whatsapp"  {...register("aceptarWpp")}/>
                                 Acepto recibir comunicaciones de Superarse Gym por WhatsApp
                             </label>
                         </div>
 
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-terms" />
+                                <input type="checkbox" id="accept-terms" {...register("aceptarTerminos",{
+                                    required: {
+                                        value: true,
+                                        message: "Por favor acepte los terminos y condiciones"
+                                    }
+                                })} />
                                 Acepto los <a href="#" target="_blank">Términos de Uso</a>, <a href="#" target="_blank">Términos de
                                     Venta</a> y la <a href="#" target="_blank">Política de Privacidad</a> de Superarse Gym
                             </label>
+                            {errors.aceptarTerminos && <span className="error">{errors.aceptarTerminos.message}</span>}
                         </div>
                     </div>
 
                     <BotonLogin type="submit" id="showPopup" className="btn btn-register">Registrarse</BotonLogin>
 
                     <div className="go-login">
-                        <a href="/login" className="go-login">¿Ya tienes una cuenta?</a>
+                        <Link to="/login" className="go-login">¿Ya tienes una cuenta?</Link>
                     </div>
-                        
+
                 </form>
-                <Modal mensaje="Registro exitoso" />
+                {/* <Modal mensaje="Registro exitoso" /> */}
             </section>
         </>
     );

@@ -1,13 +1,17 @@
 
 import "./cardInscripcion.css"
+import { useState } from "react"
+import BtnInscribite from "../botonInscribete/BtnInscribite.jsx"
 
-import BtnInscribete from "../botonInscribete/BtnInscribete.jsx"
+export default function CardInscripcion({ plan, precio, beneficio, clase, mostrarBotonInicial= true }) {
+const [mostrarBoton,setMostrarBoton] = useState(mostrarBotonInicial)
 
-export default function CardInscripcion({ plan, precio, beneficio, clase }) {
-
+const handleClick =()=>{
+  setMostrarBoton(false)
+}
   return (
     <>
-      <a href="inscripcion.html?plan=premium" className="link-inscripcion" />
+      
       <div className={`contenedor-inscripcion ${clase}`}>
         <div className="plan">
           <h1 className="descripcion">{plan}</h1>
@@ -19,8 +23,10 @@ export default function CardInscripcion({ plan, precio, beneficio, clase }) {
               <li key={index}>{bene}</li>
             ))}
           </ul>
-          <BtnInscribete />
-        </div>
+          {(mostrarBoton &&
+          <BtnInscribite onClick={handleClick} plan={plan} precio={precio} beneficio={beneficio} clase={clase}/>
+          )}
+          </div>
       </div>
     </>
   )
