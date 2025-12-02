@@ -37,7 +37,7 @@ export default function Inscripcion() {
           return (
             <Link
               key={plan.id_plan}
-              to="/inscripciondetalle"
+              to={`/inscripciondetalle/${plan.id_plan}`}
               state={{
                 plan: `Plan ${plan.nombre}`,
                 precio: `$${plan.precio}`,
