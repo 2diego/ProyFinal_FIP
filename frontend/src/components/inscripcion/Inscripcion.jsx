@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 
 export default function Inscripcion() {
   const beneficios = [
-    { id: "premium", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta ilimitadas", "Suscripción mensual",  "5 entrenos diferentes"] },
+    { id: "premium", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta ilimitadas", "Suscripción mensual", "5 entrenos diferentes"] },
     { id: "standard", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta limitadas", "Suscripcion mensual", "3 entrenos diferentes"] },
-    { id: "basic", beneficios: ["Entrenamiento online", "Entrenamiento progresivo", "Clase consulta limitadas", "Suscripcion mensual",  "Entrenos 2 veces"]}
+    { id: "basic", beneficios: ["Entrenamiento online", "Entrenamiento progresivo", "Clase consulta limitadas", "Suscripcion mensual", "Entrenos 2 veces"] }
   ];
 
   const [planes, setPlanes] = useState([]);
@@ -34,13 +34,23 @@ export default function Inscripcion() {
           )?.beneficios;
 
           return (
-            <CardInscripcion
+            <Link
               key={plan.id_plan}
-              clase={plan.nombre.toLowerCase()}
-              plan={`Plan ${plan.nombre}`}
-              precio={`$${plan.precio}`}
-              beneficio={beneficiosPlan} 
-            />
+              to="/inscripciondetalle"
+              state={{
+                plan: `Plan ${plan.nombre}`,
+                precio: `$${plan.precio}`,
+                beneficio: beneficiosPlan
+              }}
+            >
+              <CardInscripcion
+                clase={plan.nombre.toLowerCase()}
+                plan={`Plan ${plan.nombre}`}
+                precio={`$${plan.precio}`}
+                beneficio={beneficiosPlan}
+              />
+            </Link>
+
           );
         })}
       </div>
