@@ -6,7 +6,7 @@ import MetodoPago from "../metodoPago/MetodoPago";
 import BtnInscripcionDetalle from "./BtnInscripcionDetalle";
 import SuscripcionButton from "../botonSuscripcion/SuscripcionButton";
 import "./inscripcionDetalle.css";
-
+import planService from "../../services/plan.service.js";
 export default function InscripcionDetalle() {
   const { id_plan } = useParams();   // 👈 capturamos el id de la URL
   const [plan, setPlan] = useState(null);
