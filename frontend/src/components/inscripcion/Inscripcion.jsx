@@ -2,6 +2,7 @@ import "./inscripcion.css";
 import CardInscripcion from "../card-inscripcion/CardInscripcion.jsx";
 import planService from "../../services/plan.service.js";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Inscripcion() {
   const beneficios = [
