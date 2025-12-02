@@ -10,11 +10,11 @@ function SuscripcionButton({ clase, plan }) {
 
     let planData;
     if (plan.toLowerCase().includes("premium")) {
-      planData = await planService.getPlanById(1);
+      planData = await planService.getPlanById(3);
     } else if (plan.toLowerCase().includes("standard")) {
       planData = await planService.getPlanById(2);
     } else if (plan.toLowerCase().includes("basic")) {
-      planData = await planService.getPlanById(3);
+      planData = await planService.getPlanById(1);
     }
 
     const suscripcionActiva = usuario.suscripciones?.find(s => s.estado === "Activa");
