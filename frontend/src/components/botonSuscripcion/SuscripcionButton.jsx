@@ -17,7 +17,7 @@ function SuscripcionButton({ clase, plan }) {
       planData = await planService.getPlanById(1);
     }
 
-    const suscripcionActiva = usuario.suscripciones?.find(s => s.estado === "Activa");
+    const suscripcionActiva = usuario.suscripciones?.find(s => s.estado === "ACTIVA");
 
     if (suscripcionActiva) {
       Swal.fire({
