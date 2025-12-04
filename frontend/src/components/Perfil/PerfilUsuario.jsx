@@ -325,7 +325,7 @@ const PerfilUsuario = () => {
                     <div className="plan-info">
                         <div className="plan-card">
                             <div className="plan-header">
-                                {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
+                                {data.estado_pago === true && suscripcionActiva ? (
                                     <>
                                         <h3 id="planNombre">Plan {data.suscripciones[0].plan?.nombre || 'N/A'}</h3>
                                         <span className="plan-status" id="planStatus">Activo</span>
