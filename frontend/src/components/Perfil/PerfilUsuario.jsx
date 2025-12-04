@@ -327,7 +327,7 @@ const PerfilUsuario = () => {
                             <div className="plan-header">
                                 {data.estado_pago === true && suscripcionActiva ? (
                                     <>
-                                        <h3 id="planNombre">Plan {data.suscripciones[0].plan?.nombre || 'N/A'}</h3>
+                                        <h3 id="planNombre">Plan {suscripcionActiva.plan?.nombre || 'N/A'}</h3>
                                         <span className="plan-status" id="planStatus">Activo</span>
                                     </>
                                 ) : (
@@ -354,10 +354,10 @@ const PerfilUsuario = () => {
                             <div className="plan-benefits">
                                 <h4>Beneficios de tu plan:</h4>
                                 <ul className="lista-beneficios">
-                                    {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
+                                    {data.estado_pago === true && suscripcionActiva ? (
                                         <>
                                             {beneficios
-                                                .find((bene) => bene.id === data.suscripciones[0].plan?.nombre)
+                                                .find((bene) => bene.id === suscripcionActiva.plan?.nombre)
                                                 ?.beneficios.map((item, index) => (
                                                     <li key={index}>{item}</li>
                                                 ))}
