@@ -61,6 +61,8 @@ const PerfilUsuario = () => {
             }
         });
     };
+    const suscripcionActiva = data?.suscripciones?.find(s => s.estado === 'ACTIVA');
+
     console.log(data);
     return (
 
@@ -336,16 +338,19 @@ const PerfilUsuario = () => {
                                 )}
                             </div>
                             <div className="plan-details">
-                                {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
+                                {data.estado_pago === true && suscripcionActiva ? (
                                     <>
-                                        <p><strong>Precio:</strong> <span id="planPrecio">${data.suscripciones[0].plan?.precio || 'N/A'}</span></p>
-                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{data.suscripciones[0].fechaInicio ? new Date(data.suscripciones[0].fechaInicio).toLocaleDateString() : 'N/A'}</span></p>
-                                        <p><strong>Próximo pago:</strong> <span id="planProximoPago">{data.suscripciones[0].fechaFin ? new Date(data.suscripciones[0].fechaFin).toLocaleDateString() : 'N/A'}</span></p>
-                                        <p><strong>Estado:</strong> <span id="planEstado">{data.suscripciones[0].estado || 'N/A'}</span></p>
-                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${data.suscripciones[0].montoPagado || '0'}</span></p>
+                                        <p><strong>Precio:</strong> <span id="planPrecio">${suscripcionActiva.plan?.precio || 'Sin datos'}</span></p>
+                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{suscripcionActiva.fechaInicio ? new Date(suscripcionActiva.fechaInicio).toLocaleDateString() : 'Sin datos'}</span></p>
+                                        <p><strong>Próximo pago:</strong> <span id="planProximoPago">{suscripcionActiva.fechaFin ? new Date(suscripcionActiva.fechaFin).toLocaleDateString() : 'Sin datos'}</span></p>
+                                        <p><strong>Estado:</strong> <span id="planEstado">{suscripcionActiva.estado || 'Sin datos'}</span></p>
+                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${suscripcionActiva.montoPagado || '0'}</span></p>
                                     </>
-                                ) : (<p><strong>Plan:</strong> <span id="planPrecio">Gratis</span></p>)}
+                                ) : (
+                                    <p><strong>Plan:</strong> <span id="planPrecio">Gratis</span></p>
+                                )}
                             </div>
+
                             <div className="plan-benefits">
                                 <h4>Beneficios de tu plan:</h4>
                                 <ul className="lista-beneficios">
