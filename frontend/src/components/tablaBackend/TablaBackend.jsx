@@ -6,7 +6,8 @@ import "../Tabla/Tabla.css";
 const TablaBackend = ({
   columns,
   data,
-  itemsPerPage = 10 // cantidad de items por pagina
+  itemsPerPage = 10, // cantidad de items por pagina
+  loading = false // estado de carga
 }) => {
 
   const [consulta, setConsulta] = useState([]);
@@ -126,13 +127,19 @@ return (
             </thead>
 
             <tbody className="table-body">
-              {!data.length ? (
+              {loading ? (
                 <tr>
-                  <td colSpan={columns.length} className="loading-cell">
+                  <td colSpan={columns.length + 1} className="loading-cell">
                     <div className="loading-spinner">
                       <div className="spinner"></div>
                       <span>Cargando...</span>
                     </div>
+                  </td>
+                </tr>
+              ) : !data.length ? (
+                <tr>
+                  <td colSpan={columns.length + 1} className="loading-cell" style={{ textAlign: 'center', padding: '2rem' }}>
+                    <span style={{ fontSize: '1.1rem', color: '#666' }}>No hay consultas</span>
                   </td>
                 </tr>
               ) : (
