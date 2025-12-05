@@ -46,12 +46,28 @@ const AdminRutinas = () => {
         nombreRutina = 'Sin nombre';
       }
 
+      // Determinar qué mostrar en la columna categoría según el tipo de rutina
+      let categoriaDisplay = 'Sin plan';
+      
+      if (rutina.tipo_rutina === 'general') {
+        categoriaDisplay = 'Uso general';
+      } else if (rutina.tipo_rutina === 'plan' && rutina.categoria) {
+        // Para rutinas de plan, mostrar la categoría (Basic, Medium, Premium)
+        categoriaDisplay = rutina.categoria;
+      } else if (rutina.tipo_rutina === 'cliente' && rutina.usuario) {
+        // Para rutinas de cliente específico, mostrar el nombre del cliente
+        categoriaDisplay = `${rutina.usuario.nombre || ''} ${rutina.usuario.apellido || ''}`.trim() || 'Cliente sin nombre';
+      } else if (rutina.tipo_rutina === 'cliente') {
+        // Si es para cliente pero no hay datos del usuario
+        categoriaDisplay = 'Cliente específico';
+      }
+
       return {
         id: rutina.id_rutina || rutina.id,
         nombre: nombreRutina,
         descripcion: rutina.descripcion || 'Sin descripción',
         nivel: rutina.nivel ? rutina.nivel.charAt(0).toUpperCase() + rutina.nivel.slice(1) : 'N/A',
-        categoria: rutina.categoria || 'Sin plan',
+        categoria: categoriaDisplay,
       };
     });
   };

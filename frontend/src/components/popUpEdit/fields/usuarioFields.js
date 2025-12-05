@@ -1,6 +1,6 @@
 const planOptions = [
   { value: 'Basic', label: 'Plan Basico' },
-  { value: 'Medium', label: 'Plan Medium' },
+  { value: 'Standard', label: 'Plan Standard' },
   { value: 'Premium', label: 'Plan Premium' }
 ];
 

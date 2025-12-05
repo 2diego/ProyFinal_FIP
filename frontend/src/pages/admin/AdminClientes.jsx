@@ -72,7 +72,7 @@ const AdminClientes = () => {
           const planNombre = String(suscripcion.plan.nombre).toLowerCase().trim();
           const planMapping = {
             'basic': 'Basic',
-            'standard': 'Medium',
+            'standard': 'Standard',
             'premium': 'Premium'
           };
           planValue = planMapping[planNombre] || suscripcion.plan.nombre;
@@ -275,7 +275,7 @@ const AdminClientes = () => {
           const planNombre = String(suscripcion.plan.nombre).toLowerCase().trim();
           const planMapping = {
             'basic': 'Basic',
-            'standard': 'Medium',
+            'standard': 'Standard',
             'premium': 'Premium'
           };
           tipoPlan = planMapping[planNombre] || suscripcion.plan.nombre;
