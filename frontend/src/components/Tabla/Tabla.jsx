@@ -73,8 +73,9 @@ const Tabla = ({
                       className={`table-header-cell ${column.sortable ? 'sortable' : ''}`}
                       style={{ width: column.width }}
                       onClick={() => column.sortable && handleSort(column.key)}
+                      data-column={column.key}
                     >
-                      <span style={{display: 'inline-flex'}}>
+                      <span style={{display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px'}}>
                       {column.label}
                       {column.sortable && (
                         <svg className="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
