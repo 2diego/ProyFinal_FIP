@@ -5,6 +5,7 @@ import AdminBar from "../../components/AdminBar/AdminBar"
 import rutinaService from "../../services/rutina.service.js";
 import TablaRutina from "../../components/rutina/TablaRutina";
 import ModalCrearRutina from "../../components/rutina/ModalCrearRutina";
+import "./admin.css";
 
 const AdminRutinas = () => {
   const [rutinas, setRutinas] = useState([]);
@@ -175,13 +176,7 @@ const AdminRutinas = () => {
             searchValue={searchTerm}
           />
           {error && (
-            <div className="error-message" style={{ 
-              padding: '10px', 
-              margin: '10px 0', 
-              backgroundColor: '#fee', 
-              color: '#c33', 
-              borderRadius: '4px' 
-            }}>
+            <div className="admin-error-message">
               {error}
             </div>
           )}
@@ -197,55 +192,20 @@ const AdminRutinas = () => {
 
       {/* Vista de detalles de rutina con TablaRutina */}
       {isViewOpen && selectedRutina && (
-        <div className="rutina-view-modal" style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          zIndex: 1000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px',
-          overflow: 'auto'
-        }}>
-          <div style={{
-            backgroundColor: 'var(--gris-osc)',
-            borderRadius: '10px',
-            padding: '30px',
-            width: '95%',
-            maxWidth: '1200px',
-            maxHeight: '95vh',
-            overflow: 'auto',
-            border: '1px solid var(--naranja)',
-            position: 'relative'
-          }}>
+        <div className="rutina-view-modal">
+          <div className="rutina-view-content">
             <button
               onClick={() => {
                 setIsViewOpen(false);
                 setSelectedRutina(null);
               }}
-              style={{
-                position: 'absolute',
-                top: '15px',
-                right: '15px',
-                background: 'transparent',
-                border: 'none',
-                color: 'var(--blanco)',
-                fontSize: '28px',
-                cursor: 'pointer',
-                padding: '5px 10px',
-                zIndex: 10,
-                fontWeight: 'bold'
-              }}
+              className="rutina-view-close-btn"
             >
               ×
             </button>
             
             {/* Información adicional de la rutina */}
-            <div style={{ marginBottom: '20px', color: 'var(--blanco)', paddingRight: '40px' }}>
+            <div className="rutina-view-info">
               <p><strong>Nivel:</strong> {selectedRutina.nivel ? selectedRutina.nivel.charAt(0).toUpperCase() + selectedRutina.nivel.slice(1) : 'N/A'}</p>
               <p><strong>Categoría:</strong> {selectedRutina.categoria || 'Sin plan'}</p>
               {selectedRutina.usuario && (

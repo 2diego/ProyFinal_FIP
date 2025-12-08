@@ -9,6 +9,7 @@ import { getUsuarioFields, getPlanLabel } from "../../components/popUpEdit/field
 import PlanillaPdf from "../../components/convertidorPdf/PlanillaPdf";
 import ModalCrearRutina from "../../components/rutina/ModalCrearRutina";
 import Swal from 'sweetalert2';
+import "./admin.css";
 const AdminClientes = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -521,13 +522,7 @@ const AdminClientes = () => {
             searchValue={searchTerm}
           />
           {error && (
-            <div className="error-message" style={{
-              padding: '10px',
-              margin: '10px 0',
-              backgroundColor: '#fee',
-              color: '#c33',
-              borderRadius: '4px'
-            }}>
+            <div className="admin-error-message">
               {error}
             </div>
           )}
@@ -557,45 +552,30 @@ const AdminClientes = () => {
         title={modalMode === 'create' ? 'Agregar Nuevo Cliente' : 'Editar Cliente'}
         customContent={
           (modalMode === 'edit' || modalMode === 'view') && selectedUsuario ? (
-            <div style={{
-              marginBottom: '20px',
-              padding: '20px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              backgroundColor: '#f8f9fa',
-              textAlign: 'center'
-            }}>
-              <h3 style={{ color: '#333', marginBottom: '15px', fontSize: '1.1rem', fontWeight: '600' }}>
+            <div className="rutina-gestion-container">
+              <h3 className="rutina-gestion-title">
                 Gestión de Rutina
               </h3>
               
               {/* Mostrar rutina actual */}
-              <div style={{ marginBottom: '15px', color: '#333' }}>
-                <strong style={{ color: '#333' }}>Rutina Actual: </strong>
+              <div className="rutina-actual-container">
+                <strong className="rutina-actual-label">Rutina Actual: </strong>
                 {selectedUsuario?.rutina_activa ? (
-                  <span style={{ color: '#007bff' }}>{selectedUsuario.rutina_activa.nombre || `Rutina #${selectedUsuario.rutina_activa.id_rutina}`}</span>
+                  <span className="rutina-actual-nombre">{selectedUsuario.rutina_activa.nombre || `Rutina #${selectedUsuario.rutina_activa.id_rutina}`}</span>
                 ) : (
-                  <span style={{ color: '#6c757d' }}>Sin rutina asignada</span>
+                  <span className="rutina-actual-sin">Sin rutina asignada</span>
                 )}
               </div>
 
               {/* Botones de acción - Solo en modo editar */}
               {modalMode === 'edit' && (
                 <>
-                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <div className="rutina-actions-container">
                     {selectedUsuario?.rutina_activa && (
                       <button
                         type="button"
                         onClick={handleEliminarRutina}
-                        style={{
-                          padding: '8px 16px',
-                          backgroundColor: '#dc3545',
-                          color: '#fff',
-                          border: 'none',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontSize: '14px'
-                        }}
+                        className="rutina-btn rutina-btn-eliminar"
                       >
                         Desvincular Rutina
                       </button>
@@ -604,15 +584,7 @@ const AdminClientes = () => {
                     <button
                       type="button"
                       onClick={() => setRutinaAction(rutinaAction === 'cambiar' ? null : 'cambiar')}
-                      style={{
-                        padding: '8px 16px',
-                        backgroundColor: rutinaAction === 'cambiar' ? '#ff6a00' : '#007bff',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '14px'
-                      }}
+                      className={`rutina-btn ${rutinaAction === 'cambiar' ? 'rutina-btn-cambiar-active' : 'rutina-btn-cambiar'}`}
                     >
                       {rutinaAction === 'cambiar' ? 'Cancelar' : 'Cambiar Rutina'}
                     </button>
@@ -623,15 +595,7 @@ const AdminClientes = () => {
                         setIsRutinaModalOpen(true);
                         setRutinaAction('crear');
                       }}
-                      style={{
-                        padding: '8px 16px',
-                        backgroundColor: '#28a745',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '14px'
-                      }}
+                      className="rutina-btn rutina-btn-crear"
                     >
                       Crear Nueva Rutina
                     </button>
@@ -639,8 +603,8 @@ const AdminClientes = () => {
 
                   {/* Selector de rutina para cambiar */}
                   {rutinaAction === 'cambiar' && (
-                    <div style={{ marginTop: '15px' }}>
-                      <label style={{ color: '#333', display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                    <div className="rutina-selector-container">
+                      <label className="rutina-selector-label">
                         Seleccionar nueva rutina:
                       </label>
                       <select
@@ -650,15 +614,7 @@ const AdminClientes = () => {
                             e.target.value = '';
                           }
                         }}
-                        style={{
-                          width: '100%',
-                          padding: '8px',
-                          borderRadius: '4px',
-                          backgroundColor: '#fff',
-                          color: '#333',
-                          border: '1px solid #ddd',
-                          fontSize: '14px'
-                        }}
+                        className="rutina-selector-select"
                       >
                         <option value="">Seleccione una rutina...</option>
                         {rutinas
@@ -689,25 +645,18 @@ const AdminClientes = () => {
         title="Detalles del Cliente"
         customContent={
           viewUsuario ? (
-            <div style={{
-              marginTop: '20px',
-              padding: '20px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              backgroundColor: '#f8f9fa',
-              textAlign: 'center'
-            }}>
-              <h3 style={{ color: '#333', marginBottom: '15px', fontSize: '1.1rem', fontWeight: '600' }}>
+            <div className="rutina-gestion-container rutina-gestion-container-view">
+              <h3 className="rutina-gestion-title">
                 Gestión de Rutina
               </h3>
               
               {/* Mostrar rutina actual */}
-              <div style={{ marginBottom: '15px', color: '#333' }}>
-                <strong style={{ color: '#333' }}>Rutina Actual: </strong>
+              <div className="rutina-actual-container">
+                <strong className="rutina-actual-label">Rutina Actual: </strong>
                 {viewUsuario?.rutina_activa ? (
-                  <span style={{ color: '#007bff' }}>{viewUsuario.rutina_activa.nombre || `Rutina #${viewUsuario.rutina_activa.id_rutina}`}</span>
+                  <span className="rutina-actual-nombre">{viewUsuario.rutina_activa.nombre || `Rutina #${viewUsuario.rutina_activa.id_rutina}`}</span>
                 ) : (
-                  <span style={{ color: '#6c757d' }}>Sin rutina asignada</span>
+                  <span className="rutina-actual-sin">Sin rutina asignada</span>
                 )}
               </div>
             </div>
