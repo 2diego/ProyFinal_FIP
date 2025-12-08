@@ -87,7 +87,7 @@ body {
 }
 
 @media(max-width: 550px){
-    .botones-inscrip {
+    .botones-incrip {
         flex-direction: column;
         gap: 1rem;
     }

@@ -1,8 +1,8 @@
 //Cliente HTTP base para realizar peticiones a la API
 
 class ApiClient {
-  constructor() {
-    this.baseURL = 'https://proyectofinal-backend-7797.onrender.com';
+  constructor() { this.baseURL = 'https://proyectofinal-backend-7797.onrender.com'
+                 // this.baseURL= 'http://localhost:3000';
   }
 
   // Maneja la respuesta de la API
@@ -28,7 +28,7 @@ class ApiClient {
     // Intentar parsear JSON
     try {
       return await response.json();
-    } catch {
+    } catch (e){
       // Si no se puede parsear, devolver null sin romper
       return null;
     }

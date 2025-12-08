@@ -11,6 +11,12 @@ class UsuarioService {
   async getUsuarioById(id) {
     return apiClient.get(`/usuario/${id}`);
   }
+  async getCurrentUser() {
+        // Llama al endpoint que verifica la sesión y devuelve los datos del usuario.
+        // Si no hay sesión (401), apiClient lanzará un error.
+        return apiClient.get('/auth/me'); 
+       
+    }
 
   async getUserByEmail(email){
     return apiClient.get(`/usuario/email/${email}`);
