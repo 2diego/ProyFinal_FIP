@@ -192,17 +192,23 @@ const AdminRutinas = () => {
 
       {/* Vista de detalles de rutina con TablaRutina */}
       {isViewOpen && selectedRutina && (
-        <div className="rutina-view-modal">
-          <div className="rutina-view-content">
-            <button
-              onClick={() => {
-                setIsViewOpen(false);
-                setSelectedRutina(null);
-              }}
-              className="rutina-view-close-btn"
-            >
-              ×
-            </button>
+        <div className="rutina-view-modal" onClick={() => {
+          setIsViewOpen(false);
+          setSelectedRutina(null);
+        }}>
+          <div className="rutina-view-content" onClick={(e) => e.stopPropagation()}>
+            <div className="rutina-view-header">
+              <h2>Editar Rutina</h2>
+              <button
+                onClick={() => {
+                  setIsViewOpen(false);
+                  setSelectedRutina(null);
+                }}
+                className="rutina-view-close-btn"
+              >
+                ×
+              </button>
+            </div>
             
             {/* Información adicional de la rutina */}
             <div className="rutina-view-info">
