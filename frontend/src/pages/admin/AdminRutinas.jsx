@@ -197,32 +197,14 @@ const AdminRutinas = () => {
           setSelectedRutina(null);
         }}>
           <div className="rutina-view-content" onClick={(e) => e.stopPropagation()}>
-            <div className="rutina-view-header">
-              <h2>Editar Rutina</h2>
-              <button
-                onClick={() => {
-                  setIsViewOpen(false);
-                  setSelectedRutina(null);
-                }}
-                className="rutina-view-close-btn"
-              >
-                ×
-              </button>
-            </div>
-            
-            {/* Información adicional de la rutina */}
-            <div className="rutina-view-info">
-              <p><strong>Nivel:</strong> {selectedRutina.nivel ? selectedRutina.nivel.charAt(0).toUpperCase() + selectedRutina.nivel.slice(1) : 'N/A'}</p>
-              <p><strong>Categoría:</strong> {selectedRutina.categoria || 'Sin plan'}</p>
-              {selectedRutina.usuario && (
-                <p><strong>Cliente:</strong> {selectedRutina.usuario.nombre} {selectedRutina.usuario.apellido}</p>
-              )}
-            </div>
-
-            {/* Componente TablaRutina con modo edición */}
             <TablaRutina 
               rutinaProp={selectedRutina}
               modoEdicion={true}
+              isModal={true}
+              onClose={() => {
+                setIsViewOpen(false);
+                setSelectedRutina(null);
+              }}
               onRutinaActualizada={(rutinaActualizada) => {
                 setSelectedRutina(rutinaActualizada);
                 // Recargar lista de rutinas para reflejar cambios
