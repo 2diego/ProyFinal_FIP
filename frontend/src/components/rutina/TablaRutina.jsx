@@ -939,8 +939,11 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
   };
 
   // Crear nuevo ejercicio y agregarlo
-  const handleCrearYAgregarEjercicio = async () => {
-    if (!nuevoEjercicio.nombre || nuevoEjercicio.nombre.trim() === '') {
+  const handleCrearYAgregarEjercicio = async (ejercicioData = null) => {
+    // Usar los datos pasados como parámetro o el estado actual
+    const datosEjercicio = ejercicioData || nuevoEjercicio;
+    
+    if (!datosEjercicio.nombre || datosEjercicio.nombre.trim() === '') {
       SwalToUse.fire({
         title: 'Error de validación',
         text: 'El nombre del ejercicio es requerido',
@@ -974,7 +977,7 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     }
 
     try {
-      const ejercicioCreado = await ejercicioService.createEjercicio(nuevoEjercicio);
+      const ejercicioCreado = await ejercicioService.createEjercicio(datosEjercicio);
 
       await dificultadService.createDificultad({
         diaId: diaSeleccionado,

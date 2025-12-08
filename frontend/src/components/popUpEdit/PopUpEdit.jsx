@@ -27,7 +27,8 @@ const PopUpEdit = ({
   entityName = 'entidad',
   customContent = null,
   onEditar = null,
-  onEliminar = null
+  onEliminar = null,
+  submitButtonText = null
 }) => {
   const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
     defaultValues: initialData
@@ -88,7 +89,7 @@ const PopUpEdit = ({
                   <div key={field.name} className="popup-input-group">
                     <Label htmlFor={field.name}>
                       {field.label}
-                      {/* {field.required && <span className="required-asterisk">*</span>} */}
+                      {field.required && <span className="required-asterisk"> *</span>}
                     </Label>
                     
                     <div className="popup-input-wrapper">
@@ -205,7 +206,7 @@ const PopUpEdit = ({
                     Cancelar
                   </BotonForm>
                   <BotonForm type="submit" className="btn-submit">
-                    {mode === 'create' ? 'Crear' : 'Guardar Cambios'}
+                    {submitButtonText || (mode === 'create' ? 'Crear' : 'Guardar Cambios')}
                   </BotonForm>
                 </>
               )}
