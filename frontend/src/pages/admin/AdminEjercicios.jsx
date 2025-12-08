@@ -248,6 +248,8 @@ const AdminEjercicios = () => {
         onSubmit={() => {}} // No se usa en modo view
         entityName="ejercicio"
         title="Detalles del Ejercicio"
+        onEditar={handleEditar}
+        onEliminar={handleEliminar}
       />
     </>
   );

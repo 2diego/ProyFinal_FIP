@@ -230,6 +230,58 @@
   border-color: #e55a2b;
 }
 
+.popup-form-actions .btn-edit-view {
+  background: #17a2b8;
+  color: white;
+  border: 1px solid #17a2b8;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.popup-form-actions .btn-edit-view:hover {
+  background: #138496;
+  border-color: #138496;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.popup-form-actions .btn-edit-view:active {
+  transform: translateY(0);
+}
+
+.popup-form-actions .btn-delete-view {
+  background: #dc3545;
+  color: white;
+  border: 1px solid #dc3545;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.popup-form-actions .btn-delete-view:hover {
+  background: #c82333;
+  border-color: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.popup-form-actions .btn-delete-view:active {
+  transform: translateY(0);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .popup-dialog {

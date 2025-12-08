@@ -25,7 +25,9 @@ const PopUpEdit = ({
   onSubmit,
   title,
   entityName = 'entidad',
-  customContent = null
+  customContent = null,
+  onEditar = null,
+  onEliminar = null
 }) => {
   const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
     defaultValues: initialData
@@ -162,9 +164,41 @@ const PopUpEdit = ({
 
             <div className="popup-form-actions">
               {isViewMode ? (
-                <BotonForm type="button" onClick={handleCancel} className="btn-submit">
-                  Cerrar
-                </BotonForm>
+                <div style={{ display: 'flex', gap: '1rem', width: '100%', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <BotonForm type="button" onClick={handleCancel} className="btn-cancel">
+                    Cerrar
+                  </BotonForm>
+                  {onEditar && (
+                    <BotonForm 
+                      type="button" 
+                      onClick={() => {
+                        const id = initialData.id || initialData.id_usuario || initialData.id_ejercicio || initialData.id_rutina || initialData.id_producto;
+                        if (id) {
+                          onClose();
+                          onEditar(id);
+                        }
+                      }} 
+                      className="btn-edit-view"
+                    >
+                      <i className="fas fa-edit"></i> Editar
+                    </BotonForm>
+                  )}
+                  {onEliminar && (
+                    <BotonForm 
+                      type="button" 
+                      onClick={() => {
+                        const id = initialData.id || initialData.id_usuario || initialData.id_ejercicio || initialData.id_rutina || initialData.id_producto;
+                        if (id) {
+                          onClose();
+                          onEliminar(id);
+                        }
+                      }} 
+                      className="btn-delete-view"
+                    >
+                      <i className="fas fa-trash"></i> Eliminar
+                    </BotonForm>
+                  )}
+                </div>
               ) : (
                 <>
                   <BotonForm type="button" onClick={handleCancel} className="btn-cancel">

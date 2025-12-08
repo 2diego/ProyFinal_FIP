@@ -312,6 +312,8 @@ const AdminTienda = () => {
         initialData={viewProducto}
         mode="view"
         entityName="producto"
+        onEditar={handleEditar}
+        onEliminar={handleEliminar}
       />
     </>
   );
