@@ -12,10 +12,18 @@
   box-sizing: border-box;
 }
 
-/* Cuando está dentro de un modal, quitar el borde para evitar doble contenedor */
+
 .tabla-contenedor-modal {
   border: none;
   box-shadow: none;
+  padding: 0;
+}
+
+
+.profile-content .tabla-contenedor {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
   padding: 0;
 }
 
