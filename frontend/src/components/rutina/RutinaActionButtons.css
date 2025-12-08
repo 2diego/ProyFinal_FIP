@@ -65,3 +65,13 @@
   transform: none !important;
 }
 
+.rutina-btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+
+.rutina-btn-delete:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+

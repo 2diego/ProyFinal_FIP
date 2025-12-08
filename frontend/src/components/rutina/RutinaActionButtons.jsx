@@ -9,19 +9,31 @@ const RutinaActionButtons = ({
   onEditar,
   onGuardarCambios,
   onGuardarComoNueva,
-  onCancelar
+  onCancelar,
+  onEliminar = null,
+  isModal = false
 }) => {
   if (!modoEdicion) return null;
 
   return (
     <div className="rutina-action-buttons">
       {!editando ? (
-        <button
-          onClick={onEditar}
-          className="rutina-btn rutina-btn-edit"
-        >
-          Editar Rutina
-        </button>
+        <>
+          <button
+            onClick={onEditar}
+            className="rutina-btn rutina-btn-edit"
+          >
+            Editar Rutina
+          </button>
+          {isModal && onEliminar && (
+            <button
+              onClick={onEliminar}
+              className="rutina-btn rutina-btn-delete"
+            >
+              Eliminar Rutina
+            </button>
+          )}
+        </>
       ) : (
         <>
           {!requiereNuevaRutina && (

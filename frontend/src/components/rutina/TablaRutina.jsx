@@ -23,7 +23,7 @@ import { useSemanasDias } from "./hooks/useSemanasDias";
 import { getSwalInstance } from "./utils/swalConfig";
 import { validarDatosRutina } from "./utils/rutinaHelpers";
 
-export default function TablaRutina({ rutinaProp = null, modoEdicion = false, onRutinaActualizada = null, isModal = false, onClose = null }) {
+export default function TablaRutina({ rutinaProp = null, modoEdicion = false, onRutinaActualizada = null, isModal = false, onClose = null, onEliminarRutina = null }) {
   const [rutina, setRutina] = useState(rutinaProp);
   const [rutinaOriginal, setRutinaOriginal] = useState(null);
   const [loading, setLoading] = useState(!rutinaProp);
@@ -776,6 +776,71 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     }));
   };
 
+  // Eliminar rutina completa
+  const handleEliminarRutina = async () => {
+    if (!rutina || !rutina.id_rutina) {
+      SwalToUse.fire({
+        title: 'Error',
+        text: 'No hay rutina seleccionada para eliminar',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        zIndex: 10002
+      });
+      return;
+    }
+
+    const confirmacion = await SwalToUse.fire({
+      title: '¿Eliminar rutina?',
+      html: `
+        <p>¿Estás seguro de que deseas eliminar la rutina "<strong>${rutina.nombre}</strong>"?</p>
+        <p style="color: #dc3545; font-weight: bold;">Esta acción no se puede deshacer.</p>
+        <p>Se eliminarán todas las semanas, días y ejercicios asociados.</p>
+      `,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      zIndex: 10002
+    });
+
+    if (!confirmacion.isConfirmed) {
+      return;
+    }
+
+    try {
+      await rutinaService.deleteRutina(rutina.id_rutina);
+      
+      SwalToUse.fire({
+        title: 'Éxito',
+        text: 'Rutina eliminada exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        zIndex: 10002
+      });
+
+      // Cerrar el modal si está abierto
+      if (onClose) {
+        onClose();
+      }
+
+      // Notificar al componente padre para que actualice la lista
+      if (onEliminarRutina) {
+        onEliminarRutina(rutina.id_rutina);
+      }
+    } catch (err) {
+      console.error("Error al eliminar rutina:", err);
+      SwalToUse.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        zIndex: 10002
+      });
+    }
+  };
+
   // Eliminar ejercicio
   const handleEliminarEjercicio = async (dificultadId) => {
     const confirmacion = await SwalToUse.fire({
@@ -1098,6 +1163,8 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
           setDificultadesEditadas(new Map());
           resetEdit();
         }}
+        onEliminar={handleEliminarRutina}
+        isModal={isModal}
       />
 
       <SemanaDiaSelectors
@@ -1126,7 +1193,7 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
         onEliminarEjercicio={handleEliminarEjercicio}
         onVerImagen={handleVerImagen}
         onVerVideo={handleVerVideo}
-      />
+                    />
 
       <ModalAgregarEjercicio
         isOpen={mostrarModalAgregarEjercicio}

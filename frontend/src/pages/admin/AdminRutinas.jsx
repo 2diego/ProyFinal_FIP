@@ -5,6 +5,7 @@ import AdminBar from "../../components/AdminBar/AdminBar"
 import rutinaService from "../../services/rutina.service.js";
 import TablaRutina from "../../components/rutina/TablaRutina";
 import ModalCrearRutina from "../../components/rutina/ModalCrearRutina";
+import Swal from 'sweetalert2';
 import "./admin.css";
 
 const AdminRutinas = () => {
@@ -131,13 +132,30 @@ const AdminRutinas = () => {
       setIsViewOpen(true);
     } catch (err) {
       console.error("Error al obtener detalles:", err);
-      alert('Error al cargar los detalles de la rutina.');
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al cargar los detalles de la rutina.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     }
   };
 
   // Función para eliminar una rutina
   const handleEliminar = async (id) => {
-    if (!window.confirm('¿Estás seguro de que deseas eliminar esta rutina?')) {
+    const confirmacion = await Swal.fire({
+      title: '¿Eliminar rutina?',
+      text: '¿Estás seguro de que deseas eliminar esta rutina? Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (!confirmacion.isConfirmed) {
       return;
     }
 
@@ -154,12 +172,55 @@ const AdminRutinas = () => {
       // Recargar desde el servidor para asegurar consistencia
       await cargarRutinas();
       
-      alert('Rutina eliminada exitosamente');
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Rutina eliminada exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     } catch (err) {
       console.error("Error al eliminar rutina:", err);
-      alert('Error al eliminar la rutina. Por favor, intenta nuevamente.');
+      Swal.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
       // Si falla, recargar para asegurar que el estado esté sincronizado
       await cargarRutinas();
+    }
+  };
+
+  // Función para manejar la eliminación desde el modal de TablaRutina
+  const handleEliminarDesdeModal = async (id) => {
+    try {
+      await rutinaService.deleteRutina(id);
+      
+      // Cerrar el modal
+      setIsViewOpen(false);
+      setSelectedRutina(null);
+      
+      // Recargar lista de rutinas
+      await cargarRutinas();
+      
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Rutina eliminada exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
+    } catch (err) {
+      console.error("Error al eliminar rutina:", err);
+      Swal.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     }
   };
 
@@ -193,8 +254,8 @@ const AdminRutinas = () => {
       {/* Vista de detalles de rutina con TablaRutina */}
       {isViewOpen && selectedRutina && (
         <div className="rutina-view-modal" onClick={() => {
-          setIsViewOpen(false);
-          setSelectedRutina(null);
+                setIsViewOpen(false);
+                setSelectedRutina(null);
         }}>
           <div className="rutina-view-content" onClick={(e) => e.stopPropagation()}>
             <TablaRutina 
@@ -210,6 +271,7 @@ const AdminRutinas = () => {
                 // Recargar lista de rutinas para reflejar cambios
                 cargarRutinas();
               }}
+              onEliminarRutina={handleEliminarDesdeModal}
             />
           </div>
         </div>
