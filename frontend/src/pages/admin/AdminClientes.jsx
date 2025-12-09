@@ -122,6 +122,14 @@ const AdminClientes = () => {
     });
   };
 
+  // Calcular contadores de clientes
+  const contadoresClientes = useMemo(() => {
+    const total = usuarios.length;
+    const activos = usuarios.filter(usuario => usuario.estado_pago === true).length;
+    const inactivos = total - activos;
+    return { total, activos, inactivos };
+  }, [usuarios]);
+
   // Filtrar datos segun el termino de busqueda
   const datosFiltrados = useMemo(() => {
     const datosTransformados = transformarDatos(usuarios);
@@ -523,6 +531,7 @@ const AdminClientes = () => {
             showAddButton={false}
             onSearch={setSearchTerm}
             searchValue={searchTerm}
+            contadores={contadoresClientes}
           />
           {error && (
             <div className="admin-error-message">
