@@ -5,6 +5,9 @@ import AdminBar from "../../components/AdminBar/AdminBar"
 import rutinaService from "../../services/rutina.service.js";
 import TablaRutina from "../../components/rutina/TablaRutina";
 import ModalCrearRutina from "../../components/rutina/ModalCrearRutina";
+import Swal from 'sweetalert2';
+import { SwalWithHighZIndex } from '../../components/rutina/utils/swalConfig';
+import "./admin.css";
 
 const AdminRutinas = () => {
   const [rutinas, setRutinas] = useState([]);
@@ -37,13 +40,20 @@ const AdminRutinas = () => {
   // Transformar datos del backend al formato de la tabla
   const transformarDatos = (rutinas) => {
     return rutinas.map(rutina => {
-      // El nombre puede ser el nombre de la rutina o el nombre del cliente
-      let nombreRutina = rutina.nombre;
-      if (!nombreRutina && rutina.usuario) {
-        nombreRutina = `${rutina.usuario.nombre || ''} ${rutina.usuario.apellido || ''}`.trim();
-      }
-      if (!nombreRutina) {
-        nombreRutina = 'Sin nombre';
+      // El nombre de la rutina
+      let nombreRutina = rutina.nombre || 'Sin nombre';
+
+      // Determinar qué mostrar en la columna categoría según el tipo de rutina
+      let categoriaDisplay = 'Sin plan';
+      
+      if (rutina.tipo_rutina === 'general') {
+        categoriaDisplay = 'Uso general';
+      } else if (rutina.tipo_rutina === 'plan' && rutina.categoria) {
+        // Para rutinas de plan, mostrar la categoría (Basic, Medium, Premium)
+        categoriaDisplay = rutina.categoria;
+      } else if (rutina.tipo_rutina === 'cliente') {
+        // Para rutinas de cliente específico, mostrar tipo (el usuario se asigna a través de rutina_activa)
+        categoriaDisplay = 'Cliente específico';
       }
 
       return {
@@ -51,7 +61,7 @@ const AdminRutinas = () => {
         nombre: nombreRutina,
         descripcion: rutina.descripcion || 'Sin descripción',
         nivel: rutina.nivel ? rutina.nivel.charAt(0).toUpperCase() + rutina.nivel.slice(1) : 'N/A',
-        categoria: rutina.categoria || 'Sin plan',
+        categoria: categoriaDisplay,
       };
     });
   };
@@ -114,13 +124,30 @@ const AdminRutinas = () => {
       setIsViewOpen(true);
     } catch (err) {
       console.error("Error al obtener detalles:", err);
-      alert('Error al cargar los detalles de la rutina.');
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al cargar los detalles de la rutina.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     }
   };
 
   // Función para eliminar una rutina
   const handleEliminar = async (id) => {
-    if (!window.confirm('¿Estás seguro de que deseas eliminar esta rutina?')) {
+    const confirmacion = await Swal.fire({
+      title: '¿Eliminar rutina?',
+      text: '¿Estás seguro de que deseas eliminar esta rutina? Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (!confirmacion.isConfirmed) {
       return;
     }
 
@@ -137,12 +164,64 @@ const AdminRutinas = () => {
       // Recargar desde el servidor para asegurar consistencia
       await cargarRutinas();
       
-      alert('Rutina eliminada exitosamente');
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Rutina eliminada exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     } catch (err) {
       console.error("Error al eliminar rutina:", err);
-      alert('Error al eliminar la rutina. Por favor, intenta nuevamente.');
+      Swal.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
       // Si falla, recargar para asegurar que el estado esté sincronizado
       await cargarRutinas();
+    }
+  };
+
+  // Función para manejar la eliminación desde el modal de TablaRutina
+  const handleEliminarDesdeModal = async (id) => {
+    // Usar SwalWithHighZIndex cuando el modal está abierto para que las alertas aparezcan por encima
+    const SwalToUse = isViewOpen ? SwalWithHighZIndex : Swal;
+    
+    try {
+      await rutinaService.deleteRutina(id);
+      
+      // Cerrar el modal
+      setIsViewOpen(false);
+      setSelectedRutina(null);
+      
+      // Recargar lista de rutinas (siempre, incluso si hay error parcial)
+      await cargarRutinas();
+      
+      SwalToUse.fire({
+        title: 'Éxito',
+        text: 'Rutina eliminada exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
+    } catch (err) {
+      console.error("Error al eliminar rutina:", err);
+      
+      // Cerrar el modal y recargar lista incluso si hay error
+      setIsViewOpen(false);
+      setSelectedRutina(null);
+      await cargarRutinas();
+      
+      SwalToUse.fire({
+        title: 'Error',
+        text: err.response?.data?.message || err.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     }
   };
 
@@ -159,13 +238,7 @@ const AdminRutinas = () => {
             searchValue={searchTerm}
           />
           {error && (
-            <div className="error-message" style={{ 
-              padding: '10px', 
-              margin: '10px 0', 
-              backgroundColor: '#fee', 
-              color: '#c33', 
-              borderRadius: '4px' 
-            }}>
+            <div className="admin-error-message">
               {error}
             </div>
           )}
@@ -181,71 +254,25 @@ const AdminRutinas = () => {
 
       {/* Vista de detalles de rutina con TablaRutina */}
       {isViewOpen && selectedRutina && (
-        <div className="rutina-view-modal" style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          zIndex: 1000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px',
-          overflow: 'auto'
-        }}>
-          <div style={{
-            backgroundColor: 'var(--gris-osc)',
-            borderRadius: '10px',
-            padding: '30px',
-            width: '95%',
-            maxWidth: '1200px',
-            maxHeight: '95vh',
-            overflow: 'auto',
-            border: '1px solid var(--naranja)',
-            position: 'relative'
-          }}>
-            <button
-              onClick={() => {
+        <div className="rutina-view-modal" onClick={() => {
                 setIsViewOpen(false);
                 setSelectedRutina(null);
-              }}
-              style={{
-                position: 'absolute',
-                top: '15px',
-                right: '15px',
-                background: 'transparent',
-                border: 'none',
-                color: 'var(--blanco)',
-                fontSize: '28px',
-                cursor: 'pointer',
-                padding: '5px 10px',
-                zIndex: 10,
-                fontWeight: 'bold'
-              }}
-            >
-              ×
-            </button>
-            
-            {/* Información adicional de la rutina */}
-            <div style={{ marginBottom: '20px', color: 'var(--blanco)', paddingRight: '40px' }}>
-              <p><strong>Nivel:</strong> {selectedRutina.nivel ? selectedRutina.nivel.charAt(0).toUpperCase() + selectedRutina.nivel.slice(1) : 'N/A'}</p>
-              <p><strong>Categoría:</strong> {selectedRutina.categoria || 'Sin plan'}</p>
-              {selectedRutina.usuario && (
-                <p><strong>Cliente:</strong> {selectedRutina.usuario.nombre} {selectedRutina.usuario.apellido}</p>
-              )}
-            </div>
-
-            {/* Componente TablaRutina con modo edición */}
+        }}>
+          <div className="rutina-view-content" onClick={(e) => e.stopPropagation()}>
             <TablaRutina 
               rutinaProp={selectedRutina}
               modoEdicion={true}
+              isModal={true}
+              onClose={() => {
+                setIsViewOpen(false);
+                setSelectedRutina(null);
+              }}
               onRutinaActualizada={(rutinaActualizada) => {
                 setSelectedRutina(rutinaActualizada);
                 // Recargar lista de rutinas para reflejar cambios
                 cargarRutinas();
               }}
+              onEliminarRutina={handleEliminarDesdeModal}
             />
           </div>
         </div>
