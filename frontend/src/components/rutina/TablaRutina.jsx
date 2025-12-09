@@ -809,35 +809,10 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       return;
     }
 
-    try {
-      await rutinaService.deleteRutina(rutina.id_rutina);
-      
-      SwalToUse.fire({
-        title: 'Éxito',
-        text: 'Rutina eliminada exitosamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-        zIndex: 10002
-      });
-
-      // Cerrar el modal si está abierto
-      if (onClose) {
-        onClose();
-      }
-
-      // Notificar al componente padre para que actualice la lista
-      if (onEliminarRutina) {
-        onEliminarRutina(rutina.id_rutina);
-      }
-    } catch (err) {
-      console.error("Error al eliminar rutina:", err);
-      SwalToUse.fire({
-        title: 'Error',
-        text: err.response?.data?.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        zIndex: 10002
-      });
+    // Delega eliminación al componente padre
+    // AdminRutinas maneja la eliminación y actualización de la lista
+    if (onEliminarRutina) {
+      onEliminarRutina(rutina.id_rutina);
     }
   };
 
@@ -1162,7 +1137,7 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
         onCancelar={() => {
           setDificultadesEditadas(new Map());
           resetEdit();
-        }}
+                    }}
         onEliminar={handleEliminarRutina}
         isModal={isModal}
       />
