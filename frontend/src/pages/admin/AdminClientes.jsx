@@ -122,6 +122,14 @@ const AdminClientes = () => {
     });
   };
 
+  // Calcular contadores de clientes
+  const contadoresClientes = useMemo(() => {
+    const total = usuarios.length;
+    const activos = usuarios.filter(usuario => usuario.estado_pago === true).length;
+    const inactivos = total - activos;
+    return { total, activos, inactivos };
+  }, [usuarios]);
+
   // Filtrar datos segun el termino de busqueda
   const datosFiltrados = useMemo(() => {
     const datosTransformados = transformarDatos(usuarios);
@@ -523,6 +531,7 @@ const AdminClientes = () => {
             showAddButton={false}
             onSearch={setSearchTerm}
             searchValue={searchTerm}
+            contadores={contadoresClientes}
           />
           {error && (
             <div className="admin-error-message">
@@ -624,7 +633,7 @@ const AdminClientes = () => {
                           .filter(rutina => rutina.id_rutina !== selectedUsuario?.rutina_activa?.id_rutina)
                           .map(rutina => (
                             <option key={rutina.id_rutina} value={rutina.id_rutina}>
-                              {rutina.nombre} {rutina.usuario ? `(${rutina.usuario.nombre} ${rutina.usuario.apellido})` : ''}
+                              {rutina.nombre} {rutina.tipo_rutina === 'cliente' ? '(Cliente específico)' : rutina.tipo_rutina === 'plan' ? `(${rutina.categoria})` : '(General)'}
                             </option>
                           ))}
                       </select>

@@ -15,7 +15,9 @@ const RutinaInfoHeader = ({
   const nivelActual = datosEditados.nivel !== undefined ? datosEditados.nivel : rutina.nivel;
   const categoriaActual = datosEditados.categoria !== undefined ? datosEditados.categoria : rutina.categoria;
   const tipoRutinaActual = datosEditados.tipo_rutina !== undefined ? datosEditados.tipo_rutina : rutina.tipo_rutina;
-  const usuarioActualId = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : (rutina.usuario?.id_usuario || null);
+  // NOTA: usuarioActualId ahora solo viene de datosEditados (no hay rutina.usuario)
+  // Si se necesita obtener el usuario que tiene esta rutina activa, se debe hacer una consulta inversa
+  const usuarioActualId = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : null;
   const nombreActual = datosEditados.nombre !== undefined ? datosEditados.nombre : rutina.nombre;
   const descripcionActual = datosEditados.descripcion !== undefined ? datosEditados.descripcion : rutina.descripcion;
 
@@ -192,7 +194,10 @@ const RutinaInfoHeader = ({
               </select>
             ) : (
               <p className="rutina-info-text">
-                {rutina.usuario ? `${rutina.usuario.nombre} ${rutina.usuario.apellido}` : 'Sin cliente'}
+                {/* NOTA: Para mostrar el cliente, se necesitaría una consulta inversa
+                    para obtener usuarios que tienen esta rutina como activa.
+                    Por ahora mostramos un mensaje genérico. */}
+                {tipoRutinaActual === 'cliente' ? 'Cliente específico' : 'Sin cliente'}
               </p>
             )}
           </div>

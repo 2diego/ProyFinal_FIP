@@ -40,14 +40,8 @@ const AdminRutinas = () => {
   // Transformar datos del backend al formato de la tabla
   const transformarDatos = (rutinas) => {
     return rutinas.map(rutina => {
-      // El nombre puede ser el nombre de la rutina o el nombre del cliente
-      let nombreRutina = rutina.nombre;
-      if (!nombreRutina && rutina.usuario) {
-        nombreRutina = `${rutina.usuario.nombre || ''} ${rutina.usuario.apellido || ''}`.trim();
-      }
-      if (!nombreRutina) {
-        nombreRutina = 'Sin nombre';
-      }
+      // El nombre de la rutina
+      let nombreRutina = rutina.nombre || 'Sin nombre';
 
       // Determinar qué mostrar en la columna categoría según el tipo de rutina
       let categoriaDisplay = 'Sin plan';
@@ -57,11 +51,8 @@ const AdminRutinas = () => {
       } else if (rutina.tipo_rutina === 'plan' && rutina.categoria) {
         // Para rutinas de plan, mostrar la categoría (Basic, Medium, Premium)
         categoriaDisplay = rutina.categoria;
-      } else if (rutina.tipo_rutina === 'cliente' && rutina.usuario) {
-        // Para rutinas de cliente específico, mostrar el nombre del cliente
-        categoriaDisplay = `${rutina.usuario.nombre || ''} ${rutina.usuario.apellido || ''}`.trim() || 'Cliente sin nombre';
       } else if (rutina.tipo_rutina === 'cliente') {
-        // Si es para cliente pero no hay datos del usuario
+        // Para rutinas de cliente específico, mostrar tipo (el usuario se asigna a través de rutina_activa)
         categoriaDisplay = 'Cliente específico';
       }
 
