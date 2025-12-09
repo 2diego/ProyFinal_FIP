@@ -5,6 +5,8 @@ import AdminBar from "../../components/AdminBar/AdminBar"
 import productoService from "../../services/producto.service.js";
 import PopUpEdit from "../../components/popUpEdit/PopUpEdit";
 import { getProductoFields } from "../../components/popUpEdit/fields/productoFields";
+import Swal from 'sweetalert2';
+import "./admin.css";
 
 const AdminTienda = () => {
   const [productos, setProductos] = useState([]);
@@ -86,7 +88,7 @@ const AdminTienda = () => {
       clickable: true,
       width: '120px',
       render: (value, row) => {
-        if (!value) return <span style={{ color: '#999', fontSize: '0.85rem' }}>Sin imagen</span>;
+        if (!value) return <span className="tienda-sin-imagen">Sin imagen</span>;
         
         return (
           <div className="table-image-preview">
@@ -102,12 +104,7 @@ const AdminTienda = () => {
               title="Click para ver imagen completa"
             />
             <span 
-              style={{ 
-                display: 'none', 
-                color: '#999', 
-                fontSize: '0.85rem',
-                cursor: 'pointer'
-              }}
+              className="tienda-imagen-error"
               onClick={() => window.open(value, '_blank')}
             >
               Ver imagen
@@ -190,14 +187,26 @@ const AdminTienda = () => {
         console.log('Datos a enviar al backend (create):', datosLimpios);
         await productoService.createProducto(datosLimpios);
         await cargarProductos();
-        alert('Producto creado exitosamente');
+        Swal.fire({
+          title: 'Éxito',
+          text: 'Producto creado exitosamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#ff6a00'
+        });
         setIsModalOpen(false);
       } else {
         await handleUpdateProducto(selectedProducto.id_producto || selectedProducto.id, productoData);
       }
     } catch (err) {
       console.error("Error al procesar producto:", err);
-      alert(err.response?.data?.message || 'Error al procesar el producto. Por favor, intenta nuevamente.');
+      Swal.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al procesar el producto. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
       throw err; // Re-lanzar para que el componente maneje el error
     }
   };
@@ -210,7 +219,13 @@ const AdminTienda = () => {
       setIsViewModalOpen(true);
     } catch (err) {
       console.error("Error al obtener detalles:", err);
-      alert('Error al cargar los detalles del producto.');
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al cargar los detalles del producto.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     }
   };
 
@@ -223,7 +238,13 @@ const AdminTienda = () => {
       setIsModalOpen(true);
     } catch (err) {
       console.error("Error al obtener datos para editar:", err);
-      alert('Error al cargar los datos del producto.');
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al cargar los datos del producto.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     }
   };
 
@@ -234,18 +255,41 @@ const AdminTienda = () => {
       console.log('Datos a enviar al backend (update):', datosLimpios);
       await productoService.updateProducto(id, datosLimpios);
       await cargarProductos();
-      alert('Producto actualizado exitosamente');
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Producto actualizado exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
       setIsModalOpen(false);
     } catch (err) {
       console.error("Error al actualizar producto:", err);
-      alert(err.response?.data?.message || 'Error al actualizar el producto. Por favor, intenta nuevamente.');
+      Swal.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al actualizar el producto. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
       throw err;
     }
   };
 
   // Función para eliminar un producto
   const handleEliminar = async (id) => {
-    if (!window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+    const confirmacion = await Swal.fire({
+      title: '¿Eliminar producto?',
+      text: '¿Estás seguro de que deseas eliminar este producto?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (!confirmacion.isConfirmed) {
       return;
     }
 
@@ -262,10 +306,22 @@ const AdminTienda = () => {
       // Recargar desde el servidor para asegurar consistencia
       await cargarProductos();
       
-      alert('Producto eliminado exitosamente');
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Producto eliminado exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     } catch (err) {
       console.error("Error al eliminar producto:", err);
-      alert('Error al eliminar el producto. Por favor, intenta nuevamente.');
+      Swal.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al eliminar el producto. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
       // Si falla, recargar para asegurar que el estado esté sincronizado
       await cargarProductos();
     }
@@ -284,13 +340,7 @@ const AdminTienda = () => {
             searchValue={searchTerm}
           />
           {error && (
-            <div className="error-message" style={{ 
-              padding: '10px', 
-              margin: '10px 0', 
-              backgroundColor: '#fee', 
-              color: '#c33', 
-              borderRadius: '4px' 
-            }}>
+            <div className="admin-error-message">
               {error}
             </div>
           )}
@@ -322,6 +372,8 @@ const AdminTienda = () => {
         initialData={viewProducto}
         mode="view"
         entityName="producto"
+        onEditar={handleEditar}
+        onEliminar={handleEliminar}
       />
     </>
   );
