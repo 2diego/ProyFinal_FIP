@@ -624,7 +624,7 @@ const AdminClientes = () => {
                           .filter(rutina => rutina.id_rutina !== selectedUsuario?.rutina_activa?.id_rutina)
                           .map(rutina => (
                             <option key={rutina.id_rutina} value={rutina.id_rutina}>
-                              {rutina.nombre} {rutina.usuario ? `(${rutina.usuario.nombre} ${rutina.usuario.apellido})` : ''}
+                              {rutina.nombre} {rutina.tipo_rutina === 'cliente' ? '(Cliente específico)' : rutina.tipo_rutina === 'plan' ? `(${rutina.categoria})` : '(General)'}
                             </option>
                           ))}
                       </select>
