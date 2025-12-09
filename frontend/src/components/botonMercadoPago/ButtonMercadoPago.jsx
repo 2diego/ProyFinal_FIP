@@ -21,7 +21,7 @@ export default function ButtonMercadoPago() {
       unit_price: Number(p.precio),
     }));
 
-    fetch("http://localhost:3000/mercadopago/crear-preferencia", {
+    fetch("https://proyectofinal-backend-7797.onrender.com/mercadopago/crear-preferencia", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items })
