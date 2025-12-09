@@ -9,7 +9,7 @@ export default function ButtonMercadoPago() {
     if (lock.current) return;
     lock.current = true;
 
-    fetch("http://localhost:3000/api/mercadopago/crear-preferencia", {
+    fetch("http://localhost:3000/mercadopago/crear-preferencia", {
       method: "POST",
     })
       .then((res) => res.json())

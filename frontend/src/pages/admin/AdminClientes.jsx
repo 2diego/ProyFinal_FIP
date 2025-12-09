@@ -198,9 +198,12 @@ const AdminClientes = () => {
       datosLimpios.rol = datosLimpios.rol.toLowerCase();
     }
 
-    // En modo edit, eliminar password si esta vacio
-    if (mode === 'edit' && (!datosLimpios.password || datosLimpios.password.trim() === '')) {
+    // En modo edit, SIEMPRE eliminar password (no se debe modificar desde AdminClientes)
+    // El password solo se cambia desde el perfil del usuario o al crear un nuevo usuario
+    // Esto previene que el hash del password se envíe y se hashee de nuevo en el backend
+    if (mode === 'edit') {
       delete datosLimpios.password;
+      delete datosLimpios.confirmPassword; // También eliminar confirmPassword si existe
     }
 
     // Asegurar que los booleanos sean realmente booleanos
