@@ -4,9 +4,31 @@ import suscripcionService from '../../services/suscripcion.service';
 import usuarioService from '../../services/usuario.service';
 import planService from "../../services/plan.service.js";
 import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
 function SuscripcionButton({ clase, plan }) {
+
+  const navigate = useNavigate();
   const handleClick = async () => {
     const usuario = await usuarioService.getUsuarioById();
+
+    if (!usuario) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Necesitas iniciar sesión',
+        text: 'Debes iniciar sesión para continuar',
+        showCancelButton: true,             
+        confirmButtonText: 'Ir al login',
+        cancelButtonText: 'No, volver atrás',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login');
+        }
+      });
+      return;
+    }
+
 
     let planData;
     if (plan.toLowerCase().includes("premium")) {
@@ -50,7 +72,7 @@ function SuscripcionButton({ clase, plan }) {
       window.location.href = suscripcion.init_point;
     }
   };
-  
+
 
 
   return (
