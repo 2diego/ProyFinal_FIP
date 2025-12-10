@@ -45,6 +45,7 @@ export default function FormLogin() {
 
             // --- BUSCAR CARRITO BACKEND
             let carritoBackend = await carritoService.getCarritoByUsuario(userId);
+            
 
             // Si no existe → crearlo
             if (!carritoBackend || !carritoBackend.id_carrito) {
