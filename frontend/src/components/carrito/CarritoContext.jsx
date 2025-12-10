@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import CarritoService from "../../services/carrito.service";
 
 const CarritoContext = createContext();
 
@@ -42,7 +43,7 @@ export function CarritoProvider({ children }) {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
 
     if (usuario) {
-      await carritoService.addItem(usuario.id_usuario, producto.id);
+      await CarritoService.addItem(usuario.id_usuario, producto.id);
     }
   };
   const cambiarCantidad = async (id, delta) => {
@@ -67,7 +68,7 @@ export function CarritoProvider({ children }) {
       const usuario = JSON.parse(localStorage.getItem("usuario"));
 
       if (usuario) {
-        await carritoService.actualizarCantidad(
+        await CarritoService.updateCantidad(
           usuario.id_usuario,
           id,
           nuevaCantidad
