@@ -614,7 +614,8 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
   // Validar datos antes de guardar
   const validarDatos = () => {
     const tipoRutina = datosEditados.tipo_rutina !== undefined ? datosEditados.tipo_rutina : rutina.tipo_rutina;
-    const idUsuario = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : (rutina.usuario?.id_usuario || null);
+    // NOTA: usuarioActualId ahora solo viene de datosEditados (no hay rutina.usuario)
+    const idUsuario = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : null;
     const categoria = datosEditados.categoria !== undefined ? datosEditados.categoria : rutina.categoria;
 
     const validacion = validarDatosRutina(rutina, datosEditados, tipoRutina, idUsuario, categoria);
@@ -804,7 +805,8 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     if (!validarDatos()) return;
 
     const tipoRutina = datosEditados.tipo_rutina !== undefined ? datosEditados.tipo_rutina : rutina.tipo_rutina;
-    const idUsuario = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : (rutina.usuario?.id_usuario || null);
+    // NOTA: usuarioActualId ahora solo viene de datosEditados (no hay rutina.usuario)
+    const idUsuario = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : null;
 
     const confirmacion = await SwalToUse.fire({
       title: '¿Crear nueva rutina?',
