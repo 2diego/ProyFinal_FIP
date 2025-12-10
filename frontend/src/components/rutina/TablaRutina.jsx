@@ -840,7 +840,7 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       html: `
         <p>Se creará una nueva rutina basada en la actual.</p>
         ${tipoRutina === 'cliente' && idUsuario ? 
-          `<p><strong>La nueva rutina se asignará como activa al cliente seleccionado.</strong></p>` : 
+          `<p><strong>⚠️ La nueva rutina se asignará automáticamente como activa al cliente seleccionado.</strong></p>` : 
           ''}
         <p>¿Deseas continuar?</p>
       `,
@@ -940,25 +940,8 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
 
       const nuevaRutina = await rutinaService.createRutinaCompleta(rutinaCompletaData);
 
-      if (tipoRutinaFinal === 'cliente' && idUsuario) {
-        const asignarActiva = await SwalToUse.fire({
-          title: '¿Asignar como rutina activa?',
-          text: `¿Deseas asignar esta rutina como activa para el cliente?`,
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#ff6a00',
-          cancelButtonColor: '#6c757d',
-          confirmButtonText: 'Sí, asignar',
-          cancelButtonText: 'No asignar',
-          zIndex: 10002
-        });
-
-        if (asignarActiva.isConfirmed) {
-          await usuarioService.updateUsuario(idUsuario, {
-            rutina_activa_id: nuevaRutina.id_rutina
-          });
-        }
-      }
+      // NOTA: El backend automáticamente asigna la rutina como activa cuando es tipo CLIENTE y tiene id_usuario
+      // No es necesario hacer una llamada adicional aquí
 
       const rutinaCompleta = await rutinaService.getRutinaById(rutina.id_rutina);
       setRutina(rutinaCompleta);
