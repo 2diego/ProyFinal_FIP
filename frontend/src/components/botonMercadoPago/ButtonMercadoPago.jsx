@@ -1,6 +1,6 @@
 import { Wallet } from "@mercadopago/sdk-react";
 import { useEffect, useState, useRef } from "react";
-import carritoService from "../../services/carrito.service";
+import CarritoService from "../../services/carrito.service";
 
 export default function ButtonMercadoPago() {
   const [preferenceId, setPreferenceId] = useState(null);
@@ -24,9 +24,9 @@ export default function ButtonMercadoPago() {
 
     fetch("http://localhost:3000/mercadopago/crear-preferencia", {
       method: "POST",
-      credentials: 'include',
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items })
+      body: JSON.stringify({ items }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -35,15 +35,10 @@ export default function ButtonMercadoPago() {
       .catch((err) => console.error("Error MP:", err));
   }, []);
 
-  const carritoId = JSON.parse(localStorage.getItem("carritoId"));
-
   return (
     <div>
       {preferenceId && (
-        <Wallet initialization={{ preferenceId }}
-        onSubmit={async() => {
-          await carritoService.deleteCarrito(carritoId)
-        }} />
+        <Wallet initialization={{ preferenceId }}/>
       )}
     </div>
   );
