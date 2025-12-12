@@ -7,7 +7,20 @@ export default function ComprarAhoraButton({ producto, stock }) {
   const navigate = useNavigate();
 
   const comprarAhora = () => {
-    if (!checkLogin()) return;
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    // No logueado → pedir login
+    if (!usuario) {
+      Swal.fire({
+        title: "Necesitás iniciar sesión",
+        text: "Para continuar con la compra, primero iniciá sesión.",
+        icon: "warning",
+        confirmButtonText: "Ir a iniciar sesión",
+        confirmButtonColor: "#ee5f0d",
+      }).then(() => {
+        navigate("/login");
+      });
+      return;
+    }
 
     if (stock <= 0) {
       Swal.fire({

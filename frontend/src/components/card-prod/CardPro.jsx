@@ -5,12 +5,26 @@ import Boton from "../botones/Boton";
 import "./CardPro.css";
 
 function CardPro({ id, nombre, precio, stock, descripcion, img }) {
-  const { agregarAlCarrito } = useCarrito();  
+  const { agregarAlCarrito } = useCarrito();
   const navigate = useNavigate();
 
   const producto = { id, nombre, precio, stock, descripcion, img };
 
   const comprarAhora = () => {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    // No logueado → pedir login
+    if (!usuario) {
+      Swal.fire({
+        title: "Necesitás iniciar sesión",
+        text: "Para continuar con la compra, primero iniciá sesión.",
+        icon: "warning",
+        confirmButtonText: "Ir a iniciar sesión",
+        confirmButtonColor: "#ee5f0d",
+      }).then(() => {
+        navigate("/login");
+      });
+      return;
+    }
     if (stock <= 0) {
       Swal.fire({
         icon: "warning",

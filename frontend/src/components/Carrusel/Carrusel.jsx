@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import "./Carrusel.css";
+import { useNavigate } from "react-router-dom";
 import ProductoService from "../../services/producto.service";
 import { useCarrito } from "../carrito/CarritoContext"; // <-- importamos el contexto
 
@@ -12,10 +13,10 @@ const Carrusel = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
- 
-  const { agregarAlCarrito } = useCarrito();
 
-  
+  const { agregarAlCarrito } = useCarrito();
+  const navigate = useNavigate();
+
   const cargarProductos = async () => {
     try {
       const productoData = await ProductoService.getAllProductos();
@@ -51,7 +52,7 @@ const Carrusel = () => {
     }
   };
 
-  
+
   const handleAddToCart = (producto) => {
     const p = {
       id: producto.id_producto,
@@ -91,6 +92,20 @@ const Carrusel = () => {
       descripcion: producto.descripcion,
       img: producto.imagen,
     };
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    // No logueado → pedir login
+    if (!usuario) {
+      Swal.fire({
+        title: "Necesitás iniciar sesión",
+        text: "Para continuar con la compra, primero iniciá sesión.",
+        icon: "warning",
+        confirmButtonText: "Ir a iniciar sesión",
+        confirmButtonColor: "#ee5f0d",
+      }).then(() => {
+        navigate("/login");
+      });
+      return;
+    }
 
     if (p.stock <= 0) {
       Swal.fire({
@@ -102,10 +117,10 @@ const Carrusel = () => {
       return;
     }
 
-    
+
     localStorage.setItem("compraDirecta", JSON.stringify(p));
     agregarAlCarrito(p);
-    window.location.href = "/compraDirecta";
+    navigate("/compraDirecta");
   };
 
   const handleShowProduct = (producto) => {
