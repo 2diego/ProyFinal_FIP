@@ -75,11 +75,12 @@
 .form-select {
   padding: 0.4rem 0.3rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
   font-size: 1rem;
-  background: #fff;
-  color: #23252B;
+  color: var(--blanco);
   outline: none;
+  background-color: var(--gris);
+  border: 1px solid var(--naranja);
+  cursor: pointer;
 }
 .btn-success {
   background: #ee5f0d;
